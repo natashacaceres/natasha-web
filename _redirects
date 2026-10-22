@@ -29,3 +29,9 @@
 /2024/04/09/credit-evaluation-in-the-era-of-open-banking/  /blog-credit-evaluation-in-the-era-of-open-banking  301
 /2024/04/01/open-banking-europes-transformative-fintech-tool  /blog-open-banking-europes-transformative-fintech-tool  301
 /2024/04/01/open-banking-europes-transformative-fintech-tool/  /blog-open-banking-europes-transformative-fintech-tool  301
+/tag/*                                         /blog                     301
+/page/*                                        /blog                     301
+/feed                                          /blog                     301
+/feed/                                         /blog                     301
+/41-2                                          /about                    301
+/41-2/                                         /about                    301
