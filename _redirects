@@ -1,0 +1,31 @@
+# Redirecciones de las direcciones antiguas (WordPress) a las nuevas.
+# Cloudflare Pages lee este archivo solo. Va en la raíz, junto a index.html.
+/advisory-3                                    /advisory                 301
+/advisory-3/                                   /advisory                 301
+/insights                                      /blog                     301
+/insights/                                     /blog                     301
+/analysis                                      /blog                     301
+/analysis/*                                    /blog                     301
+/category/*                                    /blog                     301
+/learn                                         /academy                  301
+/learn/                                        /academy                  301
+/open-finance-academy                          /academy                  301
+/open-finance-academy/                         /academy                  301
+/open-finance-academy/courses                  /courses                  301
+/open-finance-academy/courses/                 /courses                  301
+/open-finance-academy/courses/open-finance-101   /open-finance-101       301
+/open-finance-academy/courses/open-finance-101/  /open-finance-101       301
+/2026/03/19/open-finance-in-latam-2026-the-regulatory-gaps-europe-learned-the-hard-way  /blog-open-finance-in-latam-2026-the-regulatory-gaps-europe-learned-the-hard-way  301
+/2026/03/19/open-finance-in-latam-2026-the-regulatory-gaps-europe-learned-the-hard-way/  /blog-open-finance-in-latam-2026-the-regulatory-gaps-europe-learned-the-hard-way  301
+/2025/06/11/the-loophole-economy-of-embedded-finance  /blog-the-loophole-economy-of-embedded-finance  301
+/2025/06/11/the-loophole-economy-of-embedded-finance/  /blog-the-loophole-economy-of-embedded-finance  301
+/2024/10/19/open-banking-is-great-unless-youre-an-immigrant  /blog-open-banking-is-great-unless-youre-an-immigrant  301
+/2024/10/19/open-banking-is-great-unless-youre-an-immigrant/  /blog-open-banking-is-great-unless-youre-an-immigrant  301
+/2024/10/14/europes-open-banking-is-leaving-the-u-s-behind  /blog-europes-open-banking-is-leaving-the-u-s-behind  301
+/2024/10/14/europes-open-banking-is-leaving-the-u-s-behind/  /blog-europes-open-banking-is-leaving-the-u-s-behind  301
+/2024/05/09/psd2-leveling-the-financial-playing-field  /blog-psd2-leveling-the-financial-playing-field  301
+/2024/05/09/psd2-leveling-the-financial-playing-field/  /blog-psd2-leveling-the-financial-playing-field  301
+/2024/04/09/credit-evaluation-in-the-era-of-open-banking  /blog-credit-evaluation-in-the-era-of-open-banking  301
+/2024/04/09/credit-evaluation-in-the-era-of-open-banking/  /blog-credit-evaluation-in-the-era-of-open-banking  301
+/2024/04/01/open-banking-europes-transformative-fintech-tool  /blog-open-banking-europes-transformative-fintech-tool  301
+/2024/04/01/open-banking-europes-transformative-fintech-tool/  /blog-open-banking-europes-transformative-fintech-tool  301
