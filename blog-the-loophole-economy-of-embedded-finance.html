@@ -6,7 +6,7 @@
 <title>The Loophole Economy of Embedded Finance | Natasha Cáceres</title>
 <meta name="description" content="Non-financial firms turned PSD2 compliance gaps into business models by building solutions where regulation was unclear.">
 <link rel="canonical" href="https://natashacaceres.com/blog-the-loophole-economy-of-embedded-finance">
-<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l!=='en'&&l!=='es'){l=(navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'}document.documentElement.lang=l})();</script>
+<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es|ca)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l==='ca')l='es';if(l!=='en'&&l!=='es'){var n=(navigator.language||'').toLowerCase();l=(n.indexOf('es')===0||n.indexOf('ca')===0)?'es':'en'}document.documentElement.lang=l})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -30,12 +30,18 @@
     <a class="brand" href="/">Natasha Cáceres</a>
     <nav class="nav" aria-label="Main">
       <ul>
-        <li><a href="/reports">Policy</a></li>
+        <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
         <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-        <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-        <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+        <li><a href="/academy">Academy</a></li>
+        <li class="dd is-current" data-dd><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-res"><span data-l="en">Resources</span><span data-l="es">Recursos</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+          <ul class="dd-menu" id="dd-res">
+            <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+            <li><a href="/blog" aria-current="page">Blog</a></li>
+          </ul>
+        </li>
+        <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
       </ul>
-      <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
+      <div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
     </nav>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mnav" aria-label="Menu">☰</button>
   </div>
@@ -45,12 +51,18 @@
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Close">✕</button>
     </div>
     <ul>
-      <li><a href="/reports">Policy</a></li>
+      <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
       <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-      <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-      <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li><a href="/academy">Academy</a></li>
+      <li class="mnav-group"><p class="mnav-h"><span data-l="en">Resources</span><span data-l="es">Recursos</span></p>
+        <ul>
+          <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+          <li><a href="/blog" aria-current="page">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li class="mnav-lang"><div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang-m"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang-m"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div></li>
     </ul>
-    <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
   </div>
 </header>
 
@@ -62,7 +74,7 @@
 <p>This is the environment where <a href="https://www.weforum.org/stories/2025/04/embedded-finance-disruptive-force-financial-institutions/" target="_blank" rel="noopener">embedded finance</a> truly took off, not only as a product of innovation, but as a response to regulatory friction. Non-financial firms identified the gaps in PSD2 and built business models around them. The result was a market that grew not just within the boundaries of regulation, but in its blind spots. PSD3 and FIDA are now attempting to close those gaps, not to roll back what was built, but to ensure that data protection holds and that open access remains genuinely open, rather than a privilege of the most resourced players.</p></div><div class="prose" data-l="es"><p>En la Unión Europea, el Open Banking se rige por PSD2, que obliga a los bancos a compartir los datos de sus clientes mediante APIs, interfaces digitales que permiten que distintos sistemas se comuniquen. El objetivo es <a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC141896" target="_blank" rel="noopener">democratizar las finanzas y crear un mercado más competitivo.</a> En teoría, cualquier PayTech podía obtener una licencia, acceder legalmente a esas APIs y crear servicios financieros avanzados sin convertirse en banco. En la práctica, la implementación varió mucho entre los Estados miembros de la UE. Algunos bancos retrasaron o restringieron el acceso. Otros impusieron requisitos técnicos tan complejos y costosos que el cumplimiento se convirtió en una barrera en sí mismo. Incluso con las llaves, la puerta no siempre se abría.</p>
 <p>Ante esa fricción, los actores más pequeños hicieron un cálculo pragmático. Obtener la licencia no siempre compensaba. Sin el tiempo, el capital o la capacidad técnica para superar el proceso de autorización, muchos recurrieron a la banca como servicio (BaaS). Estas plataformas con licencia ofrecían infraestructura financiera lista para usar y acceso a datos, lo que permitía a empresas sin licencia integrar pagos, cuentas o funciones de crédito en sus productos bajo la licencia de otro. No necesariamente ilegal, pero sí en una zona gris regulatoria donde las cuestiones de supervisión y responsabilidad sobre los datos rara vez tenían respuestas claras. Por la misma época ganaron terreno los agregadores de APIs, que reúnen decenas de APIs bancarias en una única interfaz unificada. Para las empresas pequeñas fue un atajo para escalar. También introdujo nuevas dependencias que pocos reguladores habían previsto.</p>
 <p>Los bancos tradicionales tomaron nota. En lugar de resistirse al Open Banking, muchos optaron por monetizarlo. Algunos lanzaron APIs premium y cobraron por un acceso a datos más rápido o más rico, convirtiendo una obligación regulatoria en una fuente de ingresos. Otros avanzaron hacia la banca como plataforma (BaaP), integrando servicios fintech externos directamente en sus propios ecosistemas. En lugar de competir con las aplicaciones de inversión o las herramientas de finanzas personales, las acogieron, manteniendo la relación con el cliente dentro de su propia interfaz mientras centralizaban discretamente el control.</p>
-<p>Este es el entorno en el que despegaron de verdad las <a href="https://www.weforum.org/stories/2025/04/embedded-finance-disruptive-force-financial-institutions/" target="_blank" rel="noopener">finanzas integradas (embedded finance)</a>, no solo como fruto de la innovación, sino como respuesta a la fricción regulatoria. Las empresas no financieras detectaron las lagunas de PSD2 y construyeron modelos de negocio en torno a ellas. El resultado fue un mercado que creció no solo dentro de los límites de la regulación, sino en sus puntos ciegos. PSD3 y FIDA intentan ahora cerrar esas lagunas, no para deshacer lo construido, sino para garantizar que la protección de datos se mantenga y que el acceso abierto siga siendo realmente abierto, en lugar de un privilegio de los actores con más recursos.</p></div><p style="margin-top:48px;padding-top:24px;border-top:1px solid var(--line-strong)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
+<p>Este es el entorno en el que despegaron de verdad las <a href="https://www.weforum.org/stories/2025/04/embedded-finance-disruptive-force-financial-institutions/" target="_blank" rel="noopener">finanzas integradas (embedded finance)</a>, no solo como fruto de la innovación, sino como respuesta a la fricción regulatoria. Las empresas no financieras detectaron las lagunas de PSD2 y construyeron modelos de negocio en torno a ellas. El resultado fue un mercado que creció no solo dentro de los límites de la regulación, sino en sus puntos ciegos. PSD3 y FIDA intentan ahora cerrar esas lagunas, no para deshacer lo construido, sino para garantizar que la protección de datos se mantenga y que el acceso abierto siga siendo realmente abierto, en lugar de un privilegio de los actores con más recursos.</p></div><p style="margin-top:48px;padding:24px 28px;background:var(--bone)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
 </article>
 <section class="sec sec--navy">
   <div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px">
@@ -77,7 +89,7 @@
     <div class="ftr-cols">
       <div>
         <h2 class="label"><span data-l="en">Location</span><span data-l="es">Ubicación</span></h2>
-        <address>Gran Via de les Corts Catalanes, 08013<br><span data-l="en">Barcelona, Spain</span><span data-l="es">Barcelona, España</span></address>
+        <address>Barcelona</address>
       </div>
       <div>
         <h2 class="label"><span data-l="en">Contact</span><span data-l="es">Contacto</span></h2>
@@ -91,7 +103,8 @@
         <ul class="ftr-links">
           <li><a href="/privacy-policy"><span data-l="en">Privacy Policy</span><span data-l="es">Política de privacidad</span></a></li>
           <li><a href="/legal-notice"><span data-l="en">Legal Notice</span><span data-l="es">Aviso legal</span></a></li>
-          <li><a href="/cookie-policy"><span data-l="en">Cookie Policy</span><span data-l="es">Política de cookies</span></a></li>
+          <li><a href="/cookie-policy"><span data-l="en">Cookies</span><span data-l="es">Cookies</span></a></li>
+          <li><a href="/about#intereses"><span data-l="en">Declared interests</span><span data-l="es">Intereses declarados</span></a></li>
         </ul>
       </div>
     </div>

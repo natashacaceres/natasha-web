@@ -6,7 +6,7 @@
 <title>Cookie Policy | Natasha Cáceres</title>
 <meta name="description" content="What cookies are, how natashacaceres.com uses them, and how you can manage your preferences.">
 <link rel="canonical" href="https://natashacaceres.com/cookie-policy">
-<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l!=='en'&&l!=='es'){l=(navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'}document.documentElement.lang=l})();</script>
+<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es|ca)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l==='ca')l='es';if(l!=='en'&&l!=='es'){var n=(navigator.language||'').toLowerCase();l=(n.indexOf('es')===0||n.indexOf('ca')===0)?'es':'en'}document.documentElement.lang=l})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -30,12 +30,18 @@
     <a class="brand" href="/">Natasha Cáceres</a>
     <nav class="nav" aria-label="Main">
       <ul>
-        <li><a href="/reports">Policy</a></li>
+        <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
         <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-        <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-        <li><a href="/blog">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+        <li><a href="/academy">Academy</a></li>
+        <li class="dd" data-dd><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-res"><span data-l="en">Resources</span><span data-l="es">Recursos</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+          <ul class="dd-menu" id="dd-res">
+            <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </li>
+        <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
       </ul>
-      <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
+      <div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
     </nav>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mnav" aria-label="Menu">☰</button>
   </div>
@@ -45,19 +51,25 @@
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Close">✕</button>
     </div>
     <ul>
-      <li><a href="/reports">Policy</a></li>
+      <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
       <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-      <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-      <li><a href="/blog">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li><a href="/academy">Academy</a></li>
+      <li class="mnav-group"><p class="mnav-h"><span data-l="en">Resources</span><span data-l="es">Recursos</span></p>
+        <ul>
+          <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li class="mnav-lang"><div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang-m"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang-m"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div></li>
     </ul>
-    <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
   </div>
 </header>
 
 <main id="main">
 <section class="sec sec--bone phero"><div class="wrap"><div class="text stack-16">
   <p class="label muted">Legal</p>
-  <h1 class="t-40"><span data-l="en">Cookie Policy</span><span data-l="es">Política de cookies</span></h1>
+  <h1 class="t-40"><span data-l="en">Cookies</span><span data-l="es">Cookies</span></h1>
   <p class="small muted"><span data-l="en">Last updated: 22 October 2026</span><span data-l="es">Última actualización: 22 de octubre de 2026</span></p>
 </div></div></section>
 <section class="sec sec--white"><div class="wrap"><div class="text">
@@ -100,7 +112,7 @@
     <div class="ftr-cols">
       <div>
         <h2 class="label"><span data-l="en">Location</span><span data-l="es">Ubicación</span></h2>
-        <address>Gran Via de les Corts Catalanes, 08013<br><span data-l="en">Barcelona, Spain</span><span data-l="es">Barcelona, España</span></address>
+        <address>Barcelona</address>
       </div>
       <div>
         <h2 class="label"><span data-l="en">Contact</span><span data-l="es">Contacto</span></h2>
@@ -115,6 +127,7 @@
           <li><a href="/privacy-policy"><span data-l="en">Privacy Policy</span><span data-l="es">Política de privacidad</span></a></li>
           <li><a href="/legal-notice"><span data-l="en">Legal Notice</span><span data-l="es">Aviso legal</span></a></li>
           <li><a href="/cookie-policy"><span data-l="en">Cookie Policy</span><span data-l="es">Política de cookies</span></a></li>
+          <li><a href="/about#intereses"><span data-l="en">Declared interests</span><span data-l="es">Intereses declarados</span></a></li>
         </ul>
       </div>
     </div>

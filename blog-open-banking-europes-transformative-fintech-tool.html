@@ -6,7 +6,7 @@
 <title>Open Banking: Europe’s Transformative Fintech Tool | Natasha Cáceres</title>
 <meta name="description" content="Open Banking is changing the financial sector, driving consumer-led innovation and opening up new opportunities for SMEs.">
 <link rel="canonical" href="https://natashacaceres.com/blog-open-banking-europes-transformative-fintech-tool">
-<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l!=='en'&&l!=='es'){l=(navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'}document.documentElement.lang=l})();</script>
+<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es|ca)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l==='ca')l='es';if(l!=='en'&&l!=='es'){var n=(navigator.language||'').toLowerCase();l=(n.indexOf('es')===0||n.indexOf('ca')===0)?'es':'en'}document.documentElement.lang=l})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -30,12 +30,18 @@
     <a class="brand" href="/">Natasha Cáceres</a>
     <nav class="nav" aria-label="Main">
       <ul>
-        <li><a href="/reports">Policy</a></li>
+        <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
         <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-        <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-        <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+        <li><a href="/academy">Academy</a></li>
+        <li class="dd is-current" data-dd><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-res"><span data-l="en">Resources</span><span data-l="es">Recursos</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+          <ul class="dd-menu" id="dd-res">
+            <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+            <li><a href="/blog" aria-current="page">Blog</a></li>
+          </ul>
+        </li>
+        <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
       </ul>
-      <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
+      <div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
     </nav>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mnav" aria-label="Menu">☰</button>
   </div>
@@ -45,12 +51,18 @@
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Close">✕</button>
     </div>
     <ul>
-      <li><a href="/reports">Policy</a></li>
+      <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
       <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-      <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-      <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li><a href="/academy">Academy</a></li>
+      <li class="mnav-group"><p class="mnav-h"><span data-l="en">Resources</span><span data-l="es">Recursos</span></p>
+        <ul>
+          <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+          <li><a href="/blog" aria-current="page">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li class="mnav-lang"><div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang-m"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang-m"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div></li>
     </ul>
-    <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
   </div>
 </header>
 
@@ -60,7 +72,7 @@
 <p>But opening up the financial system isn’t without friction. Smaller TPPs, in particular, face a real tension. They need access to sensitive data to compete, but they often lack the infrastructure to protect it at the level regulators expect. That gap, between what the regulation demands and what smaller players can realistically deliver, is one of the more underappreciated challenges of the Open Banking model. A unified regulatory framework across the European Economic Area would help. Without it, the same regulation that’s meant to level the playing field can end up favoring whoever has the resources to comply most easily.</p>
 <p>None of this has gone unnoticed outside Europe. The regulatory push led by the European Commission has fundamentally changed what banking looks like across the continent, and it’s raising uncomfortable questions elsewhere. In the United States, where market-driven approaches have long defined financial innovation, Open Banking has no equivalent mandate. That’s worth examining. As financial systems become more interconnected and the pressure to compete globally intensifies, the question isn’t just whether Open Banking works. It’s whether staying on the sidelines is still a viable option.</p></div><div class="prose" data-l="es"><p>Obtener crédito al instante con un solo clic en la aplicación del banco se está convirtiendo rápidamente en lo habitual en toda Europa, aunque la mayoría de los usuarios no sabe por qué. La respuesta no es una nueva tecnología. Es una decisión regulatoria. Desde 2018, el Open Banking ha ido reescribiendo discretamente las reglas de las finanzas en la Unión Europea y el Reino Unido. La idea es sencilla. Los bancos deben compartir los datos de sus transacciones con proveedores terceros autorizados (TPP), pero solo si usted lo autoriza. Ese único requisito, el intercambio de datos basado en el consentimiento, abrió la puerta a una oleada de servicios financieros más personalizados y competitivos que los bancos tradicionales tenían pocos incentivos para crear por su cuenta. Para consumidores y pequeñas empresas, supuso más opciones, mejores productos y, por primera vez, un control real sobre sus propios datos financieros.</p>
 <p>Pero abrir el sistema financiero no está exento de fricciones. Los TPP más pequeños, en particular, se enfrentan a una tensión real. Necesitan acceder a datos sensibles para competir, pero a menudo carecen de la infraestructura necesaria para protegerlos al nivel que esperan los reguladores. Esa brecha, entre lo que exige la regulación y lo que los actores más pequeños pueden ofrecer de forma realista, es uno de los retos menos reconocidos del modelo de Open Banking. Un marco regulatorio unificado en todo el Espacio Económico Europeo ayudaría. Sin él, la misma regulación que pretende igualar las condiciones puede acabar favoreciendo a quien tenga más recursos para cumplirla con facilidad.</p>
-<p>Nada de esto ha pasado desapercibido fuera de Europa. El impulso regulatorio liderado por la Comisión Europea ha cambiado de raíz la banca en todo el continente, y está planteando preguntas incómodas en otros lugares. En Estados Unidos, donde los enfoques basados en el mercado han definido durante mucho tiempo la innovación financiera, el Open Banking no tiene un mandato equivalente. Merece la pena analizarlo. A medida que los sistemas financieros se interconectan más y se intensifica la presión para competir a escala global, la pregunta no es solo si el Open Banking funciona. Es si quedarse al margen sigue siendo una opción viable.</p></div><p style="margin-top:48px;padding-top:24px;border-top:1px solid var(--line-strong)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
+<p>Nada de esto ha pasado desapercibido fuera de Europa. El impulso regulatorio liderado por la Comisión Europea ha cambiado de raíz la banca en todo el continente, y está planteando preguntas incómodas en otros lugares. En Estados Unidos, donde los enfoques basados en el mercado han definido durante mucho tiempo la innovación financiera, el Open Banking no tiene un mandato equivalente. Merece la pena analizarlo. A medida que los sistemas financieros se interconectan más y se intensifica la presión para competir a escala global, la pregunta no es solo si el Open Banking funciona. Es si quedarse al margen sigue siendo una opción viable.</p></div><p style="margin-top:48px;padding:24px 28px;background:var(--bone)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
 </article>
 <section class="sec sec--navy">
   <div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px">
@@ -75,7 +87,7 @@
     <div class="ftr-cols">
       <div>
         <h2 class="label"><span data-l="en">Location</span><span data-l="es">Ubicación</span></h2>
-        <address>Gran Via de les Corts Catalanes, 08013<br><span data-l="en">Barcelona, Spain</span><span data-l="es">Barcelona, España</span></address>
+        <address>Barcelona</address>
       </div>
       <div>
         <h2 class="label"><span data-l="en">Contact</span><span data-l="es">Contacto</span></h2>
@@ -89,7 +101,8 @@
         <ul class="ftr-links">
           <li><a href="/privacy-policy"><span data-l="en">Privacy Policy</span><span data-l="es">Política de privacidad</span></a></li>
           <li><a href="/legal-notice"><span data-l="en">Legal Notice</span><span data-l="es">Aviso legal</span></a></li>
-          <li><a href="/cookie-policy"><span data-l="en">Cookie Policy</span><span data-l="es">Política de cookies</span></a></li>
+          <li><a href="/cookie-policy"><span data-l="en">Cookies</span><span data-l="es">Cookies</span></a></li>
+          <li><a href="/about#intereses"><span data-l="en">Declared interests</span><span data-l="es">Intereses declarados</span></a></li>
         </ul>
       </div>
     </div>

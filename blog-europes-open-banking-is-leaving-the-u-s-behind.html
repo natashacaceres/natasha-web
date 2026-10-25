@@ -6,7 +6,7 @@
 <title>Investment in Open Banking Leaves the U.S. Behind | Natasha Cáceres</title>
 <meta name="description" content="Open Banking has changed the game, building investor trust and driving a surge of funding into fintech, especially for PayTechs.">
 <link rel="canonical" href="https://natashacaceres.com/blog-europes-open-banking-is-leaving-the-u-s-behind">
-<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l!=='en'&&l!=='es'){l=(navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'}document.documentElement.lang=l})();</script>
+<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es|ca)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l==='ca')l='es';if(l!=='en'&&l!=='es'){var n=(navigator.language||'').toLowerCase();l=(n.indexOf('es')===0||n.indexOf('ca')===0)?'es':'en'}document.documentElement.lang=l})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -30,12 +30,18 @@
     <a class="brand" href="/">Natasha Cáceres</a>
     <nav class="nav" aria-label="Main">
       <ul>
-        <li><a href="/reports">Policy</a></li>
+        <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
         <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-        <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-        <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+        <li><a href="/academy">Academy</a></li>
+        <li class="dd is-current" data-dd><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-res"><span data-l="en">Resources</span><span data-l="es">Recursos</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+          <ul class="dd-menu" id="dd-res">
+            <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+            <li><a href="/blog" aria-current="page">Blog</a></li>
+          </ul>
+        </li>
+        <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
       </ul>
-      <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
+      <div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
     </nav>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mnav" aria-label="Menu">☰</button>
   </div>
@@ -45,12 +51,18 @@
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Close">✕</button>
     </div>
     <ul>
-      <li><a href="/reports">Policy</a></li>
+      <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
       <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-      <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-      <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li><a href="/academy">Academy</a></li>
+      <li class="mnav-group"><p class="mnav-h"><span data-l="en">Resources</span><span data-l="es">Recursos</span></p>
+        <ul>
+          <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+          <li><a href="/blog" aria-current="page">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li class="mnav-lang"><div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang-m"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang-m"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div></li>
     </ul>
-    <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
   </div>
 </header>
 
@@ -61,12 +73,12 @@
 <p>The mechanism behind this is worth understanding. PSD2 required banks to open their APIs to authorized third parties, which meant that a fintech in Spain could access the same payment infrastructure as Santander. Combined with Europe’s passporting system, which allows a company licensed in one EEA country to operate across the entire region without additional licenses, the market suddenly became much larger for anyone willing to comply with the regulation. Over <a href="https://www3.weforum.org/docs/WEF_Fuelling_Innovation_Fixing_Fintech_Funding_Gaps_2024.pdf" target="_blank" rel="noopener">400 non-bank providers</a> have emerged in the EU since then, many of them smaller fintechs that would have had no realistic path to market under the old system.</p>
 <p>The contrast with the United States is significant. Without a federal mandate for data sharing, access to banking infrastructure in the U.S. remains largely negotiated between dominant players. Smaller fintechs depend on partnerships that established institutions can revoke, restrict, or price out of reach. The market is innovative, but it is not open in the same structural sense.</p>
 <p>Europe is already moving to the next phase. PSD3 and the Financial Data Access Regulation (FiDA) are extending the same logic beyond payments to insurance, investments, and pensions. The direction is clear. Financial data is becoming shared infrastructure, not private property. Whether other regions follow, or continue watching from the side, will define who leads the next decade of financial services.</p>
-<ol class="small muted" style="margin-top:40px;padding-top:16px;border-top:1px solid var(--line)"><li id="fn1">Data supporting regional comparisons exclude any potential influences and focus solely on the impact of PSD2 following its implementation. I will include data in upcoming posts. <a href="#fn1-ref-en" aria-label="Back to text">↩︎</a></li></ol></div><div class="prose" data-l="es"><p>La regulación tiene fama de frenar las cosas. Más cumplimiento, más costes, más fricción para los actores pequeños que intentan entrar en un mercado. En el sector fintech europeo, los datos cuentan otra historia.</p>
+<ol class="small muted" style="margin-top:40px;padding-top:16px"><li id="fn1">Data supporting regional comparisons exclude any potential influences and focus solely on the impact of PSD2 following its implementation. I will include data in upcoming posts. <a href="#fn1-ref-en" aria-label="Back to text">↩︎</a></li></ol></div><div class="prose" data-l="es"><p>La regulación tiene fama de frenar las cosas. Más cumplimiento, más costes, más fricción para los actores pequeños que intentan entrar en un mercado. En el sector fintech europeo, los datos cuentan otra historia.</p>
 <p>Desde la entrada en vigor de PSD2, la inversión en fintech en Europa creció un <a href="https://www3.weforum.org/docs/WEF_Fuelling_Innovation_Fixing_Fintech_Funding_Gaps_2024.pdf" target="_blank" rel="noopener">13 %</a> anual entre 2015 y 2023, hasta alcanzar los 5.600 millones de dólares. Ese crecimiento no se repartió por igual entre todas las categorías fintech. Las PayTech, las empresas construidas en torno a los servicios de pago, captaron una parte desproporcionada de ese capital. La razón no es difícil de ver. PSD2 les dio algo que los inversores valoran casi por encima de todo, un marco regulatorio que redujo la incertidumbre. Cuando las reglas son claras y el acceso a la infraestructura bancaria está garantizado por ley, construir un negocio sobre ella se convierte en una apuesta mucho más segura. <sup><a href="#fn1-es" id="fn1-ref-es">1</a></sup></p>
 <p>Merece la pena entender el mecanismo. PSD2 obligó a los bancos a abrir sus APIs a terceros autorizados, lo que significaba que una fintech en España podía acceder a la misma infraestructura de pagos que el Santander. Junto con el sistema de pasaporte europeo, que permite a una empresa autorizada en un país del EEE operar en toda la región sin licencias adicionales, el mercado se volvió de repente mucho más grande para cualquiera dispuesto a cumplir la regulación. Desde entonces han surgido en la UE más de <a href="https://www3.weforum.org/docs/WEF_Fuelling_Innovation_Fixing_Fintech_Funding_Gaps_2024.pdf" target="_blank" rel="noopener">400 proveedores no bancarios</a>, muchos de ellos fintechs pequeñas que con el sistema anterior no habrían tenido una vía realista para llegar al mercado.</p>
 <p>El contraste con Estados Unidos es notable. Sin un mandato federal de intercambio de datos, el acceso a la infraestructura bancaria en EE. UU. sigue negociándose en gran medida entre los actores dominantes. Las fintechs pequeñas dependen de alianzas que las entidades consolidadas pueden revocar, restringir o encarecer hasta hacerlas inalcanzables. El mercado es innovador, pero no está abierto en el mismo sentido estructural.</p>
 <p>Europa ya está pasando a la siguiente fase. PSD3 y el Reglamento de Acceso a Datos Financieros (FiDA) extienden la misma lógica más allá de los pagos, a los seguros, las inversiones y las pensiones. La dirección es clara. Los datos financieros pasan a ser infraestructura compartida, no propiedad privada. Que otras regiones sigan este camino, o continúen observando desde la banda, determinará quién lidera la próxima década de los servicios financieros.</p>
-<ol class="small muted" style="margin-top:40px;padding-top:16px;border-top:1px solid var(--line)"><li id="fn1-es">Los datos que sustentan las comparaciones regionales excluyen cualquier posible influencia y se centran únicamente en el impacto de PSD2 tras su implementación. Incluiré datos en próximas publicaciones. <a href="#fn1-ref-es" aria-label="Volver al texto">↩︎</a></li></ol></div><p style="margin-top:48px;padding-top:24px;border-top:1px solid var(--line-strong)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
+<ol class="small muted" style="margin-top:40px;padding-top:16px"><li id="fn1-es">Los datos que sustentan las comparaciones regionales excluyen cualquier posible influencia y se centran únicamente en el impacto de PSD2 tras su implementación. Incluiré datos en próximas publicaciones. <a href="#fn1-ref-es" aria-label="Volver al texto">↩︎</a></li></ol></div><p style="margin-top:48px;padding:24px 28px;background:var(--bone)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
 </article>
 <section class="sec sec--navy">
   <div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px">
@@ -81,7 +93,7 @@
     <div class="ftr-cols">
       <div>
         <h2 class="label"><span data-l="en">Location</span><span data-l="es">Ubicación</span></h2>
-        <address>Gran Via de les Corts Catalanes, 08013<br><span data-l="en">Barcelona, Spain</span><span data-l="es">Barcelona, España</span></address>
+        <address>Barcelona</address>
       </div>
       <div>
         <h2 class="label"><span data-l="en">Contact</span><span data-l="es">Contacto</span></h2>
@@ -95,7 +107,8 @@
         <ul class="ftr-links">
           <li><a href="/privacy-policy"><span data-l="en">Privacy Policy</span><span data-l="es">Política de privacidad</span></a></li>
           <li><a href="/legal-notice"><span data-l="en">Legal Notice</span><span data-l="es">Aviso legal</span></a></li>
-          <li><a href="/cookie-policy"><span data-l="en">Cookie Policy</span><span data-l="es">Política de cookies</span></a></li>
+          <li><a href="/cookie-policy"><span data-l="en">Cookies</span><span data-l="es">Cookies</span></a></li>
+          <li><a href="/about#intereses"><span data-l="en">Declared interests</span><span data-l="es">Intereses declarados</span></a></li>
         </ul>
       </div>
     </div>

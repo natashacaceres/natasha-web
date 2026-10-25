@@ -6,7 +6,7 @@
 <title>Open Finance in LatAm 2026: Regulatory Gaps Europe Learned the Hard Way | Natasha Cáceres</title>
 <meta name="description" content="Latin America is scaling Open Finance fast. Europe already knows what happens when the infrastructure outpaces the regulation. The lesson is still relevant.">
 <link rel="canonical" href="https://natashacaceres.com/blog-open-finance-in-latam-2026-the-regulatory-gaps-europe-learned-the-hard-way">
-<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l!=='en'&&l!=='es'){l=(navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'}document.documentElement.lang=l})();</script>
+<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es|ca)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l==='ca')l='es';if(l!=='en'&&l!=='es'){var n=(navigator.language||'').toLowerCase();l=(n.indexOf('es')===0||n.indexOf('ca')===0)?'es':'en'}document.documentElement.lang=l})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -30,12 +30,18 @@
     <a class="brand" href="/">Natasha Cáceres</a>
     <nav class="nav" aria-label="Main">
       <ul>
-        <li><a href="/reports">Policy</a></li>
+        <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
         <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-        <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-        <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+        <li><a href="/academy">Academy</a></li>
+        <li class="dd is-current" data-dd><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-res"><span data-l="en">Resources</span><span data-l="es">Recursos</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+          <ul class="dd-menu" id="dd-res">
+            <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+            <li><a href="/blog" aria-current="page">Blog</a></li>
+          </ul>
+        </li>
+        <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
       </ul>
-      <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
+      <div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
     </nav>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mnav" aria-label="Menu">☰</button>
   </div>
@@ -45,12 +51,18 @@
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Close">✕</button>
     </div>
     <ul>
-      <li><a href="/reports">Policy</a></li>
+      <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span></a></li>
       <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span></a></li>
-      <li><a href="/academy"><span data-l="en">Learn</span><span data-l="es">Academy</span></a></li>
-      <li><a href="/blog" aria-current="page">Blog</a></li><li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li><a href="/academy">Academy</a></li>
+      <li class="mnav-group"><p class="mnav-h"><span data-l="en">Resources</span><span data-l="es">Recursos</span></p>
+        <ul>
+          <li><a href="/observatorio"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span></a></li>
+          <li><a href="/blog" aria-current="page">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span></a></li>
+      <li class="mnav-lang"><div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang-m"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang-m"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div></li>
     </ul>
-    <div class="lang"><button type="button" data-set-lang="en" aria-pressed="true">EN</button><span>|</span><button type="button" data-set-lang="es" aria-pressed="false">ES</button></div>
   </div>
 </header>
 
@@ -62,7 +74,7 @@
 <p>This is not an argument against aggregators. They exist because regulation left room for them, and they solve a real problem for fintechs that cannot afford to build every connection from scratch. But infrastructure decisions made today for operational convenience tend to have competitive consequences tomorrow. Europe is writing new regulation to correct gaps it did not anticipate in 2018. Latin America is still early enough to ask the right questions before the market answers them on its own.</p></div><div class="prose" data-l="es"><p>Brasil cuenta con 128 millones de consentimientos activos de Open Finance a diciembre de 2025. Chile entra en la fase de implementación obligatoria en abril de 2026. Colombia lanzó su hub interoperable de Open Finance en 2025. México aprobó su Ley Fintech en 2018 y desde entonces lidia con lagunas regulatorias. La infraestructura se está construyendo en toda la región a velocidades distintas y con reglas distintas, y en algún punto en medio de toda esa fragmentación, un nuevo tipo de actor se está volviendo imprescindible sin hacer ruido. Los agregadores de APIs, empresas que reúnen decenas de APIs bancarias en una única interfaz unificada, surgieron como solución práctica a un problema real. Conectarse uno por uno a todos los bancos de un mercado es caro, lento y técnicamente complejo. Para la mayoría de las fintechs, externalizar esa capa en un especialista tenía sentido. Lo que los mercados están aprendiendo ahora es que las decisiones de infraestructura tomadas por comodidad operativa suelen tener consecuencias estructurales que nadie previó del todo en su momento.</p>
 <p>Europa lo aprendió por las malas. Cuando PSD2 entró en vigor en 2018, la implementación fue desigual. Algunos bancos abrieron sus APIs sin problemas. Otros impusieron barreras técnicas que hacían que el acceso directo fuera poco fiable o prohibitivamente caro. Las fintechs más pequeñas, incapaces de mantener conexiones con decenas de bancos en varios países, recurrieron a agregadores como Plaid, TrueLayer y Salt Edge. Esas empresas resolvieron un problema real. También acumularon algo que al principio nadie llamó poder. Obtuvieron el control de los flujos de datos, de los estándares de conectividad de las APIs y, en algunos casos, información sobre el comportamiento transaccional de todas las fintechs que pasaban por su infraestructura. Mi propia investigación sobre las PayTech europeas, desarrollada con el JRC de la Comisión Europea, concluyó que el diseño regulatorio determinó directamente quién recibió inversión y quién accedió al mercado tras PSD2. Los agregadores no fueron una capa neutral. Se convirtieron en inversores, socios y, en algunos mercados, competidores de las fintechs a las que daban servicio. PSD3 y FIDA intentan ahora abordar las lagunas de gobernanza que el marco original no previó. Ese proceso lleva años.</p>
 <p>América Latina está en una fase anterior, lo que significa que las decisiones que se toman ahora sobre en qué proveedores de infraestructura confiar, cómo gobernar el acceso a las APIs y qué estándares exigir definirán el entorno competitivo de la próxima década. El <a href="https://www.sensedia.com/report/open-finance" target="_blank" rel="noopener">informe Sensedia 2026 State of Open Finance</a> muestra que la dependencia de infraestructura de terceros ya es profunda. Banco Rendimento canaliza más del 80 % de sus transacciones a través de un único proveedor. EBANX externalizó toda su capa regulatoria de Open Finance para gestionar la complejidad del ecosistema. Son decisiones racionales a nivel de empresa. A nivel de mercado, generan concentración en una capa que los reguladores aún no han definido por completo. Brasil es el mercado más avanzado de la región y cuenta con las estructuras de gobernanza para gestionarlo. Los mercados que están ahora en las primeras fases de implementación, Chile, Colombia, Perú y México, toman esas mismas decisiones de infraestructura sin el respaldo de un marco regulatorio maduro.</p>
-<p>Esto no es un argumento contra los agregadores. Existen porque la regulación les dejó espacio, y resuelven un problema real para las fintechs que no pueden permitirse construir cada conexión desde cero. Pero las decisiones de infraestructura que hoy se toman por comodidad operativa suelen tener mañana consecuencias competitivas. Europa está redactando nueva regulación para corregir lagunas que no previó en 2018. América Latina todavía está a tiempo de hacerse las preguntas adecuadas antes de que el mercado las responda por sí solo.</p></div><p style="margin-top:48px;padding-top:24px;border-top:1px solid var(--line-strong)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
+<p>Esto no es un argumento contra los agregadores. Existen porque la regulación les dejó espacio, y resuelven un problema real para las fintechs que no pueden permitirse construir cada conexión desde cero. Pero las decisiones de infraestructura que hoy se toman por comodidad operativa suelen tener mañana consecuencias competitivas. Europa está redactando nueva regulación para corregir lagunas que no previó en 2018. América Latina todavía está a tiempo de hacerse las preguntas adecuadas antes de que el mercado las responda por sí solo.</p></div><p style="margin-top:48px;padding:24px 28px;background:var(--bone)"><a class="back" href="/blog"><span data-l="en">← All articles</span><span data-l="es">← Todos los artículos</span></a></p></div></div></section>
 </article>
 <section class="sec sec--navy">
   <div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px">
@@ -77,7 +89,7 @@
     <div class="ftr-cols">
       <div>
         <h2 class="label"><span data-l="en">Location</span><span data-l="es">Ubicación</span></h2>
-        <address>Gran Via de les Corts Catalanes, 08013<br><span data-l="en">Barcelona, Spain</span><span data-l="es">Barcelona, España</span></address>
+        <address>Barcelona</address>
       </div>
       <div>
         <h2 class="label"><span data-l="en">Contact</span><span data-l="es">Contacto</span></h2>
@@ -91,7 +103,8 @@
         <ul class="ftr-links">
           <li><a href="/privacy-policy"><span data-l="en">Privacy Policy</span><span data-l="es">Política de privacidad</span></a></li>
           <li><a href="/legal-notice"><span data-l="en">Legal Notice</span><span data-l="es">Aviso legal</span></a></li>
-          <li><a href="/cookie-policy"><span data-l="en">Cookie Policy</span><span data-l="es">Política de cookies</span></a></li>
+          <li><a href="/cookie-policy"><span data-l="en">Cookies</span><span data-l="es">Cookies</span></a></li>
+          <li><a href="/about#intereses"><span data-l="en">Declared interests</span><span data-l="es">Intereses declarados</span></a></li>
         </ul>
       </div>
     </div>
