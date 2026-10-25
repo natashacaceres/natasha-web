@@ -3,7 +3,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--white);color:var(--navy);font:400 16px/1.65 var(--sans);overflow-x:hidden;overflow-wrap:break-word}
-html[lang="es"] [data-l="en"],html[lang="en"] [data-l="es"]{display:none!important}
+html[lang="es"] [data-l]:not([data-l~="es"]),html[lang="ca"] [data-l]:not([data-l~="ca"]),html[lang="en"] [data-l]:not([data-l~="en"]){display:none!important}
 img{max-width:100%;height:auto;display:block}
 a{color:var(--navy);text-underline-offset:3px;text-decoration-thickness:1px}
 a:hover{color:var(--ink-65)}
@@ -125,6 +125,10 @@ p{text-wrap:pretty}
 .mnav .lang-btn{min-height:44px;font-size:16px;padding:6px 14px}
 .mnav .dd--lang .dd-menu{position:static;margin-top:6px;min-width:200px}
 .mnav .dd--lang .dd-menu li button{min-height:44px;font-size:16px;padding:10px 16px}
+.dd--m{display:none}
+@media (max-width:900px){.dd--m{display:block;margin-left:auto;margin-right:-12px}.dd--m .lang-btn{min-height:44px;min-width:44px;padding:6px 10px;justify-content:center}.dd--m .dd-menu{position:absolute;right:0;left:auto}}
+.avail{font:500 12px/1.4 var(--sans);letter-spacing:.06em;color:var(--ink-65)}
+.sec--navy .avail{color:var(--w-65)}
 /* observatorio teaser */
 /* marquee */
 .marq{display:flex;align-items:stretch;height:34px;background:var(--gold);color:var(--navy);overflow:hidden;font:600 12px/34px var(--sans);letter-spacing:.12em;text-transform:uppercase}

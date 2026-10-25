@@ -4,10 +4,10 @@
   var DEMO = Q.get('demo');
   var TODAY = { antes: '2026-10-25', recogida: '2027-02-20', datos: '2027-04-20' }[DEMO] || new Date().toISOString().slice(0, 10);
   var SRC = {
-    estado: DEMO === 'antes' ? null : DEMO === 'datos' ? 'data/ejemplo/estado_unidades.csv' : 'data/estado_unidades.csv',
-    celdas: DEMO === 'datos' ? 'data/ejemplo/celdas_publicadas.csv' : 'data/celdas_publicadas.csv',
-    transp: 'data/transparencia.csv',
-    geo: 'data/barris.geojson'
+    estado: DEMO === 'antes' ? null : DEMO === 'datos' ? '/data/ejemplo/estado_unidades.csv' : '/data/estado_unidades.csv',
+    celdas: DEMO === 'datos' ? '/data/ejemplo/celdas_publicadas.csv' : '/data/celdas_publicadas.csv',
+    transp: '/data/transparencia.csv',
+    geo: '/data/barris.geojson'
   };
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var MQ = window.matchMedia('(max-width: 899px)');
@@ -34,17 +34,80 @@
     var h = lines.shift().split(',');
     return lines.map(function (l) { var v = l.split(','), o = {}; h.forEach(function (k, i) { o[k] = v[i] === undefined ? '' : v[i]; }); return o; });
   }
-  function nf(v, d) { return Number(v).toLocaleString('es-ES', { minimumFractionDigits: d, maximumFractionDigits: d }); }
-  function fmt(v, u) { return u === 'pct' ? nf(v, 1) + ' %' : u === 'meses' ? nf(Math.round(v), 0) : nf(Math.round(v), 0) + ' €'; }
-  function fmtMed(v, u) { return u === 'eur_mes' ? fmt(v, u) + '/mes' : fmt(v, u); }
-  function rango(a, b, u) { return u === 'pct' ? nf(a, 1) + '–' + nf(b, 1) + ' %' : nf(Math.round(a), 0) + '–' + nf(Math.round(b), 0) + ' €'; }
+  function EN() { return root.lang === 'en'; }
+  function nf(v, d) { return Number(v).toLocaleString(EN() ? 'en-GB' : 'es-ES', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function fmt(v, u) { if (u === 'meses') return nf(Math.round(v), 0); if (u === 'pct') return nf(v, 1) + (EN() ? '%' : ' %'); return EN() ? '€' + nf(Math.round(v), 0) : nf(Math.round(v), 0) + ' €'; }
+  function fmtMed(v, u) { return u === 'eur_mes' ? fmt(v, u) + (EN() ? '/month' : '/mes') : fmt(v, u); }
+  function rango(a, b, u) { if (u === 'pct') return nf(a, 1) + '–' + nf(b, 1) + (EN() ? '%' : ' %'); return EN() ? '€' + nf(Math.round(a), 0) + '–' + nf(Math.round(b), 0) : nf(Math.round(a), 0) + '–' + nf(Math.round(b), 0) + ' €'; }
+  var I18N = {
+    'Cobro con tarjeta (tasa efectiva)': ['Cobrament amb targeta (taxa efectiva)', 'Card payments (effective rate)'],
+    'Belleza y cuidado personal': ['Bellesa i cura personal', 'Beauty and personal care'],
+    'Otros comercios y servicios': ['Altres comerços i serveis', 'Other shops and services'],
+    'Hostelería': ['Hostaleria', 'Hospitality'], 'Alimentación': ['Alimentació', 'Food'],
+    'Programas y plataformas': ['Programes i plataformes', 'Software and platforms'],
+    'Teléfono e internet': ['Telèfon i internet', 'Phone and internet'],
+    'Total mensual': ['Total mensual', 'Monthly total'], 'Cobro con tarjeta': ['Cobrament amb targeta', 'Card payments'],
+    'Media del Banco de España:': ['Mitjana del Banc d\'Espanya:', 'Bank of Spain average:'], 'valor y fuente pendientes': ['valor i font pendents', 'value and source pending'],
+    'Topes de las tasas de intercambio: 0,2 % (débito) y 0,3 % (crédito). Reglamento (UE) 2015/751.': ['Límits de les taxes d\'intercanvi: 0,2 % (dèbit) i 0,3 % (crèdit). Reglament (UE) 2015/751.', 'Interchange fee caps: 0.2% (debit) and 0.3% (credit). Regulation (EU) 2015/751.'],
+    'La mitad de los negocios paga entre estas dos cifras. Una cuarta parte paga menos y otra cuarta parte, más.': ['La meitat dels negocis paga entre aquestes dues xifres. Una quarta part paga menys i una altra quarta part, més.', 'Half of businesses pay between these two figures. A quarter pay less and a quarter pay more.'],
+    'Qué significa el rango habitual': ['Què significa el rang habitual', 'What the usual range means'],
+    '— No se publica: menos de 10 negocios. Cobro con tarjeta en % de las ventas con tarjeta.': ['— No es publica: menys de 10 negocis. Cobrament amb targeta en % de les vendes amb targeta.', '— Not published: fewer than 10 businesses. Card payments as % of card sales.'],
+    'No se publica: hay menos de 10 negocios en este grupo.': ['No es publica: hi ha menys de 10 negocis en aquest grup.', 'Not published: there are fewer than 10 businesses in this group.'],
+    'Le mostramos el dato de toda la ciudad.': ['Li mostrem la dada de tota la ciutat.', 'We show you the figure for the whole city.'],
+    'Le mostramos el dato de su distrito.': ['Li mostrem la dada del seu districte.', 'We show you the figure for your district.'],
+    'Tasa efectiva por ventas con tarjeta · toda la ciudad': ['Taxa efectiva per vendes amb targeta · tota la ciutat', 'Effective rate by card sales · whole city'],
+    'Sector × categoría · medianas': ['Sector × categoria · medianes', 'Sector × category · medians'],
+    'Los datos se publican al cerrar la oleada y solo en grupos de 10 negocios o más.': ['Les dades es publiquen en tancar l\'onada i només en grups de 10 negocis o més.', 'Data is published when the wave closes, and only for groups of 10 or more businesses.'],
+    '¿Tiene un negocio aquí? Déjeme su contacto y le aviso.': ['Té un negoci aquí? Deixi\'m el seu contacte i l\'avisaré.', 'Do you run a business here? Leave me your contact details and I will let you know.'],
+    'Aún no hemos llegado a este barrio.': ['Encara no hem arribat a aquest barri.', 'We have not reached this neighbourhood yet.'],
+    'No hay negocios de este sector en esta edición.': ['No hi ha negocis d\'aquest sector en aquesta edició.', 'There are no businesses from this sector in this edition.'],
+    'Los primeros resultados se publicarán aquí.': ['Els primers resultats es publicaran aquí.', 'The first results will be published here.'],
+    'Ver informe de ejemplo (datos ficticios)': ['Veure informe d\'exemple (dades fictícies)', 'See sample report (fictitious data)'],
+    'Cuotas en €/mes, sin IVA': ['Quotes en €/mes, sense IVA', 'Fees in €/month, excluding VAT'],
+    'Negocios con permanencia vigente': ['Negocis amb permanència vigent', 'Businesses with a contract lock-in'],
+    'Meses restantes (mediana)': ['Mesos restants (mediana)', 'Months remaining (median)'],
+    'Su posición frente a negocios parecidos de su barrio': ['La seva posició davant de negocis semblants del seu barri', 'Your position against similar businesses in your neighbourhood'],
+    'Su tasa efectiva de cobro con tarjeta': ['La seva taxa efectiva de cobrament amb targeta', 'Your effective card acceptance rate'],
+    'Comisiones, cuota del terminal y mínimos, como porcentaje de lo que vende con tarjeta.': ['Comissions, quota del terminal i mínims, com a percentatge del que ven amb targeta.', 'Fees, terminal rental and minimums, as a percentage of your card sales.'],
+    'Calendario de permanencias': ['Calendari de permanències', 'Contract lock-in calendar'],
+    'Alarma · penalización de 120 €': ['Alarma · penalització de 120 €', 'Alarm · €120 early-exit fee'],
+    'Vence en 9 meses': ['Venç d\'aquí a 9 mesos', 'Ends in 9 months'], 'Vence en 17 meses': ['Venç d\'aquí a 17 mesos', 'Ends in 17 months'],
+    'Sin permanencia': ['Sense permanència', 'No lock-in'],
+    'Preguntas para su banco o su proveedor': ['Preguntes per al seu banc o el seu proveïdor', 'Questions for your bank or provider'],
+    '¿Puedo quitar la cuota mensual del datáfono o pasar a una tarifa sin mínimos?': ['Puc treure la quota mensual del datàfon o passar a una tarifa sense mínims?', 'Can I drop the monthly terminal fee or move to a plan with no minimums?'],
+    '¿Qué penalización exacta tengo si cambio de alarma antes de que venza la permanencia?': ['Quina penalització exacta tinc si canvio d\'alarma abans que venci la permanència?', 'What exactly is the penalty if I switch alarm provider before the lock-in ends?'],
+    '¿Qué comisiones de mantenimiento puedo evitar en la cuenta del negocio?': ['Quines comissions de manteniment puc evitar al compte del negoci?', 'Which maintenance fees can I avoid on the business account?'],
+    'El informe es suyo y es gratis.': ['L\'informe és seu i és gratuït.', 'The report is yours, and it is free.'],
+    'Último trimestre publicado:': ['Darrer trimestre publicat:', 'Latest quarter published:'],
+    'Gracias. Le avisaré cuando la oleada llegue a su barrio.': ['Gràcies. L\'avisaré quan l\'onada arribi al seu barri.', 'Thank you. I will let you know when the wave reaches your neighbourhood.'],
+    'Participación hasta ahora:': ['Participació fins ara:', 'Participation so far:'],
+    'menos de 10 negocios': ['menys de 10 negocis', 'fewer than 10 businesses'], '20 negocios o más': ['20 negocis o més', '20 or more businesses'],
+    'Referencias citadas': ['Referències citades', 'Cited references'], 'Permanencias': ['Permanències', 'Contract lock-ins'],
+    'Por sector': ['Per sector', 'By sector'], 'Menos de 5.000 €/mes': ['Menys de 5.000 €/mes', 'Under €5,000/month'], '5.000 €/mes o más': ['5.000 €/mes o més', '€5,000/month or more'],
+    'Cómo participar →': ['Com participar →', 'How to take part →'], 'Toda la ciudad': ['Tota la ciutat', 'Whole city'], 'Su distrito': ['El seu districte', 'Your district'],
+    ' · tasa efectiva': [' · taxa efectiva', ' · effective rate'], ' · €/mes sin IVA': [' · €/mes sense IVA', ' · €/month excl. VAT'],
+    'Rango habitual': ['Rang habitual', 'Usual range'], 'Mediana': ['Mediana', 'Median'], 'Usted:': ['Vostè:', 'You:'], 'Usted': ['Vostè', 'You'],
+    'Con datos': ['Amb dades', 'With data'], 'En recogida': ['En recollida', 'Collecting'], 'Próximamente': ['Properament', 'Coming soon'],
+    'Agrupación': ['Agrupació', 'Group'], 'Sin resultados': ['Cap resultat', 'No results'], 'Qué ver': ['Què veure', 'Show'], 'Edición': ['Edició', 'Edition'],
+    'Datáfono': ['Datàfon', 'Card terminal'], 'Cerrar': ['Tancar', 'Close'], 'Acercar': ['Apropar', 'Zoom in'], 'Alejar': ['Allunyar', 'Zoom out'],
+    'Belleza': ['Bellesa', 'Beauty'], 'Todos': ['Tots', 'All'], 'Otros': ['Altres', 'Other'], 'Banco': ['Banc', 'Banking'], 'Alarma': ['Alarma', 'Alarm']
+  };
+  var I18N_KEYS = Object.keys(I18N).sort(function (a, b) { return b.length - a.length; });
+  function tr(s) {
+    var l = root.lang; if (l === 'es' || !s) return s;
+    var k = l === 'ca' ? 0 : 1;
+    s = s.replace(/Para proteger el anonimato, (.+?) y ([^<]+?) se publican juntos\./g, k ? 'To protect anonymity, $1 and $2 are published together.' : "Per protegir l'anonimat, $1 i $2 es publiquen junts.");
+    I18N_KEYS.forEach(function (key) { if (s.indexOf(key) >= 0) s = s.split(key).join(I18N[key][k]); });
+    s = s.replace(/\bnegocios\b/g, k ? 'businesses' : 'negocis');
+    return s;
+  }
   function ventana(v) {
     var p = (v || '').split('/'); if (p.length < 2) return v || '';
     var a = p[0].split('-'), b = p[1].split('-');
     return MES[+a[1] - 1] + (a[0] !== b[0] ? ' ' + a[0] : '') + '–' + MES[+b[1] - 1] + ' ' + b[0];
   }
   function banda(b) { return b === '<10' ? 'menos de 10 negocios' : b === '20+' ? '20 negocios o más' : (b || '').replace('-', '–') + ' negocios'; }
-  function pend() { var l = root.lang; return l === 'es' ? '' : '<p class="pend">' + l.toUpperCase() + ' · pendiente</p>'; }
+  function pend() { return ''; }
 
   /* data */
   function cell(niv, amb, sec, met, tramo) {
@@ -108,9 +171,10 @@
 
   function renderCity() {
     if (!S.edition) {
-      return pend() + '<div class="obs-ph"><p class="label muted">Barcelona</p></div>' +
-        '<p class="obs-panel-msg">Los primeros resultados se publicarán aquí.</p>' +
-        '<div><button type="button" class="btn" data-ejemplo>Ver informe de ejemplo (datos ficticios)</button></div>';
+      return '<div class="obs-city0"><p class="label muted">Barcelona</p>' +
+        '<p class="obs-panel-big">Los primeros resultados se publicarán aquí.</p>' +
+        '<button type="button" class="btn obs-btn-full" data-ejemplo>Ver informe de ejemplo (datos ficticios)</button>' +
+        '<svg class="obs-ill" viewBox="0 0 220 200" aria-hidden="true" focusable="false"><g fill="none" stroke="#E6DFD2" stroke-width="3" stroke-linecap="square"><path d="M62 30h76l22 22v118H62z"/><path d="M138 30v22h22"/><path d="M78 56h44M78 70h60M78 84h36"/><path d="M84 150v-26M104 150v-40M124 150v-18"/><path d="M76 158h66"/><path d="M40 70h-14M38 100h-18M40 130h-14M182 70h14M184 100h18M182 130h14M110 16V4M84 20l-6-10M136 20l6-10"/></g></svg></div>';
     }
     var met = MET.filter(function (m) { return m[0] === S.metric; })[0];
     var h = pend() + '<div class="obs-ph"><p class="label muted">Toda la ciudad</p><h3>Barcelona</h3><p class="meta">' + nOf('ciudad', 'barcelona') + ' negocios · Cuotas en €/mes, sin IVA</p></div>' + filters();
@@ -189,7 +253,7 @@
   function render() {
     var u = S.sel && S.units[S.sel];
     var keep = document.activeElement && body.contains(document.activeElement) ? (document.activeElement.getAttribute('data-sector') ? '[data-sector="' + document.activeElement.getAttribute('data-sector') + '"]' : document.activeElement.hasAttribute('data-metric') ? '[data-metric]' : null) : null;
-    body.innerHTML = u ? renderUnit(u) : renderCity();
+    body.innerHTML = tr(u ? renderUnit(u) : renderCity());
     var slot = $('[data-form-slot]', body);
     if (slot && u) {
       var tp = $('#obs-aviso-tpl'), f = tp && tp.content ? tp.content.querySelector('form') : null;
@@ -237,14 +301,14 @@
   function style(st) {
     if (st === 'con_datos') return { fillColor: '#0B1220', fillOpacity: 0.85, color: '#FFFFFF', weight: 1, opacity: 1 };
     if (st === 'en_recogida') return { fillColor: 'url(#obs-hatch)', fillOpacity: 1, color: '#FFFFFF', weight: 1, opacity: 1 };
-    return { fillColor: '#F4EFE4', fillOpacity: 1, color: 'rgba(11,18,32,.32)', weight: 1, opacity: 1 };
+    return { fillColor: '#F0E9DC', fillOpacity: 1, color: 'rgba(11,18,32,.3)', weight: 1, opacity: 1 };
   }
   function unitLayers(id) { var u = S.units[id]; return u ? u.barris.map(function (b) { return S.layers[b]; }).filter(Boolean) : []; }
   function hover(id, on) {
     unitLayers(id).forEach(function (l) { var p = l.getElement(); if (p) p.classList.toggle('is-hov', on); if (on && !S.sel) l.bringToFront(); });
   }
   function boundsOf(id) { var b = null; unitLayers(id).forEach(function (l) { b = b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds().getSouthWest(), l.getBounds().getNorthEast()); }); return b; }
-  function pad() { return MQ.matches ? { padding: [24, 24] } : { paddingTopLeft: [24, 120], paddingBottomRight: [24, 24] }; }
+  function pad() { return MQ.matches ? { padding: [24, 24] } : { paddingTopLeft: [24, 130], paddingBottomRight: [64, 20] }; }
   function fit(b, max) {
     var o = pad(); o.maxZoom = max || 15;
     if (RM) { o.animate = false; S.map.fitBounds(b, o); } else { o.duration = 0.35; S.map.flyToBounds(b, o); }
@@ -289,7 +353,7 @@
     var el = $('#obs-leaflet');
     el.innerHTML = '';
     var map = S.map = L.map(el, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: !L.Browser.mobile, tap: false, zoomSnap: 0.25, minZoom: 11, maxZoom: 16, renderer: L.svg({ padding: 0.5 }), keyboard: false });
-    L.control.zoom({ position: 'topright', zoomInTitle: 'Acercar', zoomOutTitle: 'Alejar' }).addTo(map);
+    L.control.zoom({ position: 'topright', zoomInTitle: tr('Acercar'), zoomOutTitle: tr('Alejar') }).addTo(map);
     var layer = L.geoJSON(gj, { style: function (f) { return style(stateOf(f.properties.b)); } });
     S.cityBounds = layer.getBounds();
     var o0 = pad(); o0.animate = false; map.fitBounds(S.cityBounds, o0);
@@ -305,7 +369,7 @@
       S.layers[b] = l;
       p.setAttribute('tabindex', '0');
       p.setAttribute('role', 'button');
-      p.setAttribute('aria-label', S.barri[b].name + ', ' + EST[stateOf(b)]);
+      p.setAttribute('aria-label', S.barri[b].name + ', ' + tr(EST[stateOf(b)]));
       l.on('mouseover', function () { hover(id, true); });
       l.on('mouseout', function () { hover(id, false); });
       l.on('click', function () { select(id, 'map'); });
@@ -313,7 +377,7 @@
       p.addEventListener('blur', function () { hover(id, false); });
       p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(id, 'key'); } });
     });
-    map.setMaxBounds(S.cityBounds.pad(0.35));
+    map.setMaxBounds(S.cityBounds.pad(1.5));
     var ex = $('[data-explore]');
     if (L.Browser.mobile && ex) {
       ex.hidden = false;
@@ -343,7 +407,7 @@
     function draw() {
       var q = norm(inp.value.trim());
       shown = opts.filter(function (o) { return !q || norm(o.name).indexOf(q) >= 0; });
-      list.innerHTML = shown.length ? shown.map(function (o, i) { return '<li role="option" id="obs-o' + i + '" aria-selected="' + (i === act) + '" data-i="' + i + '">' + esc(o.name) + '<small>' + esc(o.sub) + '</small></li>'; }).join('') : '<li class="obs-empty" role="option" aria-disabled="true">Sin resultados</li>';
+      list.innerHTML = shown.length ? shown.map(function (o, i) { return '<li role="option" id="obs-o' + i + '" aria-selected="' + (i === act) + '" data-i="' + i + '">' + esc(o.name) + '<small>' + esc(tr(o.sub)) + '</small></li>'; }).join('') : '<li class="obs-empty" role="option" aria-disabled="true">Sin resultados</li>';
       if (act >= 0) inp.setAttribute('aria-activedescendant', 'obs-o' + act); else inp.removeAttribute('aria-activedescendant');
       var a = $('#obs-o' + act); if (a) { var t = a.offsetTop, h = list.clientHeight; if (t < list.scrollTop || t > list.scrollTop + h - 44) list.scrollTop = t - h / 2; }
     }
@@ -362,31 +426,22 @@
   }
 
   /* example report */
+  var lastFocus = null;
   function openEjemplo() {
-    var d = $('#obs-ejemplo'), b = $('#obs-ejemplo-body');
-    if (!b.innerHTML) {
-      var rows = [['Banco', 'banco', 24, 13, 19, 26], ['Alarma', 'alarma', 52, 32, 39, 48], ['Teléfono e internet', 'telefono', 45, 39, 47, 59], ['Programas y plataformas', 'programas', 61, 28, 42, 63]];
-      var h = '<section class="obs-block"><h4>Su posición frente a negocios parecidos de su barrio</h4>' + key(false, true) + rows.map(function (r) {
-        return '<div class="obs-row"><p class="t">' + r[0] + '</p>' + fig({ metrica: r[1], unidad_medida: 'eur_mes', p25: r[3], mediana: r[4], p75: r[5], n: 14 }, null, { you: r[2], max: 80 }) + '</div>';
-      }).join('') + '</section>';
-      h += '<section class="obs-block"><h4>Su tasa efectiva de cobro con tarjeta</h4><p class="small muted">Comisiones, cuota del terminal y mínimos, como porcentaje de lo que vende con tarjeta.</p>' +
-        fig({ metrica: 'tasa_efectiva', unidad_medida: 'pct', p25: 0.9, mediana: 1.2, p75: 1.6, n: 14 }, null, { you: 1.9, max: 2.4 }) + '</section>';
-      h += '<section class="obs-block"><h4>Calendario de permanencias</h4><ul class="obs-cal">' +
-        '<li><span>Datáfono</span><span>Vence en 9 meses</span></li>' +
-        '<li><span>Alarma · penalización de 120 €</span><span>Vence en 17 meses</span></li>' +
-        '<li><span>Teléfono e internet</span><span>Sin permanencia</span></li></ul></section>';
-      h += '<section class="obs-block"><h4>Preguntas para su banco o su proveedor</h4><ul class="obs-list obs-list--dash">' +
-        '<li>¿Puedo quitar la cuota mensual del datáfono o pasar a una tarifa sin mínimos?</li>' +
-        '<li>¿Qué penalización exacta tengo si cambio de alarma antes de que venza la permanencia?</li>' +
-        '<li>¿Qué comisiones de mantenimiento puedo evitar en la cuenta del negocio?</li></ul></section>';
-      h += '<p class="obs-card-close"><strong>El informe es suyo y es gratis.</strong></p>';
-      b.innerHTML = h;
-      b.addEventListener('click', function (e) { var t = e.target.closest('.fig-i'); if (t) { var hp = document.getElementById(t.getAttribute('aria-controls')); var o = hp.hidden; hp.hidden = !o; t.setAttribute('aria-expanded', String(o)); } });
-    }
+    var d = $('#obs-ejemplo');
+    lastFocus = document.activeElement && document.activeElement.closest && document.activeElement.closest('[data-ejemplo]') ? document.activeElement : $('[data-ejemplo]');
+    document.documentElement.classList.add('obs-noscroll');
     if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+    d.focus();
   }
   var dlg = $('#obs-ejemplo');
+  dlg.setAttribute('tabindex', '-1');
   dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-modal-close]')) dlg.close(); });
+  dlg.addEventListener('close', function () {
+    document.documentElement.classList.remove('obs-noscroll');
+    var t = lastFocus && lastFocus !== document.body && document.contains(lastFocus) ? lastFocus : $('[data-ejemplo]');
+    if (t) t.focus({ preventScroll: true });
+  });
 
   /* timeline, counters, table */
   function timeline() {
@@ -402,24 +457,28 @@
     if (!rows.length) return;
     var r = rows[rows.length - 1];
     $$('[data-counters] dd').forEach(function (dd) { var v = r[dd.getAttribute('data-k')]; dd.textContent = v === '' || v == null ? '—' : v; });
-    var q = $('[data-counters-q]'); q.hidden = false; q.textContent = 'Último trimestre publicado: ' + r.trimestre;
+    var q = $('[data-counters-q]'); q.hidden = false; q.textContent = tr('Último trimestre publicado:') + ' ' + r.trimestre;
   }
   function table() {
-    $$('.obs-table tbody tr').forEach(function (tr) {
-      var b = tr.getAttribute('data-b'), x = S.barri[b]; if (!x) return;
+    $$('.obs-table tbody tr').forEach(function (row) {
+      var b = row.getAttribute('data-b'), x = S.barri[b]; if (!x) return;
       var u = S.units[x.unit];
-      tr.children[2].textContent = u.barris.length > 1 || u.estado !== 'proximamente' ? u.name : '—';
-      tr.children[3].textContent = EST[u.estado];
+      row.children[2].textContent = u.barris.length > 1 || u.estado !== 'proximamente' ? u.name : '—';
+      row.children[3].textContent = tr(EST[u.estado]);
     });
   }
 
   if (Q.get('sent') === '1') {
     var more = $('#participar .obs-cta');
-    if (more) { var n = document.createElement('p'); n.className = 'notice'; n.setAttribute('role', 'status'); n.textContent = 'Gracias. Le avisaré cuando la oleada llegue a su barrio.'; more.parentNode.insertBefore(n, more); }
+    if (more) { var n = document.createElement('p'); n.className = 'notice'; n.setAttribute('role', 'status'); n.textContent = tr('Gracias. Le avisaré cuando la oleada llegue a su barrio.'); more.parentNode.insertBefore(n, more); }
   }
 
   timeline();
-  document.addEventListener('nc-lang', function () { if (S.ready || body.innerHTML) render(); });
+  document.addEventListener('nc-lang', function () {
+    if (S.ready || body.innerHTML) render();
+    Object.keys(S.layers).forEach(function (b) { var p = S.layers[b].getElement(); if (p) p.setAttribute('aria-label', S.barri[b].name + ', ' + tr(EST[stateOf(b)])); });
+    if (Object.keys(S.units).length) table();
+  });
 
   Promise.all([get(SRC.geo), get(SRC.estado), get(SRC.celdas), get(SRC.transp)]).then(function (r) {
     var gj = r[0] ? JSON.parse(r[0]) : null;

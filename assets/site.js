@@ -1,6 +1,6 @@
 (function () {
   var root = document.documentElement;
-  var langs = (root.getAttribute('data-langs') || 'en es').split(' ');
+  var langs = (root.getAttribute('data-langs') || 'es ca en').split(' ');
   var meta = document.querySelector('meta[name="description"]');
   var ogT = document.querySelector('meta[property="og:title"]');
   var ogD = document.querySelector('meta[property="og:description"]');
@@ -8,18 +8,15 @@
   var base = { title: document.title, desc: meta ? meta.content : '' };
   var locales = { es: 'es_ES', ca: 'ca_ES', en: 'en_GB' };
   function txt(kind, l) {
-    return root.getAttribute('data-' + kind + '-' + l) || (l === 'ca' && root.getAttribute('data-' + kind + '-es')) || base[kind];
+    return root.getAttribute('data-' + kind + '-' + l) || base[kind];
   }
 
   document.querySelectorAll('img[data-alt-es]').forEach(function (img) { if (!img.hasAttribute('data-alt-en')) img.setAttribute('data-alt-en', img.alt); });
   document.querySelectorAll('option[data-es]').forEach(function (o) { if (!o.hasAttribute('data-en')) o.setAttribute('data-en', o.textContent); });
 
   var NAMES = { es: 'Español', ca: 'Català', en: 'English' };
-  var chosen = root.lang;
-  try { var pq = location.search.match(/[?&]lang=(en|es|ca)/); var pv = pq ? pq[1] : localStorage.getItem('nc-lang'); if (pv === 'ca' && root.lang === 'es') chosen = 'ca'; } catch (e) {}
   function apply(l) {
-    chosen = l;
-    if (langs.indexOf(l) < 0) l = l === 'ca' ? 'es' : langs[0];
+    if (langs.indexOf(l) < 0) l = 'es';
     root.lang = l;
     document.title = txt('title', l);
     if (meta) meta.content = txt('desc', l);
@@ -28,12 +25,13 @@
     if (ogL) ogL.content = locales[l];
     document.querySelectorAll('img[data-alt-es]').forEach(function (img) { img.alt = img.getAttribute('data-alt-' + l) || img.getAttribute('data-alt-es'); });
     document.querySelectorAll('option[data-es]').forEach(function (o) { o.textContent = o.getAttribute('data-' + l) || o.getAttribute('data-es'); });
-    var shown = langs.indexOf(chosen) >= 0 || chosen === 'ca' ? chosen : l;
-    document.querySelectorAll('[data-set-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === shown)); });
-    document.querySelectorAll('[data-lang-label]').forEach(function (s) { s.textContent = NAMES[shown]; });
+    document.querySelectorAll('[data-set-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === l)); });
+    document.querySelectorAll('[data-lang-label]').forEach(function (s) { s.textContent = NAMES[l]; });
+    document.querySelectorAll('[data-aria-' + l + ']').forEach(function (e) { e.setAttribute('aria-label', e.getAttribute('data-aria-' + l)); });
+    document.querySelectorAll('[data-lang-code]').forEach(function (s) { s.textContent = l.toUpperCase(); });
     document.dispatchEvent(new CustomEvent('nc-lang', { detail: l }));
   }
-  apply(chosen);
+  apply(root.lang);
 
   /* Resources dropdown */
   var dds = document.querySelectorAll('[data-dd]');
@@ -128,4 +126,18 @@
       window.scrollTo(0, sec.getBoundingClientRect().top + window.pageYOffset - 72);
     }
   }
+
+  document.querySelectorAll('[data-ajax-form]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!f.reportValidity()) return;
+      var btn = f.querySelector('[type="submit"]'), err = f.querySelector('.obs-visit-err'), ok = f.parentNode.querySelector('.obs-visit-ok');
+      btn.disabled = true; if (err) err.hidden = true;
+      var url = f.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+      fetch(url, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(f) })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function () { f.hidden = true; if (ok) { ok.hidden = false; ok.focus({ preventScroll: true }); } })
+        .catch(function () { btn.disabled = false; if (err) err.hidden = false; });
+    });
+  });
 })();

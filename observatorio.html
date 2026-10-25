@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="es" data-langs="es ca en" data-title-es="Índice de Cuotas y Comisiones del Barrio · Barcelona | Natasha Cáceres" data-title-ca="Índex de Quotes i Comissions del Barri · Barcelona | Natasha Cáceres" data-title-en="Neighbourhood Fees Index · Barcelona | Natasha Cáceres" data-desc-es="Lo que pagan de verdad los negocios de barrio por cobrar con tarjeta, el banco, la alarma, el teléfono y sus suscripciones. Medido con facturas reales y publicado sin nombres." data-desc-ca="El que paguen de debò els negocis de barri per cobrar amb targeta, el banc, l'alarma, el telèfon i les subscripcions. Mesurat amb factures reals i publicat sense noms." data-desc-en="What small neighbourhood businesses actually pay for card acceptance, banking, alarms, phone and subscriptions. Measured from real invoices, published without names.">
-<head>
+<html lang="es" data-title-es="Índice de Cuotas y Comisiones del Barrio · Barcelona | Natasha Cáceres" data-title-ca="Índex de Quotes i Comissions del Barri · Barcelona | Natasha Cáceres" data-title-en="Neighbourhood Fees Index · Barcelona | Natasha Cáceres" data-desc-es="Lo que pagan de verdad los negocios de barrio por cobrar con tarjeta, el banco, la alarma, el teléfono y sus suscripciones. Medido con facturas reales y publicado sin nombres." data-desc-ca="El que paguen de debò els negocis de barri per cobrar amb targeta, el banc, l'alarma, el telèfon i les subscripcions. Mesurat amb factures reals i publicat sense noms." data-desc-en="What small neighbourhood businesses actually pay for card acceptance, banking, alarms, phone and subscriptions. Measured from real invoices, published without names."><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Índice de Cuotas y Comisiones del Barrio · Barcelona | Natasha Cáceres</title>
@@ -16,13 +15,13 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:locale:alternate" content="ca_ES">
 <meta property="og:locale:alternate" content="en_GB">
-<script>(function(){var l;try{var q=location.search.match(/[?&]lang=(en|es|ca)/);l=q?q[1]:localStorage.getItem('nc-lang')}catch(e){}if(l!=='en'&&l!=='es'&&l!=='ca'){var n=(navigator.language||'').toLowerCase();l=n.indexOf('ca')===0?'ca':n.indexOf('en')===0?'en':'es'}document.documentElement.lang=l})();</script>
+<script>(function(){var L=['es','ca','en'],l=null;try{var q=location.search.match(/[?&]lang=(es|ca|en)(&|$)/);if(q)l=q[1];else{var s=localStorage.getItem('nc-lang');if(L.indexOf(s)>=0)l=s}}catch(e){}if(!l){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];for(var i=0;i<n.length&&!l;i++){var c=String(n[i]).toLowerCase().slice(0,2);if(L.indexOf(c)>=0)l=c}}document.documentElement.lang=l||'es'})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/observatorio.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=20261025-1">
+<link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css?v=20261025-1">
+<link rel="stylesheet" href="/assets/observatorio.css?v=20261025-1">
 <meta property="og:image" content="https://natashacaceres.com/og-image.jpg">
 <meta property="og:title" content="Índice de Cuotas y Comisiones del Barrio · Barcelona | Natasha Cáceres">
 <meta property="og:site_name" content="Natasha Cáceres">
@@ -37,40 +36,40 @@
 <header class="hdr">
   <div class="wrap">
     <a class="brand" href="/">Natasha Cáceres</a>
-    <nav class="nav" aria-label="Main">
+    <nav class="nav" aria-label="Main" data-aria-es="Principal" data-aria-ca="Principal" data-aria-en="Main">
       <ul>
-        <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es ca">Informes</span></a></li>
-        <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es ca">Asesoría</span></a></li>
+        <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span><span data-l="ca">Informes</span></a></li>
+        <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span><span data-l="ca">Assessoria</span></a></li>
         <li><a href="/academy">Academy</a></li>
-        <li class="dd is-current" data-dd><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-res"><span data-l="en">Resources</span><span data-l="es ca">Recursos</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+        <li class="dd is-current" data-dd=""><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-res"><span data-l="en">Resources</span><span data-l="es">Recursos</span><span data-l="ca">Recursos</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"></path></svg></button>
           <ul class="dd-menu" id="dd-res">
-            <li><a href="/observatorio" aria-current="page"><span data-l="en">Observatory</span><span data-l="es ca">Observatorio</span></a></li>
+            <li><a href="/observatorio" aria-current="page"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span><span data-l="ca">Observatori</span></a></li>
             <li><a href="/blog">Blog</a></li>
           </ul>
         </li>
-        <li><a href="/about"><span data-l="en">About</span><span data-l="es ca">Sobre mí</span></a></li>
+        <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span><span data-l="ca">Sobre mi</span></a></li>
       </ul>
-      <div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
+      <div class="dd dd--lang" data-dd=""><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang"><span data-lang-label="">Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"></path></svg></button><ul class="dd-menu" id="dd-lang"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
     </nav>
-    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mnav" aria-label="Menu">☰</button>
+    <div class="dd dd--lang dd--m" data-dd=""><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang-h"><span data-lang-code="">ES</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"></path></svg></button><ul class="dd-menu" id="dd-lang-h"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div>
+    <button class="nav-toggle" type="button" data-nav-toggle="" aria-expanded="false" aria-controls="mnav" aria-label="Menu" data-aria-es="Menú" data-aria-ca="Menú" data-aria-en="Menu">☰</button>
   </div>
   <div class="mnav" id="mnav">
     <div class="mnav-top">
       <a class="brand" href="/">Natasha Cáceres</a>
-      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Close">✕</button>
+      <button class="nav-toggle" type="button" data-nav-toggle="" aria-expanded="false" aria-label="Close" data-aria-es="Cerrar" data-aria-ca="Tancar" data-aria-en="Close">✕</button>
     </div>
     <ul>
-      <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es ca">Informes</span></a></li>
-      <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es ca">Asesoría</span></a></li>
+      <li><a href="/reports"><span data-l="en">Reports</span><span data-l="es">Informes</span><span data-l="ca">Informes</span></a></li>
+      <li><a href="/advisory"><span data-l="en">Advisory</span><span data-l="es">Asesoría</span><span data-l="ca">Assessoria</span></a></li>
       <li><a href="/academy">Academy</a></li>
-      <li class="mnav-group"><p class="mnav-h"><span data-l="en">Resources</span><span data-l="es ca">Recursos</span></p>
+      <li class="mnav-group"><p class="mnav-h"><span data-l="en">Resources</span><span data-l="es">Recursos</span><span data-l="ca">Recursos</span></p>
         <ul>
-          <li><a href="/observatorio" aria-current="page"><span data-l="en">Observatory</span><span data-l="es ca">Observatorio</span></a></li>
+          <li><a href="/observatorio" aria-current="page"><span data-l="en">Observatory</span><span data-l="es">Observatorio</span><span data-l="ca">Observatori</span></a></li>
           <li><a href="/blog">Blog</a></li>
         </ul>
       </li>
-      <li><a href="/about"><span data-l="en">About</span><span data-l="es ca">Sobre mí</span></a></li>
-      <li class="mnav-lang"><div class="dd dd--lang" data-dd><button class="dd-btn lang-btn" type="button" aria-expanded="false" aria-controls="dd-lang-m"><span data-lang-label>Español</span><svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><ul class="dd-menu" id="dd-lang-m"><li><button type="button" data-set-lang="es" lang="es" aria-pressed="false">Español</button></li><li><button type="button" data-set-lang="ca" lang="ca" aria-pressed="false">Català</button></li><li><button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button></li></ul></div></li>
+      <li><a href="/about"><span data-l="en">About</span><span data-l="es">Sobre mí</span><span data-l="ca">Sobre mi</span></a></li>
     </ul>
   </div>
 </header>
@@ -78,7 +77,7 @@
 <main id="main">
 
 <section class="obs-hero" id="top">
-  <img class="obs-hero-bg" src="assets/observatorio-contorno.svg" width="600" height="689" alt="" aria-hidden="true">
+  <img class="obs-hero-bg" src="/assets/observatorio-contorno.svg" width="600" height="689" alt="" aria-hidden="true">
   <div class="wrap obs-hero-copy">
     <p class="label obs-eyebrow"><span data-l="es">Observatorio independiente</span><span data-l="ca">Observatori independent</span><span data-l="en">Independent observatory</span></p>
     <h1 class="obs-h1"><span data-l="es">Índice de Cuotas y Comisiones del Barrio</span><span data-l="ca">Índex de Quotes i Comissions del Barri</span><span data-l="en">Neighbourhood Fees Index</span></h1>
@@ -93,35 +92,35 @@
 
 <section class="sec sec--white" id="que-es">
   <div class="wrap stack-48">
-    <p class="pend" data-l="ca en">CA/EN · Traducción pendiente en esta sección</p>
-    <p class="obs-statement">Un índice independiente que compara lo que pagan los comercios de un mismo barrio por sus servicios de cada mes. Así, cada comercio sabe si está pagando de más.</p>
+    
+    <p class="obs-statement"><span data-l="es">Un índice independiente que compara lo que pagan los comercios de un mismo barrio por sus servicios de cada mes. Así, cada comercio sabe si está pagando de más.</span><span data-l="ca">Un índex independent que compara el que paguen els comerços d'un mateix barri pels serveis de cada mes. Així, cada comerç sap si està pagant de més.</span><span data-l="en">An independent index that compares what shops in the same neighbourhood pay for their monthly services. So every shop can see whether it is paying too much.</span></p>
     <div class="obs-qe">
       <div class="obs-tile obs-tile--main stack-24">
-        <h2 class="obs-h3">Qué mide</h2>
+        <h2 class="obs-h3"><span data-l="es">Qué mide</span><span data-l="ca">Què mesura</span><span data-l="en">What it measures</span></h2>
         <ul class="obs-mlist">
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Cobro con tarjeta</span></li>
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Banco</span></li>
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Alarma</span></li>
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Teléfono e internet</span></li>
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Programas y suscripciones</span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Cobro con tarjeta</span><span data-l="ca">Cobrament amb targeta</span><span data-l="en">Card payments</span></span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Banco</span><span data-l="ca">Banc</span><span data-l="en">Banking</span></span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Alarma</span><span data-l="ca">Alarma</span><span data-l="en">Alarm</span></span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Teléfono e internet</span><span data-l="ca">Telèfon i internet</span><span data-l="en">Phone and internet</span></span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Programas y suscripciones</span><span data-l="ca">Programes i subscripcions</span><span data-l="en">Software and subscriptions</span></span></li>
         </ul>
       </div>
       <div class="obs-tile stack-24">
-        <h2 class="obs-h3">Qué no mide</h2>
+        <h2 class="obs-h3"><span data-l="es">Qué no mide</span><span data-l="ca">Què no mesura</span><span data-l="en">What it does not measure</span></h2>
         <ul class="obs-mlist">
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Alquiler, luz y sueldos</span></li>
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Sus ingresos</span></li>
-            <li><span class="obs-mk" aria-hidden="true"></span><span>Datos de un comercio concreto</span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Alquiler, luz y sueldos</span><span data-l="ca">Lloguer, llum i sous</span><span data-l="en">Rent, electricity and wages</span></span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Sus ingresos</span><span data-l="ca">Els seus ingressos</span><span data-l="en">Your income</span></span></li>
+            <li><span class="obs-mk" aria-hidden="true"></span><span><span data-l="es">Datos de un comercio concreto</span><span data-l="ca">Dades d'un comerç concret</span><span data-l="en">Data on any individual shop</span></span></li>
         </ul>
       </div>
       <div class="obs-example">
-        <p class="label">Ejemplo · Comisión por cobrar con tarjeta</p>
+        <p class="label"><span data-l="es">Ejemplo · Comisión por cobrar con tarjeta</span><span data-l="ca">Exemple · Comissió per cobrar amb targeta</span><span data-l="en">Example · Card acceptance fee</span></p>
         <div class="obs-ex-figs">
-          <div class="obs-ex-main"><p class="obs-ex-n">1,5 %</p><p class="obs-ex-c">Peluquería</p></div>
-          <div><p class="obs-ex-n">0,4 %</p><p class="obs-ex-c">Promedio del barrio</p></div>
+          <div class="obs-ex-main"><p class="obs-ex-n"><span data-l="es">1,5 %</span><span data-l="ca">1,5 %</span><span data-l="en">1.5%</span></p><p class="obs-ex-c"><span data-l="es">Peluquería</span><span data-l="ca">Perruqueria</span><span data-l="en">Hair salon</span></p></div>
+          <div><p class="obs-ex-n"><span data-l="es">0,4 %</span><span data-l="ca">0,4 %</span><span data-l="en">0.4%</span></p><p class="obs-ex-c"><span data-l="es">Promedio del barrio</span><span data-l="ca">Mitjana del barri</span><span data-l="en">Neighbourhood average</span></p></div>
         </div>
-        <p>Con 6.000 € al mes en ventas con tarjeta, esta peluquería paga unos 790 € al año de más.</p>
-        <p class="obs-ex-note">Ejemplo ilustrativo.</p>
+        <p><span data-l="es">Con 6.000 € al mes en ventas con tarjeta, esta peluquería paga unos 790 € al año de más.</span><span data-l="ca">Amb 6.000 € al mes en vendes amb targeta, aquesta perruqueria paga uns 790 € l'any de més.</span><span data-l="en">With €6,000 a month in card sales, this salon pays about €790 a year too much.</span></p>
+        <p class="obs-ex-note"><span data-l="es">Ejemplo ilustrativo.</span><span data-l="ca">Exemple il·lustratiu.</span><span data-l="en">Illustrative example.</span></p>
       </div>
     </div>
   </div>
@@ -129,191 +128,187 @@
 
 <section class="obs-cita" id="cita">
   <div class="wrap">
-    <blockquote class="obs-bigquote"><p><span data-l="es en">El proveedor sabe lo que cobra a cientos de negocios. El comerciante solo conoce su factura.</span><span data-l="ca">El proveïdor sap el que cobra a centenars de negocis. El comerciant només coneix la seva factura.</span></p></blockquote>
+    <blockquote class="obs-bigquote"><p><span data-l="es">El proveedor sabe lo que cobra a cientos de negocios. El comerciante solo conoce su factura.</span><span data-l="en">The provider knows what it charges hundreds of businesses. The shopkeeper only knows their own invoice.</span><span data-l="ca">El proveïdor sap el que cobra a centenars de negocis. El comerciant només coneix la seva factura.</span></p></blockquote>
   </div>
 </section>
 
 <section class="pz" id="participar">
   <div class="wrap">
-    <p class="pend" data-l="ca en" style="margin:0 auto 24px;display:table">CA/EN · Traducción pendiente en esta sección</p>
+    
     <header class="pz-head">
-      <h2 class="pz-h">Ayude a su barrio a pagar lo justo</h2>
-      <p class="pz-sub">Revisamos sus facturas y le entrego un informe gratuito.<br>Sin copias ni documentos.</p>
+      <h2 class="pz-h"><span data-l="es">Ayude a su barrio a pagar lo justo</span><span data-l="ca">Ajudi el seu barri a pagar el just</span><span data-l="en">Help your neighbourhood pay a fair price</span></h2>
+      <p class="pz-sub"><span data-l="es">Revisamos sus facturas y le entrego un informe gratuito.<br>Sin copias ni documentos.</span><span data-l="ca">Revisem les seves factures i li lliuro un informe gratuït.<br>Sense còpies ni documents.</span><span data-l="en">We go through your invoices and I give you a free report.<br>No copies, no documents.</span></p>
     </header>
     <ol class="pz-steps">
       <li class="pz-step">
-        <div class="pz-top"><span class="pz-n">1</span><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><path d="M9 25v22h38V25" fill="none" stroke="#0B1220" stroke-width="2"/><path d="M7 14h42l3 9H4z" fill="none" stroke="#0B1220" stroke-width="2" stroke-linejoin="round"/><path d="M11 14l-2 9M19 14l-1 9M28 14v9M37 14l1 9M45 14l2 9" stroke="#D4AF37" stroke-width="4"/><path d="M4 23c0 3 2.5 5 5.5 5s5.5-2 5.5-5c0 3 2.5 5 5.5 5S26 26 26 23" fill="none" stroke="#0B1220" stroke-width="2"/><path d="M23 47V35h10v12" fill="none" stroke="#0B1220" stroke-width="2"/><path d="M36 33h7v7h-7z" fill="none" stroke="#0B1220" stroke-width="2"/></svg></div>
-        <h3 class="pz-t">Quedamos en su local</h3>
-        <p class="pz-meta"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#D4AF37" stroke-width="1.8"/><path d="M10 5.5V10l3 2" fill="none" stroke="#D4AF37" stroke-width="1.8"/></svg><span>5 minutos</span></p>
+        <div class="pz-top"><span class="pz-n">1</span><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><path d="M9 25v22h38V25" fill="none" stroke="#0B1220" stroke-width="2"></path><path d="M7 14h42l3 9H4z" fill="none" stroke="#0B1220" stroke-width="2" stroke-linejoin="round"></path><path d="M11 14l-2 9M19 14l-1 9M28 14v9M37 14l1 9M45 14l2 9" stroke="#D4AF37" stroke-width="4"></path><path d="M4 23c0 3 2.5 5 5.5 5s5.5-2 5.5-5c0 3 2.5 5 5.5 5S26 26 26 23" fill="none" stroke="#0B1220" stroke-width="2"></path><path d="M23 47V35h10v12" fill="none" stroke="#0B1220" stroke-width="2"></path><path d="M36 33h7v7h-7z" fill="none" stroke="#0B1220" stroke-width="2"></path></svg></div>
+        <h3 class="pz-t"><span data-l="es">Quedamos en su local</span><span data-l="ca">Quedem al seu local</span><span data-l="en">We meet at your premises</span></h3>
+        <p class="pz-meta"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#D4AF37" stroke-width="1.8"></circle><path d="M10 5.5V10l3 2" fill="none" stroke="#D4AF37" stroke-width="1.8"></path></svg><span><span data-l="es">5 minutos</span><span data-l="ca">5 minuts</span><span data-l="en">5 minutes</span></span></p>
       </li>
       <li class="pz-arrow" aria-hidden="true"><span>→</span></li>
       <li class="pz-step">
-        <div class="pz-top"><span class="pz-n">2</span><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><path d="M12 6h22l10 10v32H12z" fill="none" stroke="#0B1220" stroke-width="2" stroke-linejoin="round"/><path d="M34 6v10h10" fill="none" stroke="#0B1220" stroke-width="2"/><path d="M18 22h16M18 28h12M18 34h8" stroke="#0B1220" stroke-width="2"/><circle cx="36" cy="38" r="7" fill="#fff" stroke="#D4AF37" stroke-width="2.5"/><path d="M41 43l7 7" stroke="#D4AF37" stroke-width="3" stroke-linecap="square"/></svg></div>
-        <h3 class="pz-t">Revisamos sus facturas</h3>
-        <p class="pz-meta"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#D4AF37" stroke-width="1.8"/><path d="M10 5.5V10l3 2" fill="none" stroke="#D4AF37" stroke-width="1.8"/></svg><span>10 minutos</span></p>
+        <div class="pz-top"><span class="pz-n">2</span><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><path d="M12 6h22l10 10v32H12z" fill="none" stroke="#0B1220" stroke-width="2" stroke-linejoin="round"></path><path d="M34 6v10h10" fill="none" stroke="#0B1220" stroke-width="2"></path><path d="M18 22h16M18 28h12M18 34h8" stroke="#0B1220" stroke-width="2"></path><circle cx="36" cy="38" r="7" fill="#fff" stroke="#D4AF37" stroke-width="2.5"></circle><path d="M41 43l7 7" stroke="#D4AF37" stroke-width="3" stroke-linecap="square"></path></svg></div>
+        <h3 class="pz-t"><span data-l="es">Revisamos sus facturas</span><span data-l="ca">Revisem les seves factures</span><span data-l="en">We review your invoices</span></h3>
+        <p class="pz-meta"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#D4AF37" stroke-width="1.8"></circle><path d="M10 5.5V10l3 2" fill="none" stroke="#D4AF37" stroke-width="1.8"></path></svg><span><span data-l="es">10 minutos</span><span data-l="ca">10 minuts</span><span data-l="en">10 minutes</span></span></p>
       </li>
       <li class="pz-arrow" aria-hidden="true"><span>→</span></li>
       <li class="pz-step">
-        <div class="pz-top"><span class="pz-n">3</span><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><path d="M10 6h30v44H10z" fill="none" stroke="#0B1220" stroke-width="2"/><path d="M16 14h18" stroke="#0B1220" stroke-width="2"/><path d="M17 40V30M24 40V24M31 40V33" stroke="#D4AF37" stroke-width="4"/><path d="M15 42h20" stroke="#0B1220" stroke-width="2"/><circle cx="42" cy="42" r="9" fill="#D4AF37"/><path d="M38 42l3 3 5-6" fill="none" stroke="#0B1220" stroke-width="2.2"/></svg></div>
-        <h3 class="pz-t">Recibe su informe</h3>
-        <p class="pz-meta"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#D4AF37" stroke-width="1.8"/><path d="M6.5 10.2l2.4 2.4 4.6-5" fill="none" stroke="#D4AF37" stroke-width="1.8"/></svg><span>Gratis y en mano</span></p>
+        <div class="pz-top"><span class="pz-n">3</span><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><path d="M10 6h30v44H10z" fill="none" stroke="#0B1220" stroke-width="2"></path><path d="M16 14h18" stroke="#0B1220" stroke-width="2"></path><path d="M17 40V30M24 40V24M31 40V33" stroke="#D4AF37" stroke-width="4"></path><path d="M15 42h20" stroke="#0B1220" stroke-width="2"></path><circle cx="42" cy="42" r="9" fill="#D4AF37"></circle><path d="M38 42l3 3 5-6" fill="none" stroke="#0B1220" stroke-width="2.2"></path></svg></div>
+        <h3 class="pz-t"><span data-l="es">Recibe su informe</span><span data-l="ca">Rep el seu informe</span><span data-l="en">You receive your report</span></h3>
+        <p class="pz-meta"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#D4AF37" stroke-width="1.8"></circle><path d="M6.5 10.2l2.4 2.4 4.6-5" fill="none" stroke="#D4AF37" stroke-width="1.8"></path></svg><span><span data-l="es">Gratis y en mano</span><span data-l="ca">Gratuït i en mà</span><span data-l="en">Free, delivered by hand</span></span></p>
       </li>
     </ol>
     <div class="pz-cols">
       <div>
-        <h3 class="pz-ch">Qué necesito</h3>
+        <h3 class="pz-ch"><span data-l="es">Qué necesito</span><span data-l="ca">Què necessito</span><span data-l="en">What I need</span></h3>
         <ul class="pz-list">
-          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span>Liquidación del datáfono</span></li>
-          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span>Recibos del banco en el móvil</span></li>
-          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span>Última factura de alarma, teléfono y programas</span></li>
+          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span><span data-l="es">Liquidación del datáfono</span><span data-l="ca">Liquidació del datàfon</span><span data-l="en">Card terminal statement</span></span></li>
+          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span><span data-l="es">Recibos del banco en el móvil</span><span data-l="ca">Rebuts del banc al mòbil</span><span data-l="en">Bank direct debits on your phone</span></span></li>
+          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span><span data-l="es">Última factura de alarma, teléfono y programas</span><span data-l="ca">Última factura d'alarma, telèfon i programes</span><span data-l="en">Latest alarm, phone and software invoices</span></span></li>
         </ul>
       </div>
       <div>
-        <h3 class="pz-ch">Qué obtiene</h3>
+        <h3 class="pz-ch"><span data-l="es">Qué obtiene</span><span data-l="ca">Què obté</span><span data-l="en">What you get</span></h3>
         <ul class="pz-list">
-          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span>Comparación con negocios similares del barrio</span></li>
-          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span>Coste real de cobrar con tarjeta, con todo incluido</span></li>
+          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span><span data-l="es">Comparación con negocios similares del barrio</span><span data-l="ca">Comparació amb negocis semblants del barri</span><span data-l="en">Comparison with similar businesses in your neighbourhood</span></span></li>
+          <li><span class="pz-bul" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="#0B1220" stroke-width="1.8"/></svg></span><span><span data-l="es">Coste real de cobrar con tarjeta, con todo incluido</span><span data-l="ca">Cost real de cobrar amb targeta, amb tot inclòs</span><span data-l="en">The real cost of card payments, all included</span></span></li>
         </ul>
       </div>
     </div>
     <div class="pz-cta">
-      <div class="pz-cta-txt">
-        <h3 class="pz-cta-h">¿Quiere una visita en su local?</h3>
-        <p>Por WhatsApp, solo para quedar. Nunca me envíe documentos.</p>
-      </div>
-      <a class="btn btn--gold pz-btn" href="https://wa.me/34XXXXXXXXX" target="_blank" rel="noopener" data-wa>Pedir una visita →</a>
+      <h3 class="pz-cta-h"><span data-l="es">¿Quiere una visita en su local?</span><span data-l="ca">Vol una visita al seu local?</span><span data-l="en">Would you like a visit at your premises?</span></h3>
+      <a class="btn btn--gold pz-btn" href="#pedir-visita" ><span data-l="es">Pedir una visita →</span><span data-l="ca">Demanar una visita →</span><span data-l="en">Request a visit →</span></a>
     </div>
   </div>
-  <template id="obs-aviso-tpl"><form class="form obs-form" method="POST" action="https://formsubmit.co/caceresg.natasha@gmail.com" data-obs-form>
+  <template id="obs-aviso-tpl"><form class="form obs-form" method="POST" action="https://formsubmit.co/FORMSUBMIT_ALIAS" data-obs-form="">
         <input type="hidden" name="_subject" value="Observatorio · Aviso de oleada">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://natashacaceres.com/observatorio?sent=1#participar">
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-        <p class="pend full" data-l="ca en">CA/EN · pendiente</p>
-        <div class="field"><label for="av-n">Nombre <span class="req">*</span></label><input id="av-n" name="Nombre" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="av-c">Teléfono o correo <span class="req">*</span></label><input id="av-c" name="Teléfono o correo" type="text" autocomplete="email" required></div>
-        <div class="field"><label for="av-b">Barrio <span class="req">*</span></label><select id="av-b" name="Barrio" required data-barri-select><option value="">Seleccione su barrio</option><option value="el Raval">el Raval</option><option value="el Barri Gòtic">el Barri Gòtic</option><option value="la Barceloneta">la Barceloneta</option><option value="Sant Pere, Santa Caterina i la Ribera">Sant Pere, Santa Caterina i la Ribera</option><option value="el Fort Pienc">el Fort Pienc</option><option value="la Sagrada Família">la Sagrada Família</option><option value="la Dreta de l'Eixample">la Dreta de l'Eixample</option><option value="l'Antiga Esquerra de l'Eixample">l'Antiga Esquerra de l'Eixample</option><option value="la Nova Esquerra de l'Eixample">la Nova Esquerra de l'Eixample</option><option value="Sant Antoni">Sant Antoni</option><option value="el Poble-sec">el Poble-sec</option><option value="la Marina del Prat Vermell">la Marina del Prat Vermell</option><option value="la Marina de Port">la Marina de Port</option><option value="la Font de la Guatlla">la Font de la Guatlla</option><option value="Hostafrancs">Hostafrancs</option><option value="la Bordeta">la Bordeta</option><option value="Sants - Badal">Sants - Badal</option><option value="Sants">Sants</option><option value="les Corts">les Corts</option><option value="la Maternitat i Sant Ramon">la Maternitat i Sant Ramon</option><option value="Pedralbes">Pedralbes</option><option value="Vallvidrera, el Tibidabo i les Planes">Vallvidrera, el Tibidabo i les Planes</option><option value="Sarrià">Sarrià</option><option value="les Tres Torres">les Tres Torres</option><option value="Sant Gervasi - la Bonanova">Sant Gervasi - la Bonanova</option><option value="Sant Gervasi - Galvany">Sant Gervasi - Galvany</option><option value="el Putxet i el Farró">el Putxet i el Farró</option><option value="Vallcarca i els Penitents">Vallcarca i els Penitents</option><option value="el Coll">el Coll</option><option value="la Salut">la Salut</option><option value="la Vila de Gràcia">la Vila de Gràcia</option><option value="el Camp d'en Grassot i Gràcia Nova">el Camp d'en Grassot i Gràcia Nova</option><option value="el Baix Guinardó">el Baix Guinardó</option><option value="Can Baró">Can Baró</option><option value="el Guinardó">el Guinardó</option><option value="la Font d'en Fargues">la Font d'en Fargues</option><option value="el Carmel">el Carmel</option><option value="la Teixonera">la Teixonera</option><option value="Sant Genís dels Agudells">Sant Genís dels Agudells</option><option value="Montbau">Montbau</option><option value="la Vall d'Hebron">la Vall d'Hebron</option><option value="la Clota">la Clota</option><option value="Horta">Horta</option><option value="Vilapicina i la Torre Llobeta">Vilapicina i la Torre Llobeta</option><option value="Porta">Porta</option><option value="el Turó de la Peira">el Turó de la Peira</option><option value="Can Peguera">Can Peguera</option><option value="la Guineueta">la Guineueta</option><option value="Canyelles">Canyelles</option><option value="les Roquetes">les Roquetes</option><option value="Verdun">Verdun</option><option value="la Prosperitat">la Prosperitat</option><option value="la Trinitat Nova">la Trinitat Nova</option><option value="Torre Baró">Torre Baró</option><option value="Ciutat Meridiana">Ciutat Meridiana</option><option value="Vallbona">Vallbona</option><option value="la Trinitat Vella">la Trinitat Vella</option><option value="Baró de Viver">Baró de Viver</option><option value="el Bon Pastor">el Bon Pastor</option><option value="Sant Andreu">Sant Andreu</option><option value="la Sagrera">la Sagrera</option><option value="el Congrés i els Indians">el Congrés i els Indians</option><option value="Navas">Navas</option><option value="el Camp de l'Arpa del Clot">el Camp de l'Arpa del Clot</option><option value="el Clot">el Clot</option><option value="el Parc i la Llacuna del Poblenou">el Parc i la Llacuna del Poblenou</option><option value="la Vila Olímpica del Poblenou">la Vila Olímpica del Poblenou</option><option value="el Poblenou">el Poblenou</option><option value="Diagonal Mar i el Front Marítim del Poblenou">Diagonal Mar i el Front Marítim del Poblenou</option><option value="el Besòs i el Maresme">el Besòs i el Maresme</option><option value="Provençals del Poblenou">Provençals del Poblenou</option><option value="Sant Martí de Provençals">Sant Martí de Provençals</option><option value="la Verneda i la Pau">la Verneda i la Pau</option></select></div>
-        <div class="field"><label for="av-t">Tipo de negocio <span class="req">*</span></label><select id="av-t" name="Tipo de negocio" required><option value="">Seleccione una opción</option><option>Belleza y cuidado personal</option><option>Hostelería</option><option>Alimentación</option><option>Otros comercios y servicios</option></select></div>
-        <label class="obs-consent full"><input type="checkbox" name="Consentimiento" value="Sí" required> <span>Acepto que use estos datos solo para avisarme cuando la oleada llegue a mi barrio. <a href="/privacy-policy">Política de privacidad</a>.</span></label>
-        <div class="full"><button class="btn btn--navy" type="submit">Enviar</button></div>
+        <div class="field"><label for="av-n"><span data-l="es">Nombre <span class="req">*</span></span><span data-l="ca">Nom <span class="req">*</span></span><span data-l="en">Name <span class="req">*</span></span></label><input id="av-n" name="Nombre" type="text" autocomplete="name" required=""></div>
+        <div class="field"><label for="av-c"><span data-l="es">Teléfono o correo <span class="req">*</span></span><span data-l="ca">Telèfon o correu <span class="req">*</span></span><span data-l="en">Phone or email <span class="req">*</span></span></label><input id="av-c" name="Teléfono o correo" type="text" autocomplete="email" required=""></div>
+        <div class="field"><label for="av-b"><span data-l="es">Barrio <span class="req">*</span></span><span data-l="ca">Barri <span class="req">*</span></span><span data-l="en">Neighbourhood <span class="req">*</span></span></label><select id="av-b" name="Barrio" required="" data-barri-select=""><option value="" data-es="Seleccione su barrio" data-ca="Triï el seu barri" data-en="Choose your neighbourhood">Seleccione su barrio</option><option value="el Raval">el Raval</option><option value="el Barri Gòtic">el Barri Gòtic</option><option value="la Barceloneta">la Barceloneta</option><option value="Sant Pere, Santa Caterina i la Ribera">Sant Pere, Santa Caterina i la Ribera</option><option value="el Fort Pienc">el Fort Pienc</option><option value="la Sagrada Família">la Sagrada Família</option><option value="la Dreta de l'Eixample">la Dreta de l'Eixample</option><option value="l'Antiga Esquerra de l'Eixample">l'Antiga Esquerra de l'Eixample</option><option value="la Nova Esquerra de l'Eixample">la Nova Esquerra de l'Eixample</option><option value="Sant Antoni">Sant Antoni</option><option value="el Poble-sec">el Poble-sec</option><option value="la Marina del Prat Vermell">la Marina del Prat Vermell</option><option value="la Marina de Port">la Marina de Port</option><option value="la Font de la Guatlla">la Font de la Guatlla</option><option value="Hostafrancs">Hostafrancs</option><option value="la Bordeta">la Bordeta</option><option value="Sants - Badal">Sants - Badal</option><option value="Sants">Sants</option><option value="les Corts">les Corts</option><option value="la Maternitat i Sant Ramon">la Maternitat i Sant Ramon</option><option value="Pedralbes">Pedralbes</option><option value="Vallvidrera, el Tibidabo i les Planes">Vallvidrera, el Tibidabo i les Planes</option><option value="Sarrià">Sarrià</option><option value="les Tres Torres">les Tres Torres</option><option value="Sant Gervasi - la Bonanova">Sant Gervasi - la Bonanova</option><option value="Sant Gervasi - Galvany">Sant Gervasi - Galvany</option><option value="el Putxet i el Farró">el Putxet i el Farró</option><option value="Vallcarca i els Penitents">Vallcarca i els Penitents</option><option value="el Coll">el Coll</option><option value="la Salut">la Salut</option><option value="la Vila de Gràcia">la Vila de Gràcia</option><option value="el Camp d'en Grassot i Gràcia Nova">el Camp d'en Grassot i Gràcia Nova</option><option value="el Baix Guinardó">el Baix Guinardó</option><option value="Can Baró">Can Baró</option><option value="el Guinardó">el Guinardó</option><option value="la Font d'en Fargues">la Font d'en Fargues</option><option value="el Carmel">el Carmel</option><option value="la Teixonera">la Teixonera</option><option value="Sant Genís dels Agudells">Sant Genís dels Agudells</option><option value="Montbau">Montbau</option><option value="la Vall d'Hebron">la Vall d'Hebron</option><option value="la Clota">la Clota</option><option value="Horta">Horta</option><option value="Vilapicina i la Torre Llobeta">Vilapicina i la Torre Llobeta</option><option value="Porta">Porta</option><option value="el Turó de la Peira">el Turó de la Peira</option><option value="Can Peguera">Can Peguera</option><option value="la Guineueta">la Guineueta</option><option value="Canyelles">Canyelles</option><option value="les Roquetes">les Roquetes</option><option value="Verdun">Verdun</option><option value="la Prosperitat">la Prosperitat</option><option value="la Trinitat Nova">la Trinitat Nova</option><option value="Torre Baró">Torre Baró</option><option value="Ciutat Meridiana">Ciutat Meridiana</option><option value="Vallbona">Vallbona</option><option value="la Trinitat Vella">la Trinitat Vella</option><option value="Baró de Viver">Baró de Viver</option><option value="el Bon Pastor">el Bon Pastor</option><option value="Sant Andreu">Sant Andreu</option><option value="la Sagrera">la Sagrera</option><option value="el Congrés i els Indians">el Congrés i els Indians</option><option value="Navas">Navas</option><option value="el Camp de l'Arpa del Clot">el Camp de l'Arpa del Clot</option><option value="el Clot">el Clot</option><option value="el Parc i la Llacuna del Poblenou">el Parc i la Llacuna del Poblenou</option><option value="la Vila Olímpica del Poblenou">la Vila Olímpica del Poblenou</option><option value="el Poblenou">el Poblenou</option><option value="Diagonal Mar i el Front Marítim del Poblenou">Diagonal Mar i el Front Marítim del Poblenou</option><option value="el Besòs i el Maresme">el Besòs i el Maresme</option><option value="Provençals del Poblenou">Provençals del Poblenou</option><option value="Sant Martí de Provençals">Sant Martí de Provençals</option><option value="la Verneda i la Pau">la Verneda i la Pau</option></select></div>
+        <div class="field"><label for="av-t"><span data-l="es">Tipo de negocio <span class="req">*</span></span><span data-l="ca">Tipus de negoci <span class="req">*</span></span><span data-l="en">Type of business <span class="req">*</span></span></label><select id="av-t" name="Tipo de negocio" required=""><option value="" data-es="Seleccione una opción" data-ca="Seleccioni una opció" data-en="Select an option">Seleccione una opción</option><option value="Belleza y cuidado personal" data-es="Belleza y cuidado personal" data-ca="Bellesa i cura personal" data-en="Beauty and personal care">Belleza y cuidado personal</option><option value="Hostelería" data-es="Hostelería" data-ca="Hostaleria" data-en="Hospitality">Hostelería</option><option value="Alimentación" data-es="Alimentación" data-ca="Alimentació" data-en="Food">Alimentación</option><option value="Otros comercios y servicios" data-es="Otros comercios y servicios" data-ca="Altres comerços i serveis" data-en="Other shops and services">Otros comercios y servicios</option></select></div>
+        <label class="obs-consent full"><input type="checkbox" name="Consentimiento" value="Sí" required=""> <span><span data-l="es">Acepto que use estos datos solo para avisarme cuando la oleada llegue a mi barrio. <a href="/privacy-policy">Política de privacidad</a>.</span><span data-l="ca">Accepto que faci servir aquestes dades només per avisar-me quan l'onada arribi al meu barri. <a href="/privacy-policy">Política de privacitat</a>.</span><span data-l="en">I agree that you may use this data only to let me know when the wave reaches my neighbourhood. <a href="/privacy-policy">Privacy Policy</a>.</span></span></label>
+        <div class="full"><button class="btn btn--navy" type="submit"><span data-l="es">Enviar</span><span data-l="ca">Enviar</span><span data-l="en">Send</span></button></div>
       </form></template>
 </section>
 
-<section class="sec sec--white obs-sec-map" id="mapa">
+<section class="sec sec--bone obs-sec-map" id="mapa">
   <div class="wrap stack-32">
     <div class="obs-text stack-16">
-      <p class="pend" data-l="en">EN · Traducción pendiente en esta sección</p>
-      <h2 class="obs-h2">El mapa</h2>
-      <p class="lead"><span data-l="es en">Pulse su barrio para ver sus datos. Los colores indican si hay datos o no, no si un barrio es caro o barato.</span><span data-l="ca">Premi el seu barri per veure'n les dades. Els colors indiquen si hi ha dades o no, no si un barri és car o barat.</span></p>
+      
+      <h2 class="obs-h2 obs-map-h"><span data-l="es">El mapa</span><span data-l="ca">El mapa</span><span data-l="en">The map</span></h2>
+      <p class="lead obs-map-intro"><span data-l="es">Pulse su barrio para ver sus datos. Los colores indican si hay datos o no, no si un barrio es caro o barato.</span><span data-l="en">Tap your neighbourhood to see its data. The colours show whether data exists, not whether a neighbourhood is expensive or cheap.</span><span data-l="ca">Premi el seu barri per veure'n les dades. Els colors indiquen si hi ha dades o no, no si un barri és car o barat.</span></p>
     </div>
-    <div class="obs-map" data-obs-map>
+    <div class="obs-map" data-obs-map="">
       <div class="obs-map-col">
         <div class="obs-tools">
           <div class="obs-combo">
-            <label class="obs-lbl" for="obs-q"><span data-l="es en">Elija su barrio</span><span data-l="ca">Triï el seu barri</span></label>
+            <label class="obs-lbl" for="obs-q"><span data-l="es">Elija su barrio</span><span data-l="en">Choose your neighbourhood</span><span data-l="ca">Triï el seu barri</span></label>
             <div class="obs-combo-box">
               <input id="obs-q" type="text" role="combobox" aria-expanded="false" aria-controls="obs-list" aria-autocomplete="list" autocomplete="off" spellcheck="false">
-              <svg class="obs-combo-ico" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.4"/></svg>
-              <ul id="obs-list" role="listbox" hidden></ul>
+              <svg class="obs-combo-ico" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.4"></path></svg>
+              <ul id="obs-list" role="listbox" hidden=""></ul>
             </div>
           </div>
           <ul class="obs-legend">
-            <li><span class="sw sw--data" aria-hidden="true"></span><span data-l="es en">Con datos</span><span data-l="ca">Amb dades</span></li>
-            <li><span class="sw sw--collecting" aria-hidden="true"></span><span data-l="es en">En recogida</span><span data-l="ca">En recollida</span></li>
-            <li><span class="sw sw--soon" aria-hidden="true"></span><span data-l="es en">Próximamente</span><span data-l="ca">Properament</span></li>
+            <li><span class="sw sw--data" aria-hidden="true"></span><span data-l="es">Con datos</span><span data-l="en">With data</span><span data-l="ca">Amb dades</span></li>
+            <li><span class="sw sw--collecting" aria-hidden="true"></span><span data-l="es">En recogida</span><span data-l="en">Collecting</span><span data-l="ca">En recollida</span></li>
+            <li><span class="sw sw--soon" aria-hidden="true"></span><span data-l="es">Próximamente</span><span data-l="en">Coming soon</span><span data-l="ca">Properament</span></li>
           </ul>
         </div>
-        <div class="obs-leaflet" id="obs-leaflet" role="region" aria-label="Mapa de Barcelona por barrios"><p class="obs-map-nojs small muted">Mapa de Barcelona por barrios. Sin JavaScript, consulte la tabla de barrios más abajo.</p></div>
+        <div class="obs-leaflet" id="obs-leaflet" role="region" aria-label="Mapa de Barcelona por barrios" data-aria-es="Mapa de Barcelona por barrios" data-aria-ca="Mapa de Barcelona per barris" data-aria-en="Map of Barcelona by neighbourhood"><p class="obs-map-nojs small muted"><span data-l="es">Mapa de Barcelona por barrios. Sin JavaScript, consulte la tabla de barrios más abajo.</span><span data-l="ca">Mapa de Barcelona per barris. Sense JavaScript, consulti la taula de barris més avall.</span><span data-l="en">Map of Barcelona by neighbourhood. Without JavaScript, see the table of neighbourhoods below.</span></p></div>
       </div>
-      <aside class="obs-panel" id="obs-panel" aria-label="Datos del barrio">
+      <aside class="obs-panel" id="obs-panel" aria-label="Datos del barrio" data-aria-es="Datos del barrio" data-aria-ca="Dades del barri" data-aria-en="Neighbourhood data">
         <div class="obs-sheet-bar">
-          <button class="obs-handle" type="button" data-sheet-toggle aria-label="Ampliar o reducir el panel"><span></span></button>
-          <button class="obs-close" type="button" data-panel-close aria-label="Cerrar">✕</button>
+          <button class="obs-handle" type="button" data-sheet-toggle="" aria-label="Ampliar o reducir el panel" data-aria-es="Ampliar o reducir el panel" data-aria-ca="Ampliar o reduir el tauler" data-aria-en="Expand or collapse the panel"><span></span></button>
+          <button class="obs-close" type="button" data-panel-close="" aria-label="Cerrar" data-aria-es="Cerrar" data-aria-ca="Tancar" data-aria-en="Close">✕</button>
         </div>
         <div class="obs-panel-body" id="obs-panel-body" aria-live="polite">
           <p class="label muted">Barcelona</p>
-          <p class="obs-panel-msg">Los primeros resultados se publicarán aquí.</p>
+          <p class="obs-panel-msg"><span data-l="es">Los primeros resultados se publicarán aquí.</span><span data-l="ca">Els primers resultats es publicaran aquí.</span><span data-l="en">The first results will be published here.</span></p>
         </div>
       </aside>
     </div>
     <div class="obs-table sr">
       <div class="obs-table-wrap"><table>
-        <thead><tr><th scope="col">Barrio</th><th scope="col">Distrito</th><th scope="col">Unidad de publicación</th><th scope="col">Estado</th></tr></thead>
+        <thead><tr><th scope="col"><span data-l="es">Barrio</span><span data-l="ca">Barri</span><span data-l="en">Neighbourhood</span></th><th scope="col"><span data-l="es">Distrito</span><span data-l="ca">Districte</span><span data-l="en">District</span></th><th scope="col"><span data-l="es">Unidad de publicación</span><span data-l="ca">Unitat de publicació</span><span data-l="en">Publication unit</span></th><th scope="col"><span data-l="es">Estado</span><span data-l="ca">Estat</span><span data-l="en">Status</span></th></tr></thead>
         <tbody>
-          <tr data-b="1"><th scope="row">el Raval</th><td>Ciutat Vella</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="2"><th scope="row">el Barri Gòtic</th><td>Ciutat Vella</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="3"><th scope="row">la Barceloneta</th><td>Ciutat Vella</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="4"><th scope="row">Sant Pere, Santa Caterina i la Ribera</th><td>Ciutat Vella</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="5"><th scope="row">el Fort Pienc</th><td>Eixample</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="6"><th scope="row">la Sagrada Família</th><td>Eixample</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="7"><th scope="row">la Dreta de l'Eixample</th><td>Eixample</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="8"><th scope="row">l'Antiga Esquerra de l'Eixample</th><td>Eixample</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="9"><th scope="row">la Nova Esquerra de l'Eixample</th><td>Eixample</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="10"><th scope="row">Sant Antoni</th><td>Eixample</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="11"><th scope="row">el Poble-sec</th><td>Sants-Montjuïc</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="12"><th scope="row">la Marina del Prat Vermell</th><td>Sants-Montjuïc</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="13"><th scope="row">la Marina de Port</th><td>Sants-Montjuïc</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="14"><th scope="row">la Font de la Guatlla</th><td>Sants-Montjuïc</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="15"><th scope="row">Hostafrancs</th><td>Sants-Montjuïc</td><td>Sants–Hostafrancs</td><td data-estado>En recogida</td></tr>
-          <tr data-b="16"><th scope="row">la Bordeta</th><td>Sants-Montjuïc</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="17"><th scope="row">Sants - Badal</th><td>Sants-Montjuïc</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="18"><th scope="row">Sants</th><td>Sants-Montjuïc</td><td>Sants–Hostafrancs</td><td data-estado>En recogida</td></tr>
-          <tr data-b="19"><th scope="row">les Corts</th><td>Les Corts</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="20"><th scope="row">la Maternitat i Sant Ramon</th><td>Les Corts</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="21"><th scope="row">Pedralbes</th><td>Les Corts</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="22"><th scope="row">Vallvidrera, el Tibidabo i les Planes</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="23"><th scope="row">Sarrià</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="24"><th scope="row">les Tres Torres</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="25"><th scope="row">Sant Gervasi - la Bonanova</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="26"><th scope="row">Sant Gervasi - Galvany</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="27"><th scope="row">el Putxet i el Farró</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="28"><th scope="row">Vallcarca i els Penitents</th><td>Gràcia</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="29"><th scope="row">el Coll</th><td>Gràcia</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="30"><th scope="row">la Salut</th><td>Gràcia</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="31"><th scope="row">la Vila de Gràcia</th><td>Gràcia</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="32"><th scope="row">el Camp d'en Grassot i Gràcia Nova</th><td>Gràcia</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="33"><th scope="row">el Baix Guinardó</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="34"><th scope="row">Can Baró</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="35"><th scope="row">el Guinardó</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="36"><th scope="row">la Font d'en Fargues</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="37"><th scope="row">el Carmel</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="38"><th scope="row">la Teixonera</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="39"><th scope="row">Sant Genís dels Agudells</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="40"><th scope="row">Montbau</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="41"><th scope="row">la Vall d'Hebron</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="42"><th scope="row">la Clota</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="43"><th scope="row">Horta</th><td>Horta-Guinardó</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="44"><th scope="row">Vilapicina i la Torre Llobeta</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="45"><th scope="row">Porta</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="46"><th scope="row">el Turó de la Peira</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="47"><th scope="row">Can Peguera</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="48"><th scope="row">la Guineueta</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="49"><th scope="row">Canyelles</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="50"><th scope="row">les Roquetes</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="51"><th scope="row">Verdun</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="52"><th scope="row">la Prosperitat</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="53"><th scope="row">la Trinitat Nova</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="54"><th scope="row">Torre Baró</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="55"><th scope="row">Ciutat Meridiana</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="56"><th scope="row">Vallbona</th><td>Nou Barris</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="57"><th scope="row">la Trinitat Vella</th><td>Sant Andreu</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="58"><th scope="row">Baró de Viver</th><td>Sant Andreu</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="59"><th scope="row">el Bon Pastor</th><td>Sant Andreu</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="60"><th scope="row">Sant Andreu</th><td>Sant Andreu</td><td>Sant Andreu</td><td data-estado>En recogida</td></tr>
-          <tr data-b="61"><th scope="row">la Sagrera</th><td>Sant Andreu</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="62"><th scope="row">el Congrés i els Indians</th><td>Sant Andreu</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="63"><th scope="row">Navas</th><td>Sant Andreu</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="64"><th scope="row">el Camp de l'Arpa del Clot</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="65"><th scope="row">el Clot</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="66"><th scope="row">el Parc i la Llacuna del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="67"><th scope="row">la Vila Olímpica del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="68"><th scope="row">el Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="69"><th scope="row">Diagonal Mar i el Front Marítim del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="70"><th scope="row">el Besòs i el Maresme</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="71"><th scope="row">Provençals del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="72"><th scope="row">Sant Martí de Provençals</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
-          <tr data-b="73"><th scope="row">la Verneda i la Pau</th><td>Sant Martí</td><td>—</td><td data-estado>Próximamente</td></tr>
+          <tr data-b="1"><th scope="row">el Raval</th><td>Ciutat Vella</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="2"><th scope="row">el Barri Gòtic</th><td>Ciutat Vella</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="3"><th scope="row">la Barceloneta</th><td>Ciutat Vella</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="4"><th scope="row">Sant Pere, Santa Caterina i la Ribera</th><td>Ciutat Vella</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="5"><th scope="row">el Fort Pienc</th><td>Eixample</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="6"><th scope="row">la Sagrada Família</th><td>Eixample</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="7"><th scope="row">la Dreta de l'Eixample</th><td>Eixample</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="8"><th scope="row">l'Antiga Esquerra de l'Eixample</th><td>Eixample</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="9"><th scope="row">la Nova Esquerra de l'Eixample</th><td>Eixample</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="10"><th scope="row">Sant Antoni</th><td>Eixample</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="11"><th scope="row">el Poble-sec</th><td>Sants-Montjuïc</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="12"><th scope="row">la Marina del Prat Vermell</th><td>Sants-Montjuïc</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="13"><th scope="row">la Marina de Port</th><td>Sants-Montjuïc</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="14"><th scope="row">la Font de la Guatlla</th><td>Sants-Montjuïc</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="15"><th scope="row">Hostafrancs</th><td>Sants-Montjuïc</td><td>Sants–Hostafrancs</td><td data-estado=""><span data-l="es">En recogida</span><span data-l="ca">En recollida</span><span data-l="en">Collecting</span></td></tr>
+          <tr data-b="16"><th scope="row">la Bordeta</th><td>Sants-Montjuïc</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="17"><th scope="row">Sants - Badal</th><td>Sants-Montjuïc</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="18"><th scope="row">Sants</th><td>Sants-Montjuïc</td><td>Sants–Hostafrancs</td><td data-estado=""><span data-l="es">En recogida</span><span data-l="ca">En recollida</span><span data-l="en">Collecting</span></td></tr>
+          <tr data-b="19"><th scope="row">les Corts</th><td>Les Corts</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="20"><th scope="row">la Maternitat i Sant Ramon</th><td>Les Corts</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="21"><th scope="row">Pedralbes</th><td>Les Corts</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="22"><th scope="row">Vallvidrera, el Tibidabo i les Planes</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="23"><th scope="row">Sarrià</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="24"><th scope="row">les Tres Torres</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="25"><th scope="row">Sant Gervasi - la Bonanova</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="26"><th scope="row">Sant Gervasi - Galvany</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="27"><th scope="row">el Putxet i el Farró</th><td>Sarrià-Sant Gervasi</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="28"><th scope="row">Vallcarca i els Penitents</th><td>Gràcia</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="29"><th scope="row">el Coll</th><td>Gràcia</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="30"><th scope="row">la Salut</th><td>Gràcia</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="31"><th scope="row">la Vila de Gràcia</th><td>Gràcia</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="32"><th scope="row">el Camp d'en Grassot i Gràcia Nova</th><td>Gràcia</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="33"><th scope="row">el Baix Guinardó</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="34"><th scope="row">Can Baró</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="35"><th scope="row">el Guinardó</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="36"><th scope="row">la Font d'en Fargues</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="37"><th scope="row">el Carmel</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="38"><th scope="row">la Teixonera</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="39"><th scope="row">Sant Genís dels Agudells</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="40"><th scope="row">Montbau</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="41"><th scope="row">la Vall d'Hebron</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="42"><th scope="row">la Clota</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="43"><th scope="row">Horta</th><td>Horta-Guinardó</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="44"><th scope="row">Vilapicina i la Torre Llobeta</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="45"><th scope="row">Porta</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="46"><th scope="row">el Turó de la Peira</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="47"><th scope="row">Can Peguera</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="48"><th scope="row">la Guineueta</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="49"><th scope="row">Canyelles</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="50"><th scope="row">les Roquetes</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="51"><th scope="row">Verdun</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="52"><th scope="row">la Prosperitat</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="53"><th scope="row">la Trinitat Nova</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="54"><th scope="row">Torre Baró</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="55"><th scope="row">Ciutat Meridiana</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="56"><th scope="row">Vallbona</th><td>Nou Barris</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="57"><th scope="row">la Trinitat Vella</th><td>Sant Andreu</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="58"><th scope="row">Baró de Viver</th><td>Sant Andreu</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="59"><th scope="row">el Bon Pastor</th><td>Sant Andreu</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="60"><th scope="row">Sant Andreu</th><td>Sant Andreu</td><td>Sant Andreu</td><td data-estado=""><span data-l="es">En recogida</span><span data-l="ca">En recollida</span><span data-l="en">Collecting</span></td></tr>
+          <tr data-b="61"><th scope="row">la Sagrera</th><td>Sant Andreu</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="62"><th scope="row">el Congrés i els Indians</th><td>Sant Andreu</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="63"><th scope="row">Navas</th><td>Sant Andreu</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="64"><th scope="row">el Camp de l'Arpa del Clot</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="65"><th scope="row">el Clot</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="66"><th scope="row">el Parc i la Llacuna del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="67"><th scope="row">la Vila Olímpica del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="68"><th scope="row">el Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="69"><th scope="row">Diagonal Mar i el Front Marítim del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="70"><th scope="row">el Besòs i el Maresme</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="71"><th scope="row">Provençals del Poblenou</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="72"><th scope="row">Sant Martí de Provençals</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
+          <tr data-b="73"><th scope="row">la Verneda i la Pau</th><td>Sant Martí</td><td>—</td><td data-estado=""><span data-l="es">Próximamente</span><span data-l="ca">Properament</span><span data-l="en">Coming soon</span></td></tr>
         </tbody>
       </table></div>
     </div>
@@ -322,50 +317,71 @@
 
 <section class="sec sec--bone obs-close-strip">
   <div class="wrap btns">
-    <a class="btn" href="/observatorio/metodologia-indice.pdf" download><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v8M3.5 5.5L7 9l3.5-3.5M2 12.5h10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span data-l="es">Descargar la metodología del índice (PDF)</span><span data-l="ca en">Descargar la metodología del índice (PDF)</span></a>
+    <a class="btn" href="/observatorio/metodologia-indice.pdf" download="Metodologia_Indice_Cuotas_Comisiones.pdf"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v8M3.5 5.5L7 9l3.5-3.5M2 12.5h10" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg><span data-l="es">Descargar la metodología del índice (PDF)</span><span data-l="ca">Descarregar la metodologia de l'índex (PDF, en castellà)</span><span data-l="en">Download the index methodology (PDF, in Spanish)</span></a>
     <a class="btn" href="/about"><span data-l="es">Sobre mí →</span><span data-l="ca">Sobre mi →</span><span data-l="en">About →</span></a>
+  </div>
+</section>
+
+<section class="sec sec--white obs-visit" id="pedir-visita">
+  <div class="obs-visit-in">
+    <h2 class="obs-visit-h"><span data-l="es">Pida una visita</span><span data-l="ca">Demani una visita</span><span data-l="en">Request a visit</span></h2>
+    <p class="obs-visit-lead"><span data-l="es">Déjeme sus datos y le escribo por WhatsApp para quedar.</span><span data-l="ca">Deixi'm les seves dades i li escriuré per WhatsApp per quedar.</span><span data-l="en">Leave your details and I will message you on WhatsApp to arrange it.</span></p>
+    <form class="obs-visit-form" method="POST" action="https://formsubmit.co/FORMSUBMIT_ALIAS" data-ajax-form="">
+      <input type="hidden" name="_subject" value="Observatorio · Nueva solicitud de visita">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" class="obs-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="obs-vf"><label for="pv-n"><span data-l="es">Su nombre</span><span data-l="ca">El seu nom</span><span data-l="en">Your name</span></label><input id="pv-n" name="Nombre" type="text" autocomplete="name" required></div>
+      <div class="obs-vf"><label for="pv-b"><span data-l="es">Barrio</span><span data-l="ca">Barri</span><span data-l="en">Neighbourhood</span></label><select id="pv-b" name="Barrio" required><option value="" data-es="Seleccione su barrio" data-ca="Triï el seu barri" data-en="Choose your neighbourhood">Seleccione su barrio</option><option value="l'Antiga Esquerra de l'Eixample">l'Antiga Esquerra de l'Eixample</option><option value="el Baix Guinardó">el Baix Guinardó</option><option value="la Barceloneta">la Barceloneta</option><option value="Baró de Viver">Baró de Viver</option><option value="el Barri Gòtic">el Barri Gòtic</option><option value="el Besòs i el Maresme">el Besòs i el Maresme</option><option value="el Bon Pastor">el Bon Pastor</option><option value="la Bordeta">la Bordeta</option><option value="el Camp d'en Grassot i Gràcia Nova">el Camp d'en Grassot i Gràcia Nova</option><option value="el Camp de l'Arpa del Clot">el Camp de l'Arpa del Clot</option><option value="Can Baró">Can Baró</option><option value="Can Peguera">Can Peguera</option><option value="Canyelles">Canyelles</option><option value="el Carmel">el Carmel</option><option value="Ciutat Meridiana">Ciutat Meridiana</option><option value="el Clot">el Clot</option><option value="la Clota">la Clota</option><option value="el Coll">el Coll</option><option value="el Congrés i els Indians">el Congrés i els Indians</option><option value="les Corts">les Corts</option><option value="Diagonal Mar i el Front Marítim del Poblenou">Diagonal Mar i el Front Marítim del Poblenou</option><option value="la Dreta de l'Eixample">la Dreta de l'Eixample</option><option value="la Font d'en Fargues">la Font d'en Fargues</option><option value="la Font de la Guatlla">la Font de la Guatlla</option><option value="el Fort Pienc">el Fort Pienc</option><option value="el Guinardó">el Guinardó</option><option value="la Guineueta">la Guineueta</option><option value="Horta">Horta</option><option value="Hostafrancs">Hostafrancs</option><option value="la Marina de Port">la Marina de Port</option><option value="la Marina del Prat Vermell">la Marina del Prat Vermell</option><option value="la Maternitat i Sant Ramon">la Maternitat i Sant Ramon</option><option value="Montbau">Montbau</option><option value="Navas">Navas</option><option value="la Nova Esquerra de l'Eixample">la Nova Esquerra de l'Eixample</option><option value="el Parc i la Llacuna del Poblenou">el Parc i la Llacuna del Poblenou</option><option value="Pedralbes">Pedralbes</option><option value="el Poble-sec">el Poble-sec</option><option value="el Poblenou">el Poblenou</option><option value="Porta">Porta</option><option value="la Prosperitat">la Prosperitat</option><option value="Provençals del Poblenou">Provençals del Poblenou</option><option value="el Putxet i el Farró">el Putxet i el Farró</option><option value="el Raval">el Raval</option><option value="les Roquetes">les Roquetes</option><option value="la Sagrada Família">la Sagrada Família</option><option value="la Sagrera">la Sagrera</option><option value="la Salut">la Salut</option><option value="Sant Andreu">Sant Andreu</option><option value="Sant Antoni">Sant Antoni</option><option value="Sant Genís dels Agudells">Sant Genís dels Agudells</option><option value="Sant Gervasi - Galvany">Sant Gervasi - Galvany</option><option value="Sant Gervasi - la Bonanova">Sant Gervasi - la Bonanova</option><option value="Sant Martí de Provençals">Sant Martí de Provençals</option><option value="Sant Pere, Santa Caterina i la Ribera">Sant Pere, Santa Caterina i la Ribera</option><option value="Sants">Sants</option><option value="Sants - Badal">Sants - Badal</option><option value="Sarrià">Sarrià</option><option value="la Teixonera">la Teixonera</option><option value="Torre Baró">Torre Baró</option><option value="les Tres Torres">les Tres Torres</option><option value="la Trinitat Nova">la Trinitat Nova</option><option value="la Trinitat Vella">la Trinitat Vella</option><option value="el Turó de la Peira">el Turó de la Peira</option><option value="la Vall d'Hebron">la Vall d'Hebron</option><option value="Vallbona">Vallbona</option><option value="Vallcarca i els Penitents">Vallcarca i els Penitents</option><option value="Vallvidrera, el Tibidabo i les Planes">Vallvidrera, el Tibidabo i les Planes</option><option value="Verdun">Verdun</option><option value="la Verneda i la Pau">la Verneda i la Pau</option><option value="la Vila de Gràcia">la Vila de Gràcia</option><option value="la Vila Olímpica del Poblenou">la Vila Olímpica del Poblenou</option><option value="Vilapicina i la Torre Llobeta">Vilapicina i la Torre Llobeta</option></select></div>
+      <div class="obs-vf"><label for="pv-t"><span data-l="es">Teléfono / WhatsApp</span><span data-l="ca">Telèfon / WhatsApp</span><span data-l="en">Phone / WhatsApp</span></label><input id="pv-t" name="Teléfono / WhatsApp" type="tel" autocomplete="tel" inputmode="tel" required></div>
+      <div class="obs-vf"><label for="pv-m"><span data-l="es">Mensaje (opcional)</span><span data-l="ca">Missatge (opcional)</span><span data-l="en">Message (optional)</span></label><textarea id="pv-m" name="Mensaje" rows="3"></textarea></div>
+      <label class="obs-consent"><input type="checkbox" name="Consentimiento" value="Sí" required> <span><span data-l="es">Acepto que me contacten para concertar la visita.</span><span data-l="ca">Accepto que em contactin per concertar la visita.</span><span data-l="en">I agree to be contacted to arrange the visit.</span> <a href="/privacy-policy"><span data-l="es">Política de privacidad</span><span data-l="ca">Política de privacitat</span><span data-l="en">Privacy Policy</span></a></span></label>
+      <button class="btn btn--gold obs-visit-btn" type="submit"><span data-l="es">Enviar</span><span data-l="ca">Enviar</span><span data-l="en">Send</span></button>
+      <p class="obs-visit-err" role="alert" hidden><span data-l="es">No se ha podido enviar. Inténtelo de nuevo en unos minutos.</span><span data-l="ca">No s'ha pogut enviar. Torni-ho a provar d'aquí a uns minuts.</span><span data-l="en">Your request could not be sent. Please try again in a few minutes.</span></p>
+    </form>
+    <p class="obs-visit-ok" role="status" tabindex="-1" hidden><span data-l="es">Gracias. Le escribiré por WhatsApp en los próximos días.</span><span data-l="ca">Gràcies. L'escriuré per WhatsApp els propers dies.</span><span data-l="en">Thank you. I will message you on WhatsApp in the next few days.</span></p>
   </div>
 </section>
 
 <section class="sec sec--navy obs-faq-sec" id="preguntas">
   <div class="wrap stack-32">
     <div class="obs-text stack-16">
-      <p class="pend" data-l="en">EN · Traducción pendiente en esta sección</p>
-      <h2 class="obs-h2"><span data-l="es en">Preguntas frecuentes</span><span data-l="ca">Preguntes freqüents</span></h2>
+      
+      <h2 class="obs-h2"><span data-l="es">Preguntas frecuentes</span><span data-l="en">Frequently asked questions</span><span data-l="ca">Preguntes freqüents</span></h2>
     </div>
     <div class="obs-faq">
       <details>
-        <summary><span data-l="es en">¿Tengo que pagar algo por participar?</span><span data-l="ca">He de pagar res per participar?</span></summary>
-        <div class="obs-faq-a"><p><span data-l="es en">No. Participar y recibir su informe es gratis.</span><span data-l="ca">No. Participar i rebre el seu informe és gratuït.</span></p></div>
+        <summary><span data-l="es">¿Tengo que pagar algo por participar?</span><span data-l="en">Do I have to pay anything to take part?</span><span data-l="ca">He de pagar res per participar?</span></summary>
+        <div class="obs-faq-a"><p><span data-l="es">No. Participar y recibir su informe es gratis.</span><span data-l="en">No. Taking part and receiving your report is free.</span><span data-l="ca">No. Participar i rebre el seu informe és gratuït.</span></p></div>
       </details>
       <details>
-        <summary><span data-l="es en">¿Qué es la recomendación personalizada y cuánto cuesta?</span><span data-l="ca">Què és la recomanació personalitzada i quant costa?</span></summary>
-        <div class="obs-faq-a"><p><span data-l="es en">Si su informe muestra que podría ahorrar 250 € al año o más, puedo prepararle por escrito qué cambiar o qué pedir a su proveedor, con la carta ya redactada. Cuesta 25 €, IVA incluido: es un precio simbólico para los negocios del barrio, que cubre el tiempo de preparación y no es mi tarifa profesional. Se paga al recibirla y, si no le sirve, no paga. Nunca recomiendo Ipso ni a ningún proveedor con el que tenga relación.</span><span data-l="ca">Si el seu informe mostra que podria estalviar 250 € l'any o més, puc preparar-li per escrit què canviar o què demanar al seu proveïdor, amb la carta ja redactada. Costa 25 €, IVA inclòs: és un preu simbòlic per als negocis del barri, que cobreix el temps de preparació i no és la meva tarifa professional. Es paga en rebre-la i, si no li serveix, no paga. No recomano mai Ipso ni cap proveïdor amb qui tingui relació.</span></p></div>
+        <summary><span data-l="es">¿Qué es la recomendación personalizada y cuánto cuesta?</span><span data-l="en">What is the personalised recommendation and how much does it cost?</span><span data-l="ca">Què és la recomanació personalitzada i quant costa?</span></summary>
+        <div class="obs-faq-a"><p><span data-l="es">Si su informe muestra que podría ahorrar 250 € al año o más, puedo prepararle por escrito qué cambiar o qué pedir a su proveedor, con la carta ya redactada. Cuesta 25 €, IVA incluido: es un precio simbólico para los negocios del barrio, que cubre el tiempo de preparación y no es mi tarifa profesional. Se paga al recibirla y, si no le sirve, no paga. Nunca recomiendo Ipso ni a ningún proveedor con el que tenga relación.</span><span data-l="en">If your report shows you could save €250 a year or more, I can prepare in writing what to change or what to ask your provider, with the letter already drafted. It costs €25, VAT included: a symbolic price for neighbourhood businesses that covers the preparation time and is not my professional rate. You pay when you receive it and, if it is no use to you, you do not pay. I never recommend Ipso or any provider I have a relationship with.</span><span data-l="ca">Si el seu informe mostra que podria estalviar 250 € l'any o més, puc preparar-li per escrit què canviar o què demanar al seu proveïdor, amb la carta ja redactada. Costa 25 €, IVA inclòs: és un preu simbòlic per als negocis del barri, que cobreix el temps de preparació i no és la meva tarifa professional. Es paga en rebre-la i, si no li serveix, no paga. No recomano mai Ipso ni cap proveïdor amb qui tingui relació.</span></p></div>
       </details>
       <details>
-        <summary><span data-l="es en">¿Cómo sé que no es un gancho para vender?</span><span data-l="ca">Com sé que no és un esquer per vendre?</span></summary>
+        <summary><span data-l="es">¿Cómo sé que no es un gancho para vender?</span><span data-l="en">How do I know this is not a sales hook?</span><span data-l="ca">Com sé que no és un esquer per vendre?</span></summary>
         <div class="obs-faq-a stack-24">
-          <p><span data-l="es en">Solo ofrezco la recomendación cuando el ahorro posible es claro; si no, le digo que no le compensa. Cada trimestre publico aquí cuántos informes entregué y en cuántos casos no compensaba.</span><span data-l="ca">Només ofereixo la recomanació quan l'estalvi possible és clar; si no, li dic que no li compensa. Cada trimestre publico aquí quants informes he lliurat i en quants casos no compensava.</span></p>
+          <p><span data-l="es">Solo ofrezco la recomendación cuando el ahorro posible es claro; si no, le digo que no le compensa. Cada trimestre publico aquí cuántos informes entregué y en cuántos casos no compensaba.</span><span data-l="en">I only offer the recommendation when the possible saving is clear; otherwise, I tell you it is not worth it. Every quarter I publish here how many reports I delivered and in how many cases it was not worth it.</span><span data-l="ca">Només ofereixo la recomanació quan l'estalvi possible és clar; si no, li dic que no li compensa. Cada trimestre publico aquí quants informes he lliurat i en quants casos no compensava.</span></p>
           <div>
-            <p class="pend" data-l="ca">CA · pendiente</p>
-            <dl class="obs-counters" data-counters>
-              <div><dt>Informes entregados</dt><dd data-k="informes_entregados">—</dd></div>
-              <div><dt>No compensaba</dt><dd data-k="no_compensaba">—</dd></div>
-              <div><dt>Recomendaciones ofrecidas</dt><dd data-k="ofrecidas">—</dd></div>
-              <div><dt>Pagadas</dt><dd data-k="pagadas">—</dd></div>
-              <div><dt>No sirvió y no se cobró</dt><dd data-k="no_sirvio_no_cobrada">—</dd></div>
+            
+            <dl class="obs-counters" data-counters="">
+              <div><dt><span data-l="es">Informes entregados</span><span data-l="ca">Informes lliurats</span><span data-l="en">Reports delivered</span></dt><dd data-k="informes_entregados">—</dd></div>
+              <div><dt><span data-l="es">No compensaba</span><span data-l="ca">No compensava</span><span data-l="en">Not worth it</span></dt><dd data-k="no_compensaba">—</dd></div>
+              <div><dt><span data-l="es">Recomendaciones ofrecidas</span><span data-l="ca">Recomanacions ofertes</span><span data-l="en">Recommendations offered</span></dt><dd data-k="ofrecidas">—</dd></div>
+              <div><dt><span data-l="es">Pagadas</span><span data-l="ca">Pagades</span><span data-l="en">Paid</span></dt><dd data-k="pagadas">—</dd></div>
+              <div><dt><span data-l="es">No sirvió y no se cobró</span><span data-l="ca">No va servir i no es va cobrar</span><span data-l="en">Not useful, not charged</span></dt><dd data-k="no_sirvio_no_cobrada">—</dd></div>
             </dl>
-            <p class="small muted obs-counters-q" data-counters-q hidden></p>
+            <p class="small muted obs-counters-q" data-counters-q="" hidden=""></p>
           </div>
         </div>
       </details>
       <details>
-        <summary><span data-l="es en">¿Por qué hay barrios sin datos?</span><span data-l="ca">Per què hi ha barris sense dades?</span></summary>
-        <div class="obs-faq-a"><p><span data-l="es en">Para proteger el anonimato, solo publico grupos de 10 negocios o más. Cualquier negocio puede participar.</span><span data-l="ca">Per protegir l'anonimat, només publico grups de 10 negocis o més. Qualsevol negoci hi pot participar.</span></p></div>
+        <summary><span data-l="es">¿Por qué hay barrios sin datos?</span><span data-l="en">Why do some neighbourhoods have no data?</span><span data-l="ca">Per què hi ha barris sense dades?</span></summary>
+        <div class="obs-faq-a"><p><span data-l="es">Para proteger el anonimato, solo publico grupos de 10 negocios o más. Cualquier negocio puede participar.</span><span data-l="en">To protect anonymity, I only publish groups of 10 or more businesses. Any business can take part.</span><span data-l="ca">Per protegir l'anonimat, només publico grups de 10 negocis o més. Qualsevol negoci hi pot participar.</span></p></div>
       </details>
       <details>
-        <summary><span data-l="es en">¿Es un estudio del Ayuntamiento o de una universidad?</span><span data-l="ca">És un estudi de l'Ajuntament o d'una universitat?</span></summary>
-        <div class="obs-faq-a"><p><span data-l="es en">No. Es un proyecto propio e independiente.</span><span data-l="ca">No. És un projecte propi i independent.</span></p></div>
+        <summary><span data-l="es">¿Es un estudio del Ayuntamiento o de una universidad?</span><span data-l="en">Is this a City Council or university study?</span><span data-l="ca">És un estudi de l'Ajuntament o d'una universitat?</span></summary>
+        <div class="obs-faq-a"><p><span data-l="es">No. Es un proyecto propio e independiente.</span><span data-l="en">No. It is my own independent project.</span><span data-l="ca">No. És un projecte propi i independent.</span></p></div>
       </details>
     </div>
   </div>
@@ -374,19 +390,16 @@
 
 </main>
 
-<dialog class="obs-modal" id="obs-ejemplo" aria-labelledby="obs-ej-t">
-  <div class="obs-modal-in">
-    <div class="obs-wm" aria-hidden="true"><span>EJEMPLO · DATOS FICTICIOS</span><span>EJEMPLO · DATOS FICTICIOS</span><span>EJEMPLO · DATOS FICTICIOS</span><span>EJEMPLO · DATOS FICTICIOS</span><span>EJEMPLO · DATOS FICTICIOS</span><span>EJEMPLO · DATOS FICTICIOS</span></div>
-    <div class="obs-modal-head">
-      <div class="stack-8">
-        <p class="label muted">Informe de ejemplo · Datos ficticios</p>
-        <h2 class="obs-h2" id="obs-ej-t">Peluquería · Sants–Hostafrancs</h2>
-        <p class="small muted">Comparado con 14 negocios de belleza y cuidado personal del barrio</p>
-      </div>
-      <button class="obs-close" type="button" data-modal-close aria-label="Cerrar">✕</button>
+<dialog class="obs-rep" id="obs-ejemplo" aria-labelledby="obs-ej-t">
+  <div class="obs-rep-bar">
+    <p class="obs-rep-eb" id="obs-ej-t"><span data-l="es">Informe de ejemplo · Datos ficticios</span><span data-l="ca">Informe d'exemple · Dades fictícies</span><span data-l="en">Sample report · Fictitious data</span></p>
+    <div class="obs-rep-act">
+      <a class="obs-rep-dl" href="/observatorio/informe-ejemplo.pdf" download="Informe_ejemplo_datos_ficticios.pdf"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v8M3.5 5.5L7 9l3.5-3.5M2 12.5h10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span data-l="es">Descargar PDF</span><span data-l="ca">Descarregar PDF</span><span data-l="en">Download PDF</span></a>
+      <button class="obs-close" type="button" data-modal-close aria-label="Cerrar" data-aria-es="Cerrar" data-aria-ca="Tancar" data-aria-en="Close">✕</button>
     </div>
-    <p class="pend" data-l="ca en">CA/EN · pendiente</p>
-    <div class="obs-modal-body stack-32" id="obs-ejemplo-body"></div>
+  </div>
+  <div class="obs-rep-body" tabindex="0">
+    <img src="/observatorio/informe-ejemplo.png" width="1588" height="2246" loading="lazy" alt="Informe de ejemplo con datos ficticios: comparación de las cuotas de una peluquería con la mediana de su barrio" data-alt-es="Informe de ejemplo con datos ficticios: comparación de las cuotas de una peluquería con la mediana de su barrio" data-alt-ca="Informe d'exemple amb dades fictícies: comparació de les quotes d'una perruqueria amb la mediana del seu barri" data-alt-en="Sample report with fictitious data: comparison of a hair salon's fees with the median for its neighbourhood">
   </div>
 </dialog>
 
@@ -394,31 +407,33 @@
   <div class="wrap">
     <div class="ftr-cols">
       <div>
-        <h2 class="label"><span data-l="en">Location</span><span data-l="es ca">Ubicación</span></h2>
+        <h2 class="label"><span data-l="en">Location</span><span data-l="es">Ubicación</span><span data-l="ca">Ubicació</span></h2>
         <address>Barcelona</address>
       </div>
       <div>
-        <h2 class="label"><span data-l="en">Contact</span><span data-l="es ca">Contacto</span></h2>
+        <h2 class="label"><span data-l="en">Contact</span><span data-l="es">Contacto</span><span data-l="ca">Contacte</span></h2>
         <div class="icons">
-          <a href="mailto:caceresg.natasha@gmail.com" aria-label="Email"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="M3 6l9 7 9-7"/></svg></a>
-          <a href="https://www.linkedin.com/in/natasha-c%C3%A1ceres-9912b73b0/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="M8 10.5V17M8 7.2v.1M11.5 17v-6.5M11.5 13.5c0-2 1.2-3 2.7-3s2.3 1 2.3 3V17"/></svg></a>
+          <a href="mailto:caceresg.natasha@gmail.com" aria-label="Email" data-aria-es="Correo electrónico" data-aria-ca="Correu electrònic" data-aria-en="Email"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14"></rect><path d="M3 6l9 7 9-7"></path></svg></a>
+          <a href="https://www.linkedin.com/in/natasha-c%C3%A1ceres-9912b73b0/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18"></rect><path d="M8 10.5V17M8 7.2v.1M11.5 17v-6.5M11.5 13.5c0-2 1.2-3 2.7-3s2.3 1 2.3 3V17"></path></svg></a>
         </div>
       </div>
       <div>
-        <h2 class="label"><span data-l="en">Other links</span><span data-l="es ca">Otros enlaces</span></h2>
+        <h2 class="label"><span data-l="en">Other links</span><span data-l="es">Otros enlaces</span><span data-l="ca">Altres enllaços</span></h2>
         <ul class="ftr-links">
-          <li><a href="/privacy-policy"><span data-l="en">Privacy Policy</span><span data-l="es ca">Política de privacidad</span></a></li>
-          <li><a href="/legal-notice"><span data-l="en">Legal Notice</span><span data-l="es ca">Aviso legal</span></a></li>
-          <li><a href="/cookie-policy"><span data-l="en">Cookies</span><span data-l="es ca">Cookies</span></a></li>
-          <li><a href="/about#intereses"><span data-l="en">Declared interests</span><span data-l="es ca">Intereses declarados</span></a></li>
+          <li><a href="/privacy-policy"><span data-l="en">Privacy Policy</span><span data-l="es">Política de privacidad</span><span data-l="ca">Política de privacitat</span></a></li>
+          <li><a href="/legal-notice"><span data-l="en">Legal Notice</span><span data-l="es">Aviso legal</span><span data-l="ca">Avís legal</span></a></li>
+          <li><a href="/cookie-policy"><span data-l="en">Cookies</span><span data-l="es">Cookies</span><span data-l="ca">Galetes</span></a></li>
+          <li><a href="/about#intereses"><span data-l="en">Declared interests</span><span data-l="es">Intereses declarados</span><span data-l="ca">Interessos declarats</span></a></li>
         </ul>
       </div>
     </div>
-    <p class="ftr-bottom"><span data-l="en">© 2026 Natasha Cáceres. All rights reserved.</span><span data-l="es ca">© 2026 Natasha Cáceres. Todos los derechos reservados.</span></p>
+    <p class="ftr-bottom"><span data-l="en">© 2026 Natasha Cáceres. All rights reserved.</span><span data-l="es">© 2026 Natasha Cáceres. Todos los derechos reservados.</span><span data-l="ca">© 2026 Natasha Cáceres. Tots els drets reservats.</span></p>
   </div>
 </footer>
-<script src="assets/site.js"></script>
-<script src="assets/vendor/leaflet/leaflet.js" defer></script>
-<script src="assets/observatorio.js" defer></script>
-</body>
-</html>
+<script src="/assets/site.js?v=20261025-1"></script>
+<script src="/assets/vendor/leaflet/leaflet.js?v=20261025-1" defer=""></script>
+<script src="/assets/observatorio.js?v=20261025-1" defer=""></script>
+
+
+
+</body></html>
