@@ -308,7 +308,7 @@
     unitLayers(id).forEach(function (l) { var p = l.getElement(); if (p) p.classList.toggle('is-hov', on); if (on && !S.sel) l.bringToFront(); });
   }
   function boundsOf(id) { var b = null; unitLayers(id).forEach(function (l) { b = b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds().getSouthWest(), l.getBounds().getNorthEast()); }); return b; }
-  function pad() { return MQ.matches ? { padding: [24, 24] } : { paddingTopLeft: [24, 130], paddingBottomRight: [64, 20] }; }
+  function pad() { return MQ.matches ? { padding: [24, 24] } : { paddingTopLeft: [24, 150], paddingBottomRight: [64, 24] }; }
   function fit(b, max) {
     var o = pad(); o.maxZoom = max || 15;
     if (RM) { o.animate = false; S.map.fitBounds(b, o); } else { o.duration = 0.35; S.map.flyToBounds(b, o); }
@@ -377,6 +377,7 @@
       p.addEventListener('blur', function () { hover(id, false); });
       p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(id, 'key'); } });
     });
+    window.addEventListener('resize', function () { clearTimeout(S.rz); S.rz = setTimeout(function () { map.invalidateSize(); if (!S.sel) { var o = pad(); o.animate = false; map.fitBounds(S.cityBounds, o); } }, 150); });
     map.setMaxBounds(S.cityBounds.pad(1.5));
     var ex = $('[data-explore]');
     if (L.Browser.mobile && ex) {

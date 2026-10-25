@@ -385,3 +385,10 @@ p{text-wrap:pretty}
 .ftr-links li a:hover{color:var(--gold)}
 .ftr-bottom{margin-top:56px;color:var(--w-65);font-size:14px}
 @media (max-width:760px){.ftr{padding:56px 0 32px}.ftr-cols{grid-template-columns:minmax(0,1fr);gap:40px}.ftr-links li a{padding:10px 0}.ftr-bottom{font-size:16px}}
+
+@media (max-width:759px){
+ .hero .tags{flex-wrap:nowrap;gap:0;white-space:nowrap;font-size:11px;letter-spacing:.08em;max-width:100%;overflow:visible}
+ .hero .tags li{flex:0 0 auto;white-space:nowrap}
+ .hero .tags li+li::before{margin:0 6px}
+}
+@media (max-width:339px){.hero .tags{font-size:10px}}
