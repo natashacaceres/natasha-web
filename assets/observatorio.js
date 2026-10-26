@@ -7,11 +7,13 @@
     estado: DEMO === 'antes' ? null : DEMO === 'datos' ? 'data/ejemplo/estado_unidades.csv' : 'data/estado_unidades.csv',
     celdas: DEMO === 'datos' ? 'data/ejemplo/celdas_publicadas.csv' : 'data/celdas_publicadas.csv',
     transp: 'data/transparencia.csv',
-    geo: 'data/barris.geojson'
+    geo: 'data/barris.geojson',
+    estj: '/observatorio/estado.json'
   };
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var MQ = window.matchMedia('(max-width: 899px)');
   var HOVER = window.matchMedia('(hover: hover)').matches;
+  var FINE = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var root = document.documentElement;
 
   var SECT = [['belleza', 'Belleza y cuidado personal'], ['hosteleria', 'Hostelería'], ['alimentacion', 'Alimentación'], ['otros', 'Otros comercios y servicios']];
@@ -171,15 +173,54 @@
   function sectors() { return SECT.filter(function (s) { return S.sector === 'all' || S.sector === s[0]; }); }
   function closeBtn() { return S.sel ? '<button class="obs-close obs-close--in" type="button" data-panel-close aria-label="Cerrar">✕</button>' : ''; }
 
+  function L3(es, ca, en) { return root.lang === 'ca' ? ca : root.lang === 'en' ? en : es; }
+  var DEMO_CARDS = [
+    [['Tasa efectiva al cobrar con tarjeta', 'Taxa efectiva en cobrar amb targeta', 'Effective rate for card payments'], 0.6, 1, ' %', 0.4, 0.9, 1.5],
+    [['Cuota del datáfono', 'Quota del datàfon', 'Card terminal fee'], 18, 0, ' €/mes', 12, 25, 40],
+    [['Mantenimiento de la cuenta del negocio', 'Manteniment del compte del negoci', 'Business account maintenance'], 14, 0, ' €/mes', 9, 20, 30],
+    [['Total de costes recurrentes', 'Total de costos recurrents', 'Total recurring costs'], 96, 0, ' €/mes', 72, 130, 180]
+  ];
+  function demoNum(v, d) { return Number(v).toLocaleString(root.lang === 'en' ? 'en-GB' : 'es-ES', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function demoUnit(u) { return root.lang === 'en' ? u.replace('€/mes', '€/month') : u; }
+  function miniPanel() {
+    var fict = L3('Vista previa · datos ficticios', 'Vista prèvia · dades fictícies', 'Preview · fictitious data');
+    var wm = L3('DATOS FICTICIOS', 'DADES FICTÍCIES', 'FICTITIOUS DATA');
+    var title = L3('Así se verán los resultados', 'Així es veuran els resultats', 'This is how results will look');
+    var avg = L3('Media del barrio', 'Mitjana del barri', 'Neighbourhood average');
+    return '<div class="obs-mini" role="group" aria-label="' + esc(fict) + '" data-mini>' +
+      '<div class="obs-mini-wm" aria-hidden="true"><span>' + wm + '</span><span>' + wm + '</span><span>' + wm + '</span></div>' +
+      '<div class="obs-mini-head"><p class="obs-mini-tag">' + fict + '</p></div>' +
+      '<div class="obs-mini-grid">' + DEMO_CARDS.map(function (c) {
+        var mx = c[6], fin = demoNum(c[1], c[2]) + demoUnit(c[3]);
+        return '<div class="obs-mini-card"><p class="obs-mini-l">' + L3(c[0][0], c[0][1], c[0][2]) + '</p>' +
+          '<p class="obs-mini-v"><span class="obs-sr">' + avg + ': ' + fin + '</span><span aria-hidden="true"><span data-count="' + c[1] + '" data-dec="' + c[2] + '">' + demoNum(S.countDone || RM ? c[1] : 0, c[2]) + '</span>' + demoUnit(c[3]) + '</span></p>' +
+          '</div>';
+      }).join('') + '</div><p class="obs-mini-foot" aria-hidden="true">' + L3('Medias del barrio', 'Mitjanes del barri', 'Neighbourhood averages') + '</p></div>';
+  }
+  function runCount() {
+    var el = $('[data-mini]', body); if (!el) return;
+    if (S.countDone || RM) { S.countDone = true; return; }
+    if (S.countIO) S.countIO.disconnect();
+    var go = function () {
+      S.countDone = true;
+      var t0 = null;
+      var step = function (t) {
+        if (t0 == null) t0 = t;
+        var k = Math.min(1, (t - t0) / 1000), e = 1 - Math.pow(1 - k, 3);
+        $$('[data-count]', body).forEach(function (n) { n.textContent = demoNum(+n.getAttribute('data-count') * (k < 1 ? e : 1), +n.getAttribute('data-dec')); });
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    if (!('IntersectionObserver' in window)) return go();
+    S.countIO = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { S.countIO.disconnect(); go(); } }, { threshold: 0.4 });
+    S.countIO.observe(el);
+  }
   function renderCity() {
     if (!S.edition) {
       return '<div class="obs-city0"><p class="label muted">Barcelona</p>' +
         '<p class="obs-panel-big">Los primeros resultados se publicarán aquí.</p>' +
-        (S.rep ? '<button type="button" class="btn obs-btn-full" data-ejemplo aria-expanded="true" aria-controls="obs-rep-inline">Ocultar informe de ejemplo</button>' +
-          '<div class="obs-rep-in' + (S.repAnim ? ' is-anim' : '') + '" id="obs-rep-inline"><div class="obs-rep-scroll"><div class="obs-rep-fig"><img src="/observatorio/informe-ejemplo.png" width="1588" height="2246" alt="Informe de ejemplo con datos ficticios" data-i18n-alt><div class="obs-rep-wm" aria-hidden="true"><span>DATOS FICTICIOS</span><span>DATOS FICTICIOS</span><span>DATOS FICTICIOS</span></div></div>' +
-          '<p class="obs-rep-dl"><a href="/observatorio/informe-ejemplo.pdf" download>Descargar PDF</a></p></div></div></div>'
-        : '<button type="button" class="btn obs-btn-full" data-ejemplo aria-expanded="false" aria-controls="obs-rep-inline">Ver informe de ejemplo (datos ficticios)</button>' +
-          '<svg class="obs-ill" viewBox="0 0 220 200" aria-hidden="true" focusable="false"><g fill="none" stroke="#E6DFD2" stroke-width="3" stroke-linecap="square"><path d="M62 30h76l22 22v118H62z"/><path d="M138 30v22h22"/><path d="M78 56h44M78 70h60M78 84h36"/><path d="M84 150v-26M104 150v-40M124 150v-18"/><path d="M76 158h66"/><path d="M40 70h-14M38 100h-18M40 130h-14M182 70h14M184 100h18M182 130h14M110 16V4M84 20l-6-10M136 20l6-10"/></g></svg></div>');
+        miniPanel() + '</div>';
     }
     var met = MET.filter(function (m) { return m[0] === S.metric; })[0];
     var h = pend() + '<div class="obs-ph"><p class="label muted">Toda la ciudad</p><h3>Barcelona</h3><p class="meta">' + nOf('ciudad', 'barcelona') + ' negocios · Cuotas en €/mes, sin IVA</p></div>' + filters();
@@ -246,6 +287,15 @@
       return h + '</section>';
     }
     if (u.estado === 'en_recogida' || u.estado === 'con_datos') {
+      if (u.part != null) {
+        var p = u.part, pct = Math.min(p, 10) * 10, lp = L3('Comercios participantes', 'Comerços participants', 'Participating businesses');
+        return header(u, '', '').replace('<p class="label muted"></p>', '<p class="obs-tag-col">' + L3('En recogida', 'En recollida', 'Collecting') + '</p>') +
+          '<div class="obs-prog"><p class="obs-lbl">' + lp + '</p>' +
+          (p > 0 ? '<p class="obs-prog-n">' + p + '<span> / 10</span></p>' : '<p class="obs-prog-w">' + L3('Recogida en curso', 'Recollida en curs', 'Collection under way') + '</p>') +
+          '<div class="obs-prog-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="' + Math.min(p, 10) + '" aria-label="' + lp + '"><span style="width:' + pct + '%"></span></div>' +
+          '<p class="small muted">' + L3('Los resultados se publican cuando hay al menos 10 comercios por sector.', 'Els resultats es publiquen quan hi ha almenys 10 comerços per sector.', 'Results are published once at least 10 businesses per sector take part.') + '</p></div>' +
+          '<div><a class="btn btn--gold obs-btn-full" href="#pedir-visita" data-go-visit>' + L3('Pedir una visita', 'Demanar una visita', 'Request a visit') + '</a></div>';
+      }
       return header(u, 'En recogida', '') +
         '<p class="obs-panel-msg">Participación hasta ahora: ' + banda(u.banda) + '.</p>' +
         '<p class="muted">Los datos se publican al cerrar la oleada y solo en grupos de 10 negocios o más.</p>' +
@@ -259,6 +309,7 @@
     var u = S.sel && S.units[S.sel];
     var keep = document.activeElement && body.contains(document.activeElement) ? (document.activeElement.getAttribute('data-sector') ? '[data-sector="' + document.activeElement.getAttribute('data-sector') + '"]' : document.activeElement.hasAttribute('data-metric') ? '[data-metric]' : null) : null;
     body.innerHTML = tr(u ? renderUnit(u) : renderCity());
+    if (!u) runCount();
     var slot = $('[data-form-slot]', body);
     if (slot && u) {
       var tp = $('#obs-aviso-tpl'), f = tp && tp.content ? tp.content.querySelector('form') : null;
@@ -277,8 +328,7 @@
     var t;
     if ((t = e.target.closest('[data-sector]'))) { S.sector = t.getAttribute('data-sector'); render(); }
     else if ((t = e.target.closest('.fig-i'))) { var hp = document.getElementById(t.getAttribute('aria-controls')); var o = hp.hidden; hp.hidden = !o; t.setAttribute('aria-expanded', String(o)); }
-    else if (e.target.closest('[data-ejemplo]')) toggleRep();
-    else if (e.target.closest('[data-go-participar]')) { panel.classList.remove('is-sheet', 'is-full'); }
+    else if (e.target.closest('[data-go-participar]') || e.target.closest('[data-go-visit]')) { panel.classList.remove('is-sheet', 'is-full'); }
   });
   body.addEventListener('change', function (e) {
     if (e.target.matches('[data-metric]')) { S.metric = e.target.value; render(); }
@@ -308,6 +358,7 @@
     if (st === 'en_recogida') return { fillColor: 'url(#obs-hatch)', fillOpacity: 1, color: '#FFFFFF', weight: 1, opacity: 1 };
     return { fillColor: '#F0E9DC', fillOpacity: 1, color: 'rgba(11,18,32,.3)', weight: 1, opacity: 1 };
   }
+  var tipShow = function () {};
   function unitLayers(id) { var u = S.units[id]; return u ? u.barris.map(function (b) { return S.layers[b]; }).filter(Boolean) : []; }
   function hover(id, on) {
     unitLayers(id).forEach(function (l) { var p = l.getElement(); if (p) p.classList.toggle('is-hov', on); if (on && !S.sel) l.bringToFront(); });
@@ -383,12 +434,30 @@
       p.setAttribute('tabindex', '0');
       p.setAttribute('role', 'button');
       p.setAttribute('aria-label', S.barri[b].name + ', ' + tr(EST[stateOf(b)]));
-      if (HOVER) { l.on('mouseover', function () { hover(id, true); }); l.on('mouseout', function () { hover(id, false); }); }
+      if (FINE) l.on('mouseover', function () { tipShow(b); });
       l.on('click', function () { select(id, 'map'); });
-      p.addEventListener('focus', function () { hover(id, true); });
-      p.addEventListener('blur', function () { hover(id, false); });
+      p.addEventListener('focus', function () { if (p.matches(':focus-visible')) tipShow(b); });
+      p.addEventListener('blur', function () { if (S.tipB === b) tipShow(null); });
       p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(id, 'key'); } });
     });
+    var col = el.closest('.obs-map-col') || el;
+    var tip = document.createElement('div'); tip.className = 'minimap-tip obs-map-tip'; tip.hidden = true; tip.setAttribute('aria-hidden', 'true'); col.appendChild(tip);
+    tipShow = function (b) {
+      if (S.tipB != null && S.layers[S.tipB]) { var op = S.layers[S.tipB].getElement(); if (op) op.classList.remove('is-hov'); }
+      S.tipB = b;
+      if (b == null || !S.layers[b]) { tip.hidden = true; return; }
+      var l = S.layers[b], p = l.getElement();
+      p.classList.add('is-hov'); l.bringToFront();
+      tip.textContent = S.barri[b].name; tip.hidden = false;
+      var bb = p.getBoundingClientRect(), cb = col.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+      var x = bb.left + bb.width / 2 - cb.left; x = Math.max(tw / 2 + 8, Math.min(cb.width - tw / 2 - 8, x));
+      var below = bb.top - cb.top - th - 10 < 8;
+      tip.classList.toggle('is-below', below);
+      tip.style.left = x + 'px';
+      tip.style.top = (below ? Math.min(bb.bottom - cb.top, cb.height - th - 18) : bb.top - cb.top) + 'px';
+    };
+    if (FINE) el.addEventListener('mouseleave', function () { tipShow(null); });
+    map.on('movestart zoomstart', function () { tipShow(null); });
     S.lastW = window.innerWidth;
     window.addEventListener('resize', function () { if (window.innerWidth === S.lastW) return; clearTimeout(S.rz); S.rz = setTimeout(function () { S.lastW = window.innerWidth; map.invalidateSize({ pan: false }); if (!S.sel) { var o = pad(); o.animate = false; map.fitBounds(S.cityBounds, o); } }, 150); });
     map.setMaxBounds(S.cityBounds.pad(1.5));
@@ -459,7 +528,7 @@
     if (d.showModal) d.showModal(); else d.setAttribute('open', '');
     d.focus();
   }
-  var dlg = $('#obs-ejemplo');
+  var dlg = $('#obs-ejemplo') || document.createElement('dialog');
   dlg.setAttribute('tabindex', '-1');
   dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-modal-close]')) dlg.close(); });
   dlg.addEventListener('close', function () {
@@ -498,6 +567,36 @@
     if (more) { var n = document.createElement('p'); n.className = 'notice'; n.setAttribute('role', 'status'); n.textContent = tr('Gracias. Le avisaré cuando la oleada llegue a su barrio.'); more.parentNode.insertBefore(n, more); }
   }
 
+
+  /* example card count-up (same effect as the map's sample panel) */
+  (function () {
+    var nums = $$('.obs-ex-n [data-l]');
+    if (!nums.length || RM) return;
+    var items = nums.map(function (s) {
+      var fin = s.textContent, m = fin.match(/\d+(?:[.,]\d+)?/);
+      if (!m) return null;
+      var sep = m[0].indexOf(',') >= 0 ? ',' : '.', dec = (m[0].split(/[.,]/)[1] || '').length, val = parseFloat(m[0].replace(',', '.'));
+      s.innerHTML = '<span class="obs-sr">' + esc(fin) + '</span><span aria-hidden="true"></span>';
+      var vis = s.lastChild;
+      var put = function (v) { vis.textContent = fin.replace(m[0], v.toFixed(dec).replace('.', sep)); };
+      put(0);
+      return { put: put, val: val };
+    }).filter(Boolean);
+    var go = function () {
+      var t0 = null;
+      var step = function (t) {
+        if (t0 == null) t0 = t;
+        var k = Math.min(1, (t - t0) / 1000), e = 1 - Math.pow(1 - k, 3);
+        items.forEach(function (it) { it.put(k < 1 ? it.val * e : it.val); });
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    var box = nums[0].closest('.obs-ex-figs') || nums[0];
+    if (!('IntersectionObserver' in window)) return go();
+    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); go(); } }, { threshold: 0.4 });
+    io.observe(box);
+  })();
   timeline();
   document.addEventListener('nc-lang', function () {
     if (S.ready || body.innerHTML) render();
@@ -505,7 +604,7 @@
     if (Object.keys(S.units).length) table();
   });
 
-  Promise.all([get(SRC.geo), get(SRC.estado), get(SRC.celdas), get(SRC.transp)]).then(function (r) {
+  Promise.all([get(SRC.geo), get(SRC.estado), get(SRC.celdas), get(SRC.transp), fetch(SRC.estj, { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; })]).then(function (r) {
     var gj = r[0] ? JSON.parse(r[0]) : null;
     if (!gj) return;
     var est = csv(r[1]);
@@ -524,6 +623,13 @@
     Object.keys(S.barri).forEach(function (b) {
       var x = S.barri[b];
       if (!x.unit) { var id = slug(x.name); x.unit = id; S.units[id] = { id: id, name: x.name, barris: [+b], districte: String(x.d), estado: 'proximamente' }; }
+    });
+    var ej = null; try { ej = r[4] ? JSON.parse(r[4]) : null; } catch (e) { ej = null; }
+    if (ej) Object.keys(ej).forEach(function (k) {
+      var u = S.units[k] || S.units[Object.keys(S.units).filter(function (id) { return id.replace(/^(el|la|les|l)-/, '') === k; })[0]];
+      if (!u || !ej[k]) return;
+      if (ej[k].estado) u.estado = ej[k].estado;
+      u.part = Math.max(0, parseInt(ej[k].participantes, 10) || 0);
     });
     table();
     render();
