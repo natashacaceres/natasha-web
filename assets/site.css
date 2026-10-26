@@ -392,3 +392,7 @@ p{text-wrap:pretty}
  .hero .tags li+li::before{margin:0 6px}
 }
 @media (max-width:339px){.hero .tags{font-size:10px}}
+
+.hdr{z-index:1000}
+.mnav{z-index:1010}
+.dd-menu,.nav .dd-menu,.lang-menu{z-index:1020}

@@ -4,13 +4,14 @@
   var DEMO = Q.get('demo');
   var TODAY = { antes: '2026-10-25', recogida: '2027-02-20', datos: '2027-04-20' }[DEMO] || new Date().toISOString().slice(0, 10);
   var SRC = {
-    estado: DEMO === 'antes' ? null : DEMO === 'datos' ? '/data/ejemplo/estado_unidades.csv' : '/data/estado_unidades.csv',
-    celdas: DEMO === 'datos' ? '/data/ejemplo/celdas_publicadas.csv' : '/data/celdas_publicadas.csv',
-    transp: '/data/transparencia.csv',
-    geo: '/data/barris.geojson'
+    estado: DEMO === 'antes' ? null : DEMO === 'datos' ? 'data/ejemplo/estado_unidades.csv' : 'data/estado_unidades.csv',
+    celdas: DEMO === 'datos' ? 'data/ejemplo/celdas_publicadas.csv' : 'data/celdas_publicadas.csv',
+    transp: 'data/transparencia.csv',
+    geo: 'data/barris.geojson'
   };
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var MQ = window.matchMedia('(max-width: 899px)');
+  var HOVER = window.matchMedia('(hover: hover)').matches;
   var root = document.documentElement;
 
   var SECT = [['belleza', 'Belleza y cuidado personal'], ['hosteleria', 'Hostelería'], ['alimentacion', 'Alimentación'], ['otros', 'Otros comercios y servicios']];
@@ -96,6 +97,7 @@
   function tr(s) {
     var l = root.lang; if (l === 'es' || !s) return s;
     var k = l === 'ca' ? 0 : 1;
+    [['Ocultar informe de ejemplo', "Amagar l'informe d'exemple", 'Hide sample report'], ['alt="Informe de ejemplo con datos ficticios"', 'alt="Informe d\'exemple amb dades fictícies"', 'alt="Sample report with fictitious data"'], ['>DATOS FICTICIOS<', '>DADES FICTÍCIES<', '>FICTITIOUS DATA<'], ['>Descargar PDF<', '>Descarregar PDF<', '>Download PDF<']].forEach(function (p) { s = s.split(p[0]).join(p[k + 1]); });
     s = s.replace(/Para proteger el anonimato, (.+?) y ([^<]+?) se publican juntos\./g, k ? 'To protect anonymity, $1 and $2 are published together.' : "Per protegir l'anonimat, $1 i $2 es publiquen junts.");
     I18N_KEYS.forEach(function (key) { if (s.indexOf(key) >= 0) s = s.split(key).join(I18N[key][k]); });
     s = s.replace(/\bnegocios\b/g, k ? 'businesses' : 'negocis');
@@ -173,8 +175,11 @@
     if (!S.edition) {
       return '<div class="obs-city0"><p class="label muted">Barcelona</p>' +
         '<p class="obs-panel-big">Los primeros resultados se publicarán aquí.</p>' +
-        '<button type="button" class="btn obs-btn-full" data-ejemplo>Ver informe de ejemplo (datos ficticios)</button>' +
-        '<svg class="obs-ill" viewBox="0 0 220 200" aria-hidden="true" focusable="false"><g fill="none" stroke="#E6DFD2" stroke-width="3" stroke-linecap="square"><path d="M62 30h76l22 22v118H62z"/><path d="M138 30v22h22"/><path d="M78 56h44M78 70h60M78 84h36"/><path d="M84 150v-26M104 150v-40M124 150v-18"/><path d="M76 158h66"/><path d="M40 70h-14M38 100h-18M40 130h-14M182 70h14M184 100h18M182 130h14M110 16V4M84 20l-6-10M136 20l6-10"/></g></svg></div>';
+        (S.rep ? '<button type="button" class="btn obs-btn-full" data-ejemplo aria-expanded="true" aria-controls="obs-rep-inline">Ocultar informe de ejemplo</button>' +
+          '<div class="obs-rep-in' + (S.repAnim ? ' is-anim' : '') + '" id="obs-rep-inline"><div class="obs-rep-scroll"><div class="obs-rep-fig"><img src="/observatorio/informe-ejemplo.png" width="1588" height="2246" alt="Informe de ejemplo con datos ficticios" data-i18n-alt><div class="obs-rep-wm" aria-hidden="true"><span>DATOS FICTICIOS</span><span>DATOS FICTICIOS</span><span>DATOS FICTICIOS</span></div></div>' +
+          '<p class="obs-rep-dl"><a href="/observatorio/informe-ejemplo.pdf" download>Descargar PDF</a></p></div></div></div>'
+        : '<button type="button" class="btn obs-btn-full" data-ejemplo aria-expanded="false" aria-controls="obs-rep-inline">Ver informe de ejemplo (datos ficticios)</button>' +
+          '<svg class="obs-ill" viewBox="0 0 220 200" aria-hidden="true" focusable="false"><g fill="none" stroke="#E6DFD2" stroke-width="3" stroke-linecap="square"><path d="M62 30h76l22 22v118H62z"/><path d="M138 30v22h22"/><path d="M78 56h44M78 70h60M78 84h36"/><path d="M84 150v-26M104 150v-40M124 150v-18"/><path d="M76 158h66"/><path d="M40 70h-14M38 100h-18M40 130h-14M182 70h14M184 100h18M182 130h14M110 16V4M84 20l-6-10M136 20l6-10"/></g></svg></div>');
     }
     var met = MET.filter(function (m) { return m[0] === S.metric; })[0];
     var h = pend() + '<div class="obs-ph"><p class="label muted">Toda la ciudad</p><h3>Barcelona</h3><p class="meta">' + nOf('ciudad', 'barcelona') + ' negocios · Cuotas en €/mes, sin IVA</p></div>' + filters();
@@ -272,14 +277,14 @@
     var t;
     if ((t = e.target.closest('[data-sector]'))) { S.sector = t.getAttribute('data-sector'); render(); }
     else if ((t = e.target.closest('.fig-i'))) { var hp = document.getElementById(t.getAttribute('aria-controls')); var o = hp.hidden; hp.hidden = !o; t.setAttribute('aria-expanded', String(o)); }
-    else if (e.target.closest('[data-ejemplo]')) openEjemplo();
+    else if (e.target.closest('[data-ejemplo]')) toggleRep();
     else if (e.target.closest('[data-go-participar]')) { panel.classList.remove('is-sheet', 'is-full'); }
   });
   body.addEventListener('change', function (e) {
     if (e.target.matches('[data-metric]')) { S.metric = e.target.value; render(); }
     if (e.target.matches('[data-edition]')) { S.edition = e.target.value; render(); }
   });
-  panel.addEventListener('click', function (e) { if (e.target.closest('[data-panel-close]')) unselect(); });
+  panel.addEventListener('click', function (e) { if (e.target.closest('[data-panel-close]')) { if (S.sel) unselect(); else if (S.rep) toggleRep(false); } });
 
   /* sheet (mobile) */
   var handle = $('[data-sheet-toggle]'), y0 = null;
@@ -291,8 +296,8 @@
     else if (dy > 30) { if (panel.classList.contains('is-full')) panel.classList.remove('is-full'); else unselect(); e.preventDefault(); }
   });
   function sheet(open) {
-    if (open && MQ.matches) { panel.classList.add('is-sheet'); if (Q.get('hoja') === 'full') panel.classList.add('is-full'); }
-    else panel.classList.remove('is-sheet', 'is-full');
+    if (open && MQ.matches) { if (panel.classList.contains('is-sheet') && Q.get('hoja') !== 'full') { return; } panel.classList.add('is-sheet'); if (Q.get('hoja') === 'full') panel.classList.add('is-full'); }
+    else { panel.classList.remove('is-sheet', 'is-full'); if (S.rep && !S.sel) { S.rep = false; render(); } }
   }
   MQ.addEventListener && MQ.addEventListener('change', function () { sheet(!!S.sel); if (S.map) S.map.invalidateSize(); });
 
@@ -309,21 +314,29 @@
   }
   function boundsOf(id) { var b = null; unitLayers(id).forEach(function (l) { b = b ? b.extend(l.getBounds()) : L.latLngBounds(l.getBounds().getSouthWest(), l.getBounds().getNorthEast()); }); return b; }
   function pad() { return MQ.matches ? { padding: [24, 24] } : { paddingTopLeft: [24, 150], paddingBottomRight: [64, 24] }; }
-  function fit(b, max) {
+  function fit(b, max, still) {
     var o = pad(); o.maxZoom = max || 15;
-    if (RM) { o.animate = false; S.map.fitBounds(b, o); } else { o.duration = 0.35; S.map.flyToBounds(b, o); }
+    if (RM || still) { o.animate = false; S.map.fitBounds(b, o); } else { o.duration = 0.35; S.map.flyToBounds(b, o); }
   }
 
   function select(id, from) {
     if (!S.units[id]) return;
+    S.rep = false;
     S.sel = id;
     var el = $('#obs-leaflet');
     el.classList.add('has-sel');
     $$('path.is-sel', el).forEach(function (p) { p.classList.remove('is-sel'); });
     unitLayers(id).forEach(function (l) { var p = l.getElement(); if (p) p.classList.add('is-sel'); l.bringToFront(); });
-    fit(boundsOf(id), 14);
-    render();
-    sheet(true);
+    if (MQ.matches) {
+      fit(boundsOf(id), 14, true);
+      render();
+      cancelAnimationFrame(S.raf);
+      S.raf = requestAnimationFrame(function () { if (S.sel === id) sheet(true); });
+    } else {
+      fit(boundsOf(id), 14);
+      render();
+      sheet(true);
+    }
     var inp = $('#obs-q'); if (inp && from !== 'combo') inp.value = S.units[id].name;
     try { history.replaceState(null, '', location.pathname + location.search + '#' + id); } catch (e) {}
     if (from === 'combo' || from === 'key') { var h = $('.obs-ph h3', body); if (h) { h.tabIndex = -1; if (!MQ.matches) h.focus({ preventScroll: true }); } }
@@ -370,14 +383,14 @@
       p.setAttribute('tabindex', '0');
       p.setAttribute('role', 'button');
       p.setAttribute('aria-label', S.barri[b].name + ', ' + tr(EST[stateOf(b)]));
-      l.on('mouseover', function () { hover(id, true); });
-      l.on('mouseout', function () { hover(id, false); });
+      if (HOVER) { l.on('mouseover', function () { hover(id, true); }); l.on('mouseout', function () { hover(id, false); }); }
       l.on('click', function () { select(id, 'map'); });
       p.addEventListener('focus', function () { hover(id, true); });
       p.addEventListener('blur', function () { hover(id, false); });
       p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(id, 'key'); } });
     });
-    window.addEventListener('resize', function () { clearTimeout(S.rz); S.rz = setTimeout(function () { map.invalidateSize(); if (!S.sel) { var o = pad(); o.animate = false; map.fitBounds(S.cityBounds, o); } }, 150); });
+    S.lastW = window.innerWidth;
+    window.addEventListener('resize', function () { if (window.innerWidth === S.lastW) return; clearTimeout(S.rz); S.rz = setTimeout(function () { S.lastW = window.innerWidth; map.invalidateSize({ pan: false }); if (!S.sel) { var o = pad(); o.animate = false; map.fitBounds(S.cityBounds, o); } }, 150); });
     map.setMaxBounds(S.cityBounds.pad(1.5));
     var ex = $('[data-explore]');
     if (L.Browser.mobile && ex) {
@@ -426,6 +439,17 @@
     list.addEventListener('mousedown', function (e) { var li = e.target.closest('[data-i]'); if (li) { e.preventDefault(); pick(+li.getAttribute('data-i')); } });
   }
 
+  /* example report: inline in panel */
+  function toggleRep(force) {
+    var open = force == null ? !S.rep : force;
+    S.rep = open; S.repAnim = open && !RM;
+    render(); S.repAnim = false;
+    var b = $('[data-ejemplo]', body); if (b) b.focus({ preventScroll: true });
+    if (MQ.matches) {
+      if (open) { panel.classList.add('is-sheet', 'is-full'); }
+      else if (!S.sel) { panel.classList.remove('is-sheet', 'is-full'); }
+    }
+  }
   /* example report */
   var lastFocus = null;
   function openEjemplo() {
