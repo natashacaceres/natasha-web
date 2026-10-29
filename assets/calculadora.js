@@ -349,6 +349,35 @@ function iniciarUI(){
     const v = vals(), ok = v.V > 0 && v.ops > 0 && prov.value && P.pSector;
     $("pGo").disabled = !ok; $("pMissing").hidden = !!ok; return ok;
   }
+
+  // pasos de la precisa: uno cada vez
+  const pp = $("pPrecisa"), steps = [...pp.querySelectorAll(":scope > .q")], pMore = pp.querySelector(":scope > .more"), pAct = pp.querySelector(":scope > .actions");
+  const NS = steps.length;
+  steps.forEach((st, i) => {
+    st.querySelector("h3").tabIndex = -1;
+    st.insertAdjacentHTML("afterbegin", `<div class="prog" aria-hidden="true"><span style="width:${Math.round((i + 1) / NS * 100)}%"></span></div>`);
+    const nav = document.createElement("div"); nav.className = "qnav";
+    nav.innerHTML = (i > 0 ? `<button type="button" class="back" data-pback="">${L({es:"← Anterior",ca:"← Anterior",en:"← Back"})}</button>` : "<span></span>")
+      + (i < NS - 1 ? `<button type="button" class="btn btn--gold" data-pnext="">${L({es:"Siguiente →",ca:"Següent →",en:"Next →"})}</button>` : "");
+    st.appendChild(nav);
+  });
+  let pi = 0;
+  const stepOK = i => i === 0 ? (vals().V > 0 && vals().ops > 0) : i === 1 ? !!prov.value : true;
+  function navState(){ steps.forEach((st, i) => { const b = st.querySelector("[data-pnext]"); if (b) b.disabled = !stepOK(i); }); }
+  function showStep(i, focus){
+    pi = Math.max(0, Math.min(NS - 1, i));
+    steps.forEach((st, j) => st.hidden = j !== pi);
+    pMore.hidden = pAct.hidden = pi !== NS - 1;
+    navState();
+    if (focus) { keepTop(pp); steps[pi].querySelector("h3").focus({ preventScroll: true }); }
+  }
+  pp.addEventListener("click", e => {
+    if (e.target.closest("[data-pback]")) { showStep(pi - 1, true); return; }
+    const n = e.target.closest("[data-pnext]"); if (n && !n.disabled) showStep(pi + 1, true);
+  });
+  pp.addEventListener("input", navState);
+  prov.addEventListener("change", navState);
+  showStep(0, false);
   $("pGo").addEventListener("click", () => { if (validate()) { shownP = true; runPrecisa(true); } });
   function runPrecisa(scroll){
     if (mode !== "precisa" || !validate()) { if (mode === "precisa") hideRes(); return; }

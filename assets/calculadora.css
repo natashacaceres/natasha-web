@@ -125,3 +125,9 @@
 
 .calc .legal{padding-top:24px;padding-bottom:48px;color:var(--muted);font-size:14px}
 .calc .legal p + p{margin-top:6px}
+
+/* Pasos de la precisa */
+.calc .qnav{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px}
+.calc .qnav .back{margin-top:0}
+.calc .qnav .btn{width:auto;min-height:48px}
+.calc .qnav .btn:disabled{opacity:.45;cursor:not-allowed}
