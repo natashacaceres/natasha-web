@@ -35,3 +35,8 @@
 /feed/                                         /blog                     301
 /41-2                                          /about                    301
 /41-2/                                         /about                    301
+
+# La calculadora se retiró el 30/10/2026: sus direcciones llevan a la portada.
+/calculadora                                   /                         301
+/calculadora/                                  /                         301
+/calculadora.html                              /                         301
