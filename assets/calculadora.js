@@ -1,4 +1,11 @@
 /* Calculadora del datáfono. Todo se calcula en el navegador: no se envía ni se guarda nada. Las tarifas se leen de /data/tarifas-datafono.json. */
+// ---------- pago: configuración en un solo sitio
+const PAGO = {
+  enlace: "https://buy.stripe.com/3cI5kEffNfIK5r93fb2VG00",
+  activo: true,
+  precio: 10,
+  umbralAhorro: 50
+};
 let PLANS = [];
 // Motor de la calculadora: misma lógica que el Excel (Motor rápido / Motor preciso).
 function calcular(PLANS, I) {
@@ -107,93 +114,100 @@ function calcular(PLANS, I) {
 }
 if (typeof module !== "undefined") module.exports = { calcular };
 
+let REFERENCIA = null;
+
+// Título en una sola línea: reduce la letra hasta que quepa (mínimo 22 px; por debajo, deja que se parta).
+(function fitTitle(){
+  const h = document.querySelector(".c-hero h1"); if (!h) return;
+  const MAX = 68, MIN = 22;
+  const fit = () => {
+    h.style.whiteSpace = "nowrap"; h.style.fontSize = MAX + "px";
+    const w = h.scrollWidth, a = h.clientWidth;
+    let s = w > a ? Math.floor(MAX * a / w * 0.98) : MAX;
+    if (s < MIN) { s = MIN; h.style.whiteSpace = "normal"; }
+    h.style.fontSize = s + "px";
+  };
+  fit();
+  if (document.fonts) {
+    if (document.fonts.ready) document.fonts.ready.then(fit);
+    if (document.fonts.load) document.fonts.load('400 68px "Playfair Display"').then(fit, () => {});
+    document.fonts.addEventListener && document.fonts.addEventListener("loadingdone", fit);
+  }
+  addEventListener("load", fit);
+  if (typeof ResizeObserver !== "undefined") { let w = 0; new ResizeObserver(() => { if (h.clientWidth !== w) { w = h.clientWidth; fit(); } }).observe(h.parentElement); }
+  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(fit, 60); });
+  document.addEventListener("nc-lang", () => requestAnimationFrame(fit));
+})();
+
 function iniciarUI(){
   const $ = id => document.getElementById(id);
   const LANGS = ["es", "ca", "en"];
   const lang = () => LANGS.indexOf(document.documentElement.lang) >= 0 ? document.documentElement.lang : "es";
-  const L = o => LANGS.map(l => `<span data-l="${l}">${o[l]}</span>`).join("");
+  const L = o => LANGS.map(l => '<span data-l="' + l + '">' + o[l] + '</span>').join("");
   const same = s => ({ es: s, ca: s, en: s });
 
   const TX = {
     es: {
-      res: "Su resultado", prud: "Su resultado · estimación prudente",
-      vIgual: "Ya paga una de las opciones más baratas para su negocio.", vNo: "Hoy no le compensa cambiar de datáfono.",
-      vDudoso: "Solo le compensaría por una promoción temporal.", vWait: "Le compensa cambiar cuando acabe su permanencia.", vSi: "Sí, le compensa revisar su datáfono.",
-      best: "Ya está en una de las mejores opciones", between: (a, b) => "Entre " + a + " y " + b, min: "Como mínimo",
-      instant: "Al instante", months: n => "≈ " + n + " meses", costs: x => "Cambiar le cuesta " + x, free: "Cambiar no le cuesta nada",
-      wait24: "Si espera a que acabe su permanencia", net24: "Ya descontado lo que cuesta cambiar",
-      ckOk: "El cálculo coincide con su factura: puede fiarse del resultado.",
-      ckWarn: n => "El cálculo se aleja un " + n + " % de su factura. Revise los importes o busque cargos extra.",
-      ckBad: n => "El cálculo no coincide con su factura (" + n + " % de diferencia). No se fíe del resultado: elija «escribir mis precios».",
-      ckNone: "Sin el total de su factura no podemos comprobar el cálculo.",
-      wLockR: "Antes de cambiar, confirme que su caja o programa de ventas funciona con el nuevo datáfono.",
-      wBank: "Si tiene permanencia o un préstamo con su banco, use la versión precisa.",
-      wLoan: "Pregunte a su banco si dejar el datáfono cambia las condiciones de su préstamo o póliza.",
-      wLockP: "Su caja está conectada al datáfono: pregunte cuánto cuesta adaptarla y escríbalo en el paso 3.",
-      wDunno: "Confirme que su caja o programa de ventas funciona con el nuevo datáfono.",
-      ctaYesT: "¿Con quién y cómo cambiar?", ctaNoT: "¿Quiere confirmarlo con su factura?",
-      ctaYesP: "Le preparo un análisis con su factura: qué plan le conviene, cuánto ahorra exactamente y cómo pedirlo.",
-      ctaNoP: "Reviso su factura y su contrato y le digo si hay cargos que puede reducir sin cambiar de proveedor.",
-      toP: "Probar la versión precisa →", toR: "Volver a la versión rápida →",
-      e0: "Conteste las 6 preguntas.", eLeft: n => n === 1 ? "Falta 1 pregunta." : "Faltan " + n + " preguntas.", eP: "Rellene los 3 pasos y pulse «Ver resultado».",
-      chooseProv: "Elija su proveedor y plan", banks: "Bancos", fin: "Fintech y otros", fin2: "Fintech",
-      whoToday: "¿Con quién cobra hoy?", own: "Otro o precio negociado: escribir mis precios", nolimit: "sin límite"
+      vYes: "Sí, paga de más.", vNo: "No, está bien.", noSub: "Ninguna tarifa le ahorra lo bastante para que compense cambiar.",
+      payLine: (x, p) => "Ahorro estimado: " + x + "/año · Recomendación: " + p,
+      iCost: (c, s) => "Coste: " + c + "/mes · Ahorro: " + s + "/año", iAltCost: c => c + "/mes",
+      iWait2: (d, pen) => "Cuando acabe su permanencia, en " + d + "." + (pen ? " Así evita la penalización de " + pen + "." : ""),
+      iBankX: (x, y) => "Pida igualar " + x + "/mes o la tarifa " + y + "; si no, solicite la baja.",
+      iSteps2: ["Contrate el nuevo proveedor.", "Reciba y active el nuevo datáfono.", "Pida por escrito la baja del anterior.", "Si su datáfono actual es de alquiler, devuélvalo."],
+      prog: (i, n) => i + " de " + n, pre: "Paga", post: "de más", one: x => x + "/mes",
+      instant: "Al instante", months: n => "≈ " + n + (n === 1 ? " mes" : " meses"), cheap: n => "de " + n + " tarifas le salen más baratas",
+      ref: (v, s) => "Comisión media que cobran los bancos en España: " + v + "\u00a0% (" + s + "Banco de España). No incluye cuotas ni alquiler.",
+      shareTxtYes: x => x + " de más por cobrar con tarjeta. Calcule lo suyo, gratis:", shareTxtNo: "¿Paga de más por cobrar con tarjeta? Calcúlelo gratis:",
+      shTop: "Calculadora del datáfono", shYes: "de más por cobrar con tarjeta", shNo: "de coste efectivo por cobrar con tarjeta", shAsk: "¿Y usted?",
+      shared: "Imagen descargada y enlace copiado.",
+      chooseProv: "Elija su proveedor y plan", banks: "Bancos", fin: "Fintech y otros", own: "Otro o precio negociado: escribir mis precios", own2: "Su contrato actual",
+      iSave: x => "Ahorra unos " + x + " al mes", iWait: d => "Cuando acabe su permanencia, en " + d + ". Así evita la penalización.", iNow: "Ya. Cambiar no le cuesta nada.", iNowCost: x => "Ya. Cambiar le cuesta " + x + " y lo recupera con el ahorro.",
+      iBank1: p => "Que le iguale " + p + " por cobro con tarjeta europea de particular.", iBank2: "Que le quite la cuota mensual y el alquiler del datáfono.", iBank3: "Que se lo dé por escrito, con la fecha de inicio.",
+      iSteps: ["Pida al nuevo proveedor las condiciones por escrito.", "Confirme que el datáfono funciona con su caja o programa de ventas.", "Active el nuevo datáfono antes de dar de baja el antiguo.", "Pida la baja por escrito y guarde el justificante."]
     },
     ca: {
-      res: "El seu resultat", prud: "El seu resultat · estimació prudent",
-      vIgual: "Ja paga una de les opcions més barates per al seu negoci.", vNo: "Avui no li compensa canviar de datàfon.",
-      vDudoso: "Només li compensaria per una promoció temporal.", vWait: "Li compensa canviar quan acabi la permanència.", vSi: "Sí, li compensa revisar el seu datàfon.",
-      best: "Ja és en una de les millors opcions", between: (a, b) => "Entre " + a + " i " + b, min: "Com a mínim",
-      instant: "A l'instant", months: n => "≈ " + n + " mesos", costs: x => "Canviar li costa " + x, free: "Canviar no li costa res",
-      wait24: "Si espera que acabi la permanència", net24: "Ja descomptat el que costa canviar",
-      ckOk: "El càlcul coincideix amb la seva factura: es pot refiar del resultat.",
-      ckWarn: n => "El càlcul s'allunya un " + n + " % de la seva factura. Revisi els imports o busqui càrrecs addicionals.",
-      ckBad: n => "El càlcul no coincideix amb la seva factura (" + n + " % de diferència). No es refiï del resultat: triï «escriure els meus preus».",
-      ckNone: "Sense el total de la seva factura no podem comprovar el càlcul.",
-      wLockR: "Abans de canviar, confirmi que la seva caixa o programa de vendes funciona amb el nou datàfon.",
-      wBank: "Si té permanència o un préstec amb el seu banc, faci servir la versió precisa.",
-      wLoan: "Pregunti al seu banc si deixar el datàfon canvia les condicions del seu préstec o pòlissa.",
-      wLockP: "La seva caixa està connectada al datàfon: pregunti quant costa adaptar-la i escrigui-ho al pas 3.",
-      wDunno: "Confirmi que la seva caixa o programa de vendes funciona amb el nou datàfon.",
-      ctaYesT: "Amb qui i com canviar?", ctaNoT: "Vol confirmar-ho amb la seva factura?",
-      ctaYesP: "Li preparo una anàlisi amb la seva factura: quin pla li convé, quant estalvia exactament i com demanar-lo.",
-      ctaNoP: "Reviso la seva factura i el seu contracte i li dic si hi ha càrrecs que pot reduir sense canviar de proveïdor.",
-      toP: "Provar la versió precisa →", toR: "Tornar a la versió ràpida →",
-      e0: "Respongui les 6 preguntes.", eLeft: n => n === 1 ? "Falta 1 pregunta." : "Falten " + n + " preguntes.", eP: "Ompli els 3 passos i premi «Veure el resultat».",
-      chooseProv: "Triï el seu proveïdor i pla", banks: "Bancs", fin: "Fintech i altres", fin2: "Fintech",
-      whoToday: "Amb qui cobra avui?", own: "Un altre o preu negociat: escriure els meus preus", nolimit: "sense límit"
+      vYes: "Sí, paga de més.", vNo: "No, està bé.", noSub: "Cap tarifa li estalvia prou perquè compensi canviar.",
+      payLine: (x, p) => "Estalvi estimat: " + x + "/any · Recomanació: " + p,
+      iCost: (c, s) => "Cost: " + c + "/mes · Estalvi: " + s + "/any", iAltCost: c => c + "/mes",
+      iWait2: (d, pen) => "Quan acabi la permanència, el " + d + "." + (pen ? " Així evita la penalització de " + pen + "." : ""),
+      iBankX: (x, y) => "Demani igualar " + x + "/mes o la tarifa " + y + "; si no, sol·liciti la baixa.",
+      iSteps2: ["Contracti el nou proveïdor.", "Rebi i activi el nou datàfon.", "Demani per escrit la baixa de l'anterior.", "Si el seu datàfon actual és de lloguer, torni'l."],
+      prog: (i, n) => i + " de " + n, pre: "Paga", post: "de més", one: x => x + "/mes",
+      instant: "A l'instant", months: n => "≈ " + n + (n === 1 ? " mes" : " mesos"), cheap: n => "de " + n + " tarifes li surten més barates",
+      ref: (v, s) => "Comissió mitjana que cobren els bancs a Espanya: " + v + "\u00a0% (" + s + "Banc d'Espanya). No inclou quotes ni lloguer.",
+      shareTxtYes: x => x + " de més per cobrar amb targeta. Calculi el seu, gratis:", shareTxtNo: "Paga de més per cobrar amb targeta? Calculi-ho gratis:",
+      shTop: "Calculadora del datàfon", shYes: "de més per cobrar amb targeta", shNo: "de cost efectiu per cobrar amb targeta", shAsk: "I vostè?",
+      shared: "Imatge descarregada i enllaç copiat.",
+      chooseProv: "Triï el seu proveïdor i pla", banks: "Bancs", fin: "Fintech i altres", own: "Un altre o preu negociat: escriure els meus preus", own2: "El seu contracte actual",
+      iSave: x => "Estalvia uns " + x + " al mes", iWait: d => "Quan acabi la permanència, el " + d + ". Així evita la penalització.", iNow: "Ja. Canviar no li costa res.", iNowCost: x => "Ja. Canviar li costa " + x + " i ho recupera amb l'estalvi.",
+      iBank1: p => "Que li iguali " + p + " per cobrament amb targeta europea de particular.", iBank2: "Que li tregui la quota mensual i el lloguer del datàfon.", iBank3: "Que l'hi doni per escrit, amb la data d'inici.",
+      iSteps: ["Demani al nou proveïdor les condicions per escrit.", "Confirmi que el datàfon funciona amb la seva caixa o programa de vendes.", "Activi el nou datàfon abans de donar de baixa l'antic.", "Demani la baixa per escrit i guardi'n el justificant."]
     },
     en: {
-      res: "Your result", prud: "Your result · cautious estimate",
-      vIgual: "You already pay one of the cheapest options for your business.", vNo: "Changing terminal is not worth it for you today.",
-      vDudoso: "It would only pay off because of a temporary offer.", vWait: "It pays to switch when your minimum term ends.", vSi: "Yes, it is worth reviewing your card terminal.",
-      best: "You are already on one of the best options", between: (a, b) => "Between " + a + " and " + b, min: "At least",
-      instant: "Straight away", months: n => "≈ " + n + " months", costs: x => "Switching costs you " + x, free: "Switching costs you nothing",
-      wait24: "If you wait until your minimum term ends", net24: "After the cost of switching",
-      ckOk: "The calculation matches your invoice: you can rely on the result.",
-      ckWarn: n => "The calculation differs from your invoice by " + n + " %. Check the amounts or look for extra charges.",
-      ckBad: n => "The calculation does not match your invoice (" + n + " % difference). Do not rely on the result: choose “enter my own prices”.",
-      ckNone: "Without your invoice total we cannot check the calculation.",
-      wLockR: "Before switching, check that your till or sales software works with the new terminal.",
-      wBank: "If you have a minimum term or a loan with your bank, use the precise version.",
-      wLoan: "Ask your bank whether giving up the terminal changes the terms of your loan or credit line.",
-      wLockP: "Your till is connected to the terminal: ask how much it costs to adapt it and enter it in step 3.",
-      wDunno: "Check that your till or sales software works with the new terminal.",
-      ctaYesT: "Who to switch to, and how?", ctaNoT: "Would you like to confirm it with your invoice?",
-      ctaYesP: "I prepare an analysis using your invoice: which plan suits you, exactly how much you save and how to ask for it.",
-      ctaNoP: "I review your invoice and contract and tell you whether there are charges you can reduce without changing provider.",
-      toP: "Try the precise version →", toR: "Back to the quick version →",
-      e0: "Answer the 6 questions.", eLeft: n => n === 1 ? "1 question to go." : n + " questions to go.", eP: "Complete the 3 steps and press “See result”.",
-      chooseProv: "Choose your provider and plan", banks: "Banks", fin: "Fintech and others", fin2: "Fintech",
-      whoToday: "Who do you use today?", own: "Other or negotiated price: enter my own prices", nolimit: "no limit"
+      vYes: "Yes, you are paying too much.", vNo: "No, you are fine.", noSub: "No rate saves you enough to make switching worth it.",
+      payLine: (x, p) => "Estimated saving: " + x + "/year · Recommendation: " + p,
+      iCost: (c, s) => "Cost: " + c + "/month · Saving: " + s + "/year", iAltCost: c => c + "/month",
+      iWait2: (d, pen) => "When your minimum term ends, in " + d + "." + (pen ? " That way you avoid the " + pen + " penalty." : ""),
+      iBankX: (x, y) => "Ask them to match " + x + "/month or the " + y + " rate; if not, request cancellation.",
+      iSteps2: ["Sign up with the new provider.", "Receive and activate the new card machine.", "Cancel the previous one in writing.", "If your current card machine is rented, return it."],
+      prog: (i, n) => i + " of " + n, pre: "You pay", post: "too much", one: x => x + "/month",
+      instant: "Straight away", months: n => "≈ " + n + (n === 1 ? " month" : " months"), cheap: n => "of " + n + " rates are cheaper for you",
+      ref: (v, s) => "Average fee charged by banks in Spain: " + v + "\u00a0% (" + s + "Bank of Spain). Excludes monthly fees and rental.",
+      shareTxtYes: x => x + " too much to take card payments. Check yours, free:", shareTxtNo: "Paying too much for card payments? Check for free:",
+      shTop: "Card terminal calculator", shYes: "too much to take card payments", shNo: "effective cost of card payments", shAsk: "What about you?",
+      shared: "Image downloaded and link copied.",
+      chooseProv: "Choose your provider and plan", banks: "Banks", fin: "Fintech and others", own: "Other or negotiated price: enter my own prices", own2: "Your current contract",
+      iSave: x => "You save about " + x + " a month", iWait: d => "When your minimum term ends, in " + d + ". That way you avoid the penalty.", iNow: "Now. Switching costs you nothing.", iNowCost: x => "Now. Switching costs you " + x + " and the saving pays it back.",
+      iBank1: p => "To match " + p + " per payment on European consumer cards.", iBank2: "To drop the monthly fee and the terminal rental.", iBank3: "To put it in writing, with a start date.",
+      iSteps: ["Ask the new provider for the terms in writing.", "Check that the terminal works with your till or sales software.", "Activate the new terminal before cancelling the old one.", "Cancel in writing and keep the receipt."]
     }
   };
   const T = () => TX[lang()];
 
   const SIM = PLANS.filter(p => p.sim === "Sí");
-  const MIX = { 0:[.85,.04,.04,.03,.04], 1:[.78,.05,.09,.04,.04], 2:[.66,.05,.20,.06,.03], 3:[.55,.05,.30,.08,.02] };
   const grp = s => s.replace(/\B(?=(\d{3})+(?!\d))/g, "\u202F");
-  const eur = (x, d=0) => { const v = (Math.round(Math.abs(x) * 10**d) / 10**d).toFixed(d).split("."); return (x < 0 ? "−" : "") + grp(v[0]) + (d ? "," + v[1] : "") + "\u00a0€"; };
+  const eur = (x, d = 0) => { const v = (Math.round(Math.abs(x) * 10**d) / 10**d).toFixed(d).split("."); return (x < 0 ? "−" : "") + grp(v[0]) + (d ? "," + v[1] : "") + "\u00a0€"; };
+  const pct = x => (x * 100).toFixed(2).replace(".", ",") + "\u00a0%";
   const num = s => {
     if (s == null) return null; s = String(s).trim().replace(/\s|€|%/g, ""); if (s === "") return null;
     if (/^\d{1,3}(,\d{3})+$/.test(s) || /^\d{1,3}(,\d{3})+\.\d+$/.test(s)) s = s.replace(/,/g, "");
@@ -202,14 +216,10 @@ function iniciarUI(){
     else s = s.replace(",", ".");
     const v = parseFloat(s); return isFinite(v) ? v : null; };
   const numPct = s => { if (s == null) return null; s = String(s).trim().replace(",", "."); if (s === "") return null; const v = parseFloat(s); return isFinite(v) ? v / 100 : null; };
-
-  const narrow = () => matchMedia("(max-width:1099px)").matches;
   const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function goTo(el, smooth){
-    const h = document.querySelector(".hdr"), off = (h ? h.getBoundingClientRect().height : 0) + 12;
-    window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - off), behavior: smooth && !reduced() ? "smooth" : "auto" });
-  }
-  function keepTop(el){ const h = document.querySelector(".hdr"), off = (h ? h.getBoundingClientRect().height : 0) + 12; if (el.getBoundingClientRect().top < off) goTo(el, false); }
+  const hdrOff = () => { const h = document.querySelector(".hdr"); return (h ? h.getBoundingClientRect().height : 0) + 16; };
+  function goTo(el, smooth){ window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - hdrOff()), behavior: smooth && !reduced() ? "smooth" : "auto" }); }
+  function keepTop(el){ if (el.getBoundingClientRect().top < hdrOff()) goTo(el, false); }
 
   const SECT = [
     [{es:"Bar o cafetería",ca:"Bar o cafeteria",en:"Bar or café"},"Bar o restaurante"],
@@ -230,258 +240,213 @@ function iniciarUI(){
     [{es:"Llega solo desde mi caja o programa de ventas",ca:"Arriba sol des de la meva caixa o programa de vendes",en:"It comes automatically from my till or sales software"},"Sí"],
     [{es:"No lo sé",ca:"No ho sé",en:"I don't know"},"No sé"]
   ];
-  const chip = (lab, val) => `<button type="button" class="chip" aria-pressed="false" data-v="${val}">${L(lab)}</button>`;
+  const PROVS = [["SumUp","SumUp"],["CaixaBank","CaixaBank"],["BBVA","BBVA"],["Santander-Getnet","Santander"],["Sabadell","Sabadell"],["Revolut","Revolut"],["Square","Square"]]
+    .filter(([v]) => SIM.some(p => p.prov === v));
+  const chip = (lab, val) => '<button type="button" class="chip" aria-pressed="false" data-v="' + val + '">' + L(lab) + '</button>';
+  const press = b => b.parentElement.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b));
+  const unpress = el => el.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", "false"));
 
-  // ---------- rápida: una pregunta cada vez
-  const QS = [
-    { k:"V", t:{es:"¿Cuánto cobra con tarjeta al mes?",ca:"Quant cobra amb targeta al mes?",en:"How much do you take by card each month?"},
-      o:[[{es:"Menos de 1000 €",ca:"Menys de 1000 €",en:"Under 1000 €"},700],[same("1000 – 3000 €"),2000],[same("3000 – 6000 €"),4500],[same("6000 – 10\u202F000 €"),8000],[{es:"Más de 10\u202F000 €",ca:"Més de 10\u202F000 €",en:"Over 10\u202F000 €"},13000]] },
-    { k:"T", t:{es:"¿Cuánto paga de media cada cliente?",ca:"Quant paga de mitjana cada client?",en:"How much does each customer pay on average?"},
-      o:[[{es:"Menos de 10 €",ca:"Menys de 10 €",en:"Under 10 €"},7],[same("10 – 25 €"),17],[same("25 – 50 €"),35],[{es:"Más de 50 €",ca:"Més de 50 €",en:"Over 50 €"},70]] },
-    { k:"sector", t:{es:"¿Qué tipo de negocio tiene?",ca:"Quin tipus de negoci té?",en:"What type of business do you have?"}, o:SECT },
-    { k:"mix", t:{es:"De cada 10 clientes que pagan con tarjeta, ¿cuántos son turistas o extranjeros?",ca:"De cada 10 clients que paguen amb targeta, quants són turistes o estrangers?",en:"Out of every 10 customers who pay by card, how many are tourists or from abroad?"},
-      o:[[{es:"Ninguno o casi ninguno",ca:"Cap o gairebé cap",en:"None or almost none"},"0"],[same("1"),"1"],[same("2"),"2"],[{es:"3 o más",ca:"3 o més",en:"3 or more"},"3"],[{es:"No lo sé",ca:"No ho sé",en:"I don't know"},"1"]] },
-    { k:"cur", t:{es:"¿Con quién cobra hoy?",ca:"Amb qui cobra avui?",en:"Who do you use today?"},
-      o:[[same("SumUp"),"SUMUP_PPU"],[same("CaixaBank"),"CAIXA"],[same("BBVA"),"BBVA"],[same("Santander"),"GETNET_B"],[same("Sabadell"),"SABADELL"],[same("Square"),"SQUARE"],[same("Revolut"),"REVOLUT"],[{es:"Otro",ca:"Un altre",en:"Other"},"OTRO"]] },
-    { k:"lock", t:{es:"¿Cómo llega el importe al datáfono?",ca:"Com arriba l'import al datàfon?",en:"How does the amount reach the card terminal?"}, o:LOCK },
-  ];
-  const KEYS = QS.map(q => q.k), NQ = QS.length;
-  const A = {};
-  const pr = $("pRapida");
-  const answeredN = () => KEYS.filter(k => A[k] !== undefined).length;
-  QS.forEach((q, i) => {
-    const d = document.createElement("div"); d.className = "q"; d.hidden = i > 0;
-    d.innerHTML = `<div class="prog" aria-hidden="true"><span style="width:${Math.round((i + 1) / NQ * 100)}%"></span></div>`
-      + `<div class="q-head"><h3 tabindex="-1">${L(q.t)}</h3><span class="n">${L({es:(i+1)+" de "+NQ,ca:(i+1)+" de "+NQ,en:(i+1)+" of "+NQ})}</span></div>`
-      + (q.h ? `<p class="hint">${L(q.h)}</p>` : "")
-      + `<div class="chips" data-q="${q.k}">` + q.o.map(([lab, val]) => chip(lab, val)).join("") + `</div>`;
-    if (q.k === "cur") {
-      const s = document.createElement("select"); s.className = "sel"; s.id = "rOtro"; s.hidden = true;
-      s.setAttribute("aria-label", "Otro proveedor"); s.setAttribute("data-aria-es", "Otro proveedor"); s.setAttribute("data-aria-ca", "Un altre proveïdor"); s.setAttribute("data-aria-en", "Other provider");
-      d.appendChild(s);
-      const h = document.createElement("p"); h.className = "hint";
-      h.innerHTML = L({es:"Si su proveedor no aparece, use la versión precisa con su factura.",ca:"Si el seu proveïdor no hi apareix, faci servir la versió precisa amb la seva factura.",en:"If your provider is not listed, use the precise version with your invoice."});
-      d.appendChild(h);
-      s.addEventListener("change", () => { A.cur = s.value || undefined; if (s.value) answer(4); else runRapida(false); });
-    }
-    if (i > 0) d.insertAdjacentHTML("beforeend", `<div><button type="button" class="back" data-back="">${L({es:"← Anterior",ca:"← Anterior",en:"← Back"})}</button></div>`);
-    pr.appendChild(d);
-  });
-  const cards = [...pr.querySelectorAll(":scope > .q")];
-  let qi = 0, advT = 0;
-  function showQ(i, focus){
-    clearTimeout(advT);
-    qi = Math.max(0, Math.min(NQ - 1, i));
-    cards.forEach((c, j) => c.hidden = j !== qi);
-    if (focus) { keepTop(pr); cards[qi].querySelector("h3").focus({ preventScroll: true }); }
-  }
-  function fillRapidaSelect(){
-    const s = $("rOtro"), v = s.value, t = T();
-    s.innerHTML = `<option value="">${t.chooseProv}</option>` + [[t.banks, SIM.filter(p => p.tipo === "Banco")], [t.fin, SIM.filter(p => p.tipo !== "Banco")]]
-      .map(([g, l]) => `<optgroup label="${g}">` + l.slice().sort((a,b) => a.plan.localeCompare(b.plan, "es")).map(p => `<option value="${p.id}">${p.plan}</option>`).join("") + `</optgroup>`).join("");
-    s.value = v;
-  }
-  let doneOnce = false;
-  function answer(i){
-    const complete = answeredN() === NQ;
-    const scroll = complete && (!doneOnce || i === NQ - 1);
-    if (complete) doneOnce = true;
-    runRapida(scroll);
-    if (i < NQ - 1) { clearTimeout(advT); advT = setTimeout(() => { if (qi === i) showQ(i + 1, true); }, 250); }
-  }
-  pr.addEventListener("click", e => {
-    if (e.target.closest("[data-back]")) { showQ(qi - 1, true); return; }
-    const b = e.target.closest(".chip"); if (!b) return;
-    const c = b.parentElement, k = c.dataset.q, i = KEYS.indexOf(k);
-    c.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b));
-    const v = b.dataset.v;
-    if (k === "cur") {
-      $("rOtro").hidden = v !== "OTRO";
-      if (v === "OTRO") { A.cur = $("rOtro").value || undefined; runRapida(false); if (!A.cur) $("rOtro").focus(); else answer(i); return; }
-      A.cur = v;
-    } else A[k] = (k === "V" || k === "T") ? +v : v;
-    answer(i);
-  });
-
-  function runRapida(scroll){
-    if (mode !== "rapida") return;
-    const n = answeredN();
-    $("resEmptyN").textContent = n === 0 ? T().e0 : T().eLeft(NQ - n);
-    if (n < NQ) { hideRes(); return; }
-    const m = MIX[A.mix];
-    const I = { V:A.V, T:A.T, wP:m[0], wE:m[1], wN:m[2], wA:m[3], wB:m[4], NP:.025, BZ:.005, PROMO:false, IVAQ:true, IVA:.21, CTA:true,
-                ND:1, nF:2, pF:.5, PEN:0, MREM:0, CAJA:0, cur:A.cur, curCost:0, sector:A.sector, cons:1, incBaja:false, maxDias:null, swLock:false };
-    const R = calcular(PLANS, I); if (!R) return;
-    const t = T(), warns = [];
-    if (A.lock !== "No") warns.push(t.wLockR);
-    if (R.cur.p.tipo === "Banco") warns.push(t.wBank);
-    show(R, I, warns, null, scroll);
-  }
-
-  // ---------- precisa
+  const pp = $("calc"), steps = [...pp.querySelectorAll(":scope > .q")], NS = steps.length, prov = $("pProv"), P = {};
   $("pSectorChips").innerHTML = SECT.map(([lab, val]) => chip(lab, val)).join("");
   $("pLockChips").innerHTML = LOCK.map(([lab, val]) => chip(lab, val)).join("");
-  const prov = $("pProv");
-  function fillPrecisaSelect(){
+  $("pProvChips").innerHTML = PROVS.map(([v, lab]) => chip(same(lab), v)).join("")
+    + chip({es:"Otro",ca:"Un altre",en:"Other"}, "OTRO") + chip({es:"Escribir mis precios",ca:"Escriure els meus preus",en:"Enter my own prices"}, "CONTRATO");
+  function fillSelect(){
     const v = prov.value, t = T();
-    const groups = [[t.banks, SIM.filter(p => p.tipo === "Banco")], [t.fin2, SIM.filter(p => p.tipo !== "Banco")]];
-    prov.innerHTML = `<option value="">${t.whoToday}</option>` + groups.map(([g, l]) => `<optgroup label="${g}">` + l.map(p => `<option value="${p.id}">${p.plan}</option>`).join("") + `</optgroup>`).join("")
-      + `<option value="CONTRATO">${t.own}</option>`;
+    prov.innerHTML = '<option value="">' + t.chooseProv + '</option>' + [[t.banks, SIM.filter(p => p.tipo === "Banco")], [t.fin, SIM.filter(p => p.tipo !== "Banco")]]
+      .map(([g, l]) => '<optgroup label="' + g + '">' + l.slice().sort((a, b) => a.plan.localeCompare(b.plan, "es")).map(p => '<option value="' + p.id + '">' + p.plan + '</option>').join("") + '</optgroup>').join("")
+      + '<option value="CONTRATO">' + t.own + '</option>';
     prov.value = v;
-    $("pDias").placeholder = t.nolimit;
   }
-  const P = {};
-  let shownP = false;
-  $("pPrecisa").addEventListener("click", e => {
-    const b = e.target.closest(".chip"); if (!b) return;
-    const c = b.parentElement; c.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b));
-    P[c.dataset.name] = b.dataset.v;
-    if (c.dataset.name === "pLock") $("pLockMore").hidden = b.dataset.v !== "Sí";
-    validate(); if (shownP) runPrecisa(false);
-  });
-  prov.addEventListener("change", () => { $("pContract").hidden = prov.value !== "CONTRATO"; validate(); if (shownP) runPrecisa(false); });
-  $("pPrecisa").addEventListener("input", () => { validate(); if (shownP) runPrecisa(false); });
   function vals(){
     const s = ["pPart","pEmp","pNoe","pAmex","pBiz"].map(id => num($(id).value) || 0);
-    return { s, V: s.reduce((a,b)=>a+b,0), ops: num($("pOps").value) || 0 };
+    return { s, V: s.reduce((a, b) => a + b, 0), ops: num($("pOps").value) || 0 };
   }
-  function validate(){
-    const v = vals(), ok = v.V > 0 && v.ops > 0 && prov.value && P.pSector;
-    $("pGo").disabled = !ok; $("pMissing").hidden = !!ok; return ok;
-  }
-
-  // pasos de la precisa: uno cada vez
-  const pp = $("pPrecisa"), steps = [...pp.querySelectorAll(":scope > .q")], pMore = pp.querySelector(":scope > .more"), pAct = pp.querySelector(":scope > .actions");
-  const NS = steps.length;
-  steps.forEach((st, i) => {
-    st.querySelector("h3").tabIndex = -1;
-    st.insertAdjacentHTML("afterbegin", `<div class="prog" aria-hidden="true"><span style="width:${Math.round((i + 1) / NS * 100)}%"></span></div>`);
-    const nav = document.createElement("div"); nav.className = "qnav";
-    nav.innerHTML = (i > 0 ? `<button type="button" class="back" data-pback="">${L({es:"← Anterior",ca:"← Anterior",en:"← Back"})}</button>` : "<span></span>")
-      + (i < NS - 1 ? `<button type="button" class="btn btn--gold" data-pnext="">${L({es:"Siguiente →",ca:"Següent →",en:"Next →"})}</button>` : "");
-    st.appendChild(nav);
-  });
-  let pi = 0;
-  const stepOK = i => i === 0 ? (vals().V > 0 && vals().ops > 0) : i === 1 ? !!prov.value : true;
-  function navState(){ steps.forEach((st, i) => { const b = st.querySelector("[data-pnext]"); if (b) b.disabled = !stepOK(i); }); }
+  const stepOK = i => i === 0 ? vals().V > 0 : i === 1 ? vals().ops > 0 : i === 2 ? num($("pPaid").value) > 0 : true;
+  function navState(){ steps.forEach((st, i) => st.querySelectorAll("[data-pnext]").forEach(b => b.disabled = !stepOK(i))); }
+  let pi = 0, advT = 0;
   function showStep(i, focus){
+    clearTimeout(advT);
     pi = Math.max(0, Math.min(NS - 1, i));
     steps.forEach((st, j) => st.hidden = j !== pi);
-    pMore.hidden = pAct.hidden = pi !== NS - 1;
     navState();
-    if (focus) { keepTop(pp); steps[pi].querySelector("h3").focus({ preventScroll: true }); }
+    if (focus && last && !$("res").hidden) { tok++; hideOut(); }
+    if (focus) { keepTop(pp); steps[pi].querySelector("h2").focus({ preventScroll: true }); }
   }
+  const next = i => { if (i >= NS - 1) run(precisaInput()); else showStep(i + 1, true); };
+  function answered(i){ clearTimeout(advT); advT = setTimeout(() => { if (pi === i) next(i); }, 250); }
+  const provSub = which => { $("pPlanChips").hidden = which !== "plan"; prov.hidden = which !== "sel"; $("pContract").hidden = $("pContractNext").hidden = which !== "own"; };
+
   pp.addEventListener("click", e => {
     if (e.target.closest("[data-pback]")) { showStep(pi - 1, true); return; }
-    const n = e.target.closest("[data-pnext]"); if (n && !n.disabled) showStep(pi + 1, true);
+    const n = e.target.closest("[data-pnext]"); if (n) { if (!n.disabled) next(pi); return; }
+    const no = e.target.closest("[data-paid-no]");
+    if (no) { no.setAttribute("aria-pressed", "true"); $("pPaid").value = ""; navState(); answered(2); return; }
+    const b = e.target.closest(".chip[data-v]"); if (!b) return;
+    const name = b.parentElement.dataset.name; if (!name) return;
+    press(b);
+    const v = b.dataset.v;
+    if (name === "prov") {
+      unpress($("pPlanChips"));
+      if (v === "OTRO") { P.cur = prov.value && prov.value !== "CONTRATO" ? prov.value : undefined; provSub("sel"); if (P.cur) answered(pi); else prov.focus(); return; }
+      if (v === "CONTRATO") { P.cur = "CONTRATO"; provSub("own"); const f = $("cP"); if (f) f.focus({ preventScroll: true }); return; }
+      const plans = SIM.filter(p => p.prov === v);
+      if (plans.length === 1) { P.cur = plans[0].id; provSub(null); answered(pi); return; }
+      P.cur = undefined;
+      $("pPlanChips").innerHTML = plans.map(p => chip(same(p.plan), p.id)).join(""); provSub("plan"); return;
+    }
+    if (name === "plan") { P.cur = v; answered(pi); return; }
+    P[name] = v;
+    if (name === "pLock") { $("pLockMore").hidden = $("pLockNext").hidden = v !== "Sí"; if (v === "Sí") return; }
+    answered(pi);
   });
-  pp.addEventListener("input", navState);
-  prov.addEventListener("change", navState);
-  showStep(0, false);
-  $("pGo").addEventListener("click", () => { if (validate()) { shownP = true; runPrecisa(true); } });
-  function runPrecisa(scroll){
-    if (mode !== "precisa" || !validate()) { if (mode === "precisa") hideRes(); return; }
+  prov.addEventListener("change", () => {
+    P.cur = prov.value || undefined;
+    if (P.cur === "CONTRATO") { provSub("own"); return; }
+    if (P.cur) answered(pi);
+  });
+  pp.addEventListener("input", e => {
+    if (e.target.id === "pPaid") pp.querySelector("[data-paid-no]").setAttribute("aria-pressed", "false");
+    navState();
+  });
+  pp.addEventListener("keydown", e => {
+    if (e.key !== "Enter" || e.target.tagName !== "INPUT") return;
+    e.preventDefault();
+    const b = [...steps[pi].querySelectorAll("[data-pnext]")].find(x => x.offsetParent !== null);
+    if (b && !b.disabled) b.click();
+  });
+  function precisaInput(){
     const v = vals(), V = v.V, w = v.s.map(x => x / V);
-    const paid = num($("pPaid").value) || 0;
-    const contrato = prov.value === "CONTRATO" ? { rp:numPct($("cP").value), re:numPct($("cE").value), rn:numPct($("cN").value), ra:numPct($("cA").value), rb:numPct($("cB").value),
-      f:num($("cF").value)||0, cuota:num($("cQ").value)||0, alq:num($("cL").value)||0 } : null;
+    const contrato = P.cur === "CONTRATO" ? { rp:numPct($("cP").value), re:numPct($("cE").value), rn:numPct($("cN").value), ra:numPct($("cA").value), rb:numPct($("cB").value),
+      f:num($("cF").value) || 0, cuota:num($("cQ").value) || 0, alq:num($("cL").value) || 0 } : null;
     const lock = P.pLock === "Sí";
-    const dias = num($("pDias").value);
-    const I = { V, T: V / v.ops, wP:w[0], wE:w[1], wN:w[2], wA:w[3], wB:w[4], NP:.025, BZ:.005, PROMO:$("pPromo").value === "Sí", IVAQ:false, IVA:.21, CTA:true,
-      ND: Math.max(1, num($("pND").value) || 1), nF: Math.min(12, Math.max(0, num($("pNF").value) ?? 2)), pF: (num($("pPF").value) ?? 50) / 100,
-      PEN: num($("pPen").value) || 0, MREM: num($("pPerm").value) || 0, CAJA: lock ? (num($("pCaja").value) || 0) : 0,
-      cur: prov.value, curCost: paid, sector: P.pSector, cons:0, forma: P.pForma || null, incBaja: $("pBaja").value === "Sí", maxDias: dias, swLock: lock,
+    const I = { V, T: V / v.ops, wP:w[0], wE:w[1], wN:w[2], wA:w[3], wB:w[4], NP:.025, BZ:.005, PROMO:true, IVAQ:false, IVA:.21, CTA:true,
+      ND:1, nF:2, pF:.5, PEN: num($("pPen").value) || 0, MREM: num($("pPerm").value) || 0, CAJA: lock ? (num($("pCaja").value) || 0) : 0,
+      cur: P.cur, curCost: num($("pPaid").value) || 0, sector: P.pSector, cons:0, forma: P.pForma || null, incBaja:false, maxDias:null, swLock: lock,
       swF: num($("pSwF").value) || 0, swNew: num($("pSwN").value) || 0, contrato };
     if (P.pIva === "Sí") I.IVA = 0;
-    const R = calcular(PLANS, I); if (!R) return;
-    const t = T(), warns = [];
-    if (P.pLoan === "Sí") warns.push(t.wLoan);
-    if (lock && !I.CAJA) warns.push(t.wLockP);
-    if (P.pLock === "No sé") warns.push(t.wDunno);
-    let check = null;
-    if (paid > 0) {
-      const diff = (R.cur.Cn - paid) / paid, a = Math.abs(diff);
-      check = a <= .10 ? ["ok", t.ckOk] : a <= .25 ? ["warn", t.ckWarn(Math.round(a*100))] : ["bad", t.ckBad(Math.round(a*100))];
-    } else check = ["warn", t.ckNone];
-    show(R, I, warns, check, scroll);
+    return I;
   }
 
-  // ---------- resultado
-  let tok = 0, shownOnce = false;
-  function hideRes(){ tok++; $("about").hidden = true; $("res").hidden = true; $("resLoad").hidden = true; $("resEmpty").hidden = false; }
-  function show(R, I, warns, check, scroll){
-    const t = ++tok;
-    $("resEmpty").hidden = true; $("res").hidden = true; $("resLoad").hidden = false;
-    if (scroll && narrow()) requestAnimationFrame(() => goTo($("resLoad"), true));
-    setTimeout(() => {
-      if (t !== tok) return;
-      fill(R, I, warns, check); shownOnce = true;
-      $("resLoad").hidden = true; $("res").hidden = false; $("about").hidden = false;
-    }, reduced() ? 250 : (shownOnce ? 700 : 1400));
+  // ---------- resultado (en el mismo sitio)
+  let last = null, tok = 0;
+  const hideOut = () => { ["res","pay","informe","resLoad"].forEach(id => $(id).hidden = true); $("shareMsg").hidden = true; $("contacto").hidden = true; };
+  function run(I){
+    const v = vals();
+    if (!(v.V > 0 && v.ops > 0 && P.cur && P.pSector)) { showStep(!(v.V > 0) ? 0 : !(v.ops > 0) ? 1 : !P.cur ? 3 : 5, true); return; }
+    const R = calcular(PLANS, I); if (!R) return;
+    last = { kind: "precisa", I, R };
+    tok++; hideOut();
+    fill(); $("res").hidden = false; $("pay").hidden = !ofrecer(last.R);
+    $("rVerdict").focus({ preventScroll: true });
+    requestAnimationFrame(() => goTo($("res"), true));
   }
-  function fill(R, I, warns, check){
-    const tx = T(), b = R.best, prec = !I.cons;
-    const wait = R.tono === "si" && (I.MREM || 0) > 0 && b.neto24_espera > b.neto24;
-    $("rEyebrow").textContent = prec ? tx.res : tx.prud;
-    $("rVerdict").textContent = R.tono === "igual" ? tx.vIgual : R.tono === "no" ? tx.vNo : R.tono === "dudoso" ? tx.vDudoso : wait ? tx.vWait : tx.vSi;
-    $("sMes").textContent = eur(Math.max(0, b.ahorro_m));
-    $("sMesX").textContent = b.es_actual ? tx.best : (prec ? tx.between(eur(Math.max(0,b.ahorro_lo)), eur(Math.max(0,b.ahorro_hi))) : tx.min);
-    const pb = b.payback;
-    $("sPay").textContent = typeof pb === "number" ? (pb < 1 ? tx.instant : tx.months(Math.ceil(pb))) : "—";
-    $("sPayX").textContent = b.es_actual ? "" : (b.coste_cambio > 0 ? tx.costs(eur(b.coste_cambio)) : tx.free);
-    $("s24").textContent = eur(Math.max(0, wait ? b.neto24_espera : b.neto24));
-    $("s24X").textContent = wait ? tx.wait24 : tx.net24;
-    const ch = $("rCheck");
-    if (check) { ch.hidden = false; ch.className = "check " + check[0]; ch.textContent = check[1]; } else ch.hidden = true;
-    $("rWarns").innerHTML = warns.map(w => "<li>" + w + "</li>").join("");
-    $("rWarns").hidden = !warns.length;
-    const yes = R.tono === "si" || R.tono === "dudoso";
-    $("ctaT").textContent = yes ? tx.ctaYesT : tx.ctaNoT;
-    $("ctaP").textContent = yes ? tx.ctaYesP : tx.ctaNoP;
-    $("rSwitch").textContent = prec ? tx.toR : tx.toP;
+  function fill(){
+    const { I, R } = last, t = T(), b = R.best, yes = R.tono === "si";
+    const wait = yes && (I.MREM || 0) > 0 && b.neto24_espera > b.neto24;
+    $("rVerdict").textContent = yes ? t.vYes : t.vNo;
+    $("rHero").hidden = $("rFacts").hidden = !yes; $("rNo").hidden = yes;
+    $("rNo").textContent = t.noSub;
+    if (yes) {
+      $("rPre").textContent = t.pre;
+      $("rBig").textContent = t.one(eur(Math.max(0, b.ahorro_m)));
+      $("rPost").textContent = t.post;
+      $("f24").textContent = eur(Math.max(0, wait ? b.neto24_espera : b.neto24));
+      const pb = b.payback;
+      $("fPay").textContent = typeof pb === "number" ? (pb < 1 ? t.instant : t.months(Math.ceil(pb))) : "—";
+      $("fCheap").textContent = R.ranked.filter(r => !r.es_actual && r.ahorro_m > 0).length;
+      $("fCheapK").textContent = t.cheap(SIM.length);
+    }
+    const vol = I.V * ((12 - I.nF) + I.nF * I.pF);
+    $("rEff").textContent = vol > 0 ? pct(R.CURANN / vol) : "—";
+    const ref = REFERENCIA;
+    $("rRef").hidden = !ref;
+    if (ref) $("rRef").textContent = t.ref(String(ref.valor).replace(".", ","), ref.periodo ? ref.periodo + ", " : "");
+    $("payLine").textContent = t.payLine(eur(anual(R)), precio());
+    if (!$("informe").hidden && last.I) fillInforme();
   }
-  $("rSwitch").addEventListener("click", e => { e.preventDefault(); setMode(mode === "rapida" ? "precisa" : "rapida", true); });
+  async function shareCard(){
+    if (!last) return;
+    const t = T(), yes = last.R.tono === "si", url = "https://natashacaceres.com/calculadora";
+    const fig = yes ? t.one(eur(Math.max(0, last.R.best.ahorro_m))) : null;
+    const big = fig || $("rEff").textContent, line = fig ? t.shYes : t.shNo, text = fig ? t.shareTxtYes(fig) : t.shareTxtNo;
+    const c = document.createElement("canvas"); c.width = 1080; c.height = 1080;
+    const x = c.getContext("2d");
+    try { await document.fonts.ready; } catch(_) {}
+    x.fillStyle = "#0B1220"; x.fillRect(0, 0, 1080, 1080);
+    x.textAlign = "center";
+    x.fillStyle = "#D4AF37"; x.font = '600 30px Inter, system-ui, sans-serif'; x.fillText(t.shTop.toUpperCase(), 540, 250);
+    let size = 150; x.font = '500 ' + size + 'px "Playfair Display", Georgia, serif';
+    while (x.measureText(big).width > 940 && size > 60) { size -= 6; x.font = '500 ' + size + 'px "Playfair Display", Georgia, serif'; }
+    x.fillText(big, 540, 520);
+    x.fillStyle = "#FFFFFF"; x.font = '400 42px Inter, system-ui, sans-serif'; x.fillText(line, 540, 610);
+    x.fillStyle = "#B9C0CF"; x.font = '400 34px Inter, system-ui, sans-serif'; x.fillText(t.shAsk, 540, 860); x.fillText("natashacaceres.com/calculadora", 540, 910);
+    const blob = await new Promise(r => c.toBlob(r, "image/png"));
+    if (!blob) return;
+    const file = new File([blob], "resultado-datafono.png", { type: "image/png" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], text: text + " " + url }); return; } catch (e) { if (e && e.name === "AbortError") return; }
+    }
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file.name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    try { await navigator.clipboard.writeText(text + " " + url); } catch(_) {}
+    $("shareMsg").textContent = t.shared; $("shareMsg").hidden = false;
+  }
+  $("rShare").addEventListener("click", shareCard);
+  const change = () => { tok++; hideOut(); pp.hidden = false; showStep(0, false); goTo(pp, true); steps[0].querySelector("h2").focus({ preventScroll: true }); };
+  $("rChange").addEventListener("click", change);
+
+  // ---------- informe de pago (configuración en PAGO, al principio del archivo)
+  const PRUEBA = /[?&]prueba=1(&|$)/.test(location.search);
+  const PAGABLE = PAGO.activo || PRUEBA;
+  const KEY = "nc-calc";
+  const precio = () => eur(PAGO.precio);
+  const anual = R => Math.max(0, R.best.ahorro_m * 12);
+  const ofrecer = R => R.tono === "si" && anual(R) >= PAGO.umbralAhorro;
+  $("paySoon").hidden = PAGABLE;
+  $("payOk").addEventListener("change", () => { $("payBtn").disabled = !(PAGABLE && $("payOk").checked); });
+  $("payBtn").addEventListener("click", () => {
+    if (!PAGABLE || !$("payOk").checked || !last) return;
+    try { sessionStorage.setItem(KEY, JSON.stringify({ I: last.I })); } catch(_) {}
+    location.href = PAGO.enlace;
+  });
+  function fillInforme(){
+    const { I, R } = last, t = T(), b = R.best;
+    const name = p => p.id === "CONTRATO" ? t.own2 : p.plan;
+    const mes = r => eur(Math.max(0, r.ano2 / 12));
+    $("iPlan").textContent = name(b.p);
+    $("iSave").textContent = t.iCost(mes(b), eur(anual(R)));
+    $("iAlts").innerHTML = R.ranked.filter(r => r !== b && !r.es_actual).slice(0, 2).map(r => '<li><b>' + name(r.p) + '</b> · ' + t.iAltCost(mes(r)) + '</li>').join("");
+    const wait = (I.MREM || 0) > 0 && b.neto24_espera > b.neto24;
+    if (wait) { const d = new Date(); d.setMonth(d.getMonth() + I.MREM); $("iWhen").textContent = t.iWait2(d.toLocaleDateString({ es:"es-ES", ca:"ca-ES", en:"en-GB" }[lang()], { month:"long", year:"numeric" }), I.PEN > 0 ? eur(I.PEN) : ""); }
+    else $("iWhen").textContent = b.coste_cambio > 0 ? t.iNowCost(eur(b.coste_cambio)) : t.iNow;
+    $("iBank").textContent = t.iBankX(mes(b), name(b.p));
+    $("iSteps").innerHTML = t.iSteps2.map(s => '<li>' + s + '</li>').join("");
+  }
+  $("iPrint").addEventListener("click", () => window.print());
   $("ctaBtn").addEventListener("click", e => {
     e.preventDefault();
     $("contacto").hidden = false;
     requestAnimationFrame(() => { goTo($("contacto"), true); const f = $("ct-n"); if (f) f.focus({ preventScroll: true }); });
   });
 
-  // ---------- modo
-  let mode = null;
-  function setMode(m, scroll){
-    mode = m;
-    $("mRapida").setAttribute("aria-pressed", m === "rapida"); $("mPrecisa").setAttribute("aria-pressed", m === "precisa");
-    $("work").hidden = false;
-    $("pRapida").hidden = m !== "rapida"; $("pPrecisa").hidden = m !== "precisa";
-    $("resEmptyN").textContent = m === "rapida" ? T().e0 : T().eP;
-    hideRes();
-    try { if (location.hash !== "#" + m) history.replaceState(null, "", "#" + m); } catch(_) {}
-    if (m === "rapida") runRapida(false); else if (shownP) runPrecisa(false);
-    if (scroll) requestAnimationFrame(() => goTo($("work"), scroll !== "instant"));
-  }
-  function closeMode(){
-    mode = null;
-    $("mRapida").setAttribute("aria-pressed", "false"); $("mPrecisa").setAttribute("aria-pressed", "false");
-    $("work").hidden = true; hideRes();
-    try { history.replaceState(null, "", location.pathname + location.search); } catch(_) {}
-  }
-  $("mRapida").addEventListener("click", () => mode === "rapida" ? closeMode() : setMode("rapida", narrow()));
-  $("mPrecisa").addEventListener("click", () => mode === "precisa" ? closeMode() : setMode("precisa", narrow()));
+  document.addEventListener("nc-lang", () => { fillSelect(); if (last && !$("res").hidden) fill(); if (last && !$("informe").hidden && !$("iBody").hidden) fillInforme(); });
+  fillSelect(); showStep(0, false);
 
-  function runQuiet(fn){ const s = show; show = (R, I, w, c) => fill(R, I, w, c); fn(false); show = s; }
-  document.addEventListener("nc-lang", () => {
-    fillRapidaSelect(); fillPrecisaSelect();
-    if (!mode) return;
-    const n = answeredN();
-    $("resEmptyN").textContent = mode === "rapida" ? (n === 0 ? T().e0 : T().eLeft(NQ - n)) : T().eP;
-    if (!$("res").hidden) { if (mode === "rapida") runQuiet(runRapida); else if (shownP) runQuiet(runPrecisa); }
-  });
-  fillRapidaSelect(); fillPrecisaSelect(); validate();
-
-  const h = location.hash.replace("#","");
-  if (h === "rapida" || h === "precisa") setMode(h, narrow() ? "instant" : false);
-  window.addEventListener("hashchange", () => { const x = location.hash.replace("#",""); if ((x === "rapida" || x === "precisa") && x !== mode) setMode(x, narrow()); });
+  // Vuelta desde el pago (?pago=ok): informe completo en lugar de las preguntas.
+  const qs = new URLSearchParams(location.search);
+  if (qs.get("pago") === "ok") {
+    let saved = null;
+    try { saved = JSON.parse(sessionStorage.getItem(KEY)); } catch(_) {}
+    try { history.replaceState(null, "", location.pathname); } catch(_) {}
+    pp.hidden = true;
+    const R = saved && saved.I ? calcular(PLANS, saved.I) : null;
+    if (R) { last = { kind: "precisa", I: saved.I, R }; fillInforme(); }
+    $("iBody").hidden = !R; $("iMissing").hidden = !!R;
+    $("informe").hidden = false;
+    try { sessionStorage.removeItem(KEY); } catch(_) {}
+    requestAnimationFrame(() => goTo($("informe"), false));
+  }
 }
 
 // ---------- tarifas: /data/tarifas-datafono.json con copia de respaldo en la página (RESPALDO)
@@ -494,9 +459,9 @@ function iniciarUI(){
     en: ["January","February","March","April","May","June","July","August","September","October","November","December"]
   };
   const lang = () => ["es","ca","en"].indexOf(document.documentElement.lang) >= 0 ? document.documentElement.lang : "es";
-  const fecha = s => {
+  const fecha = (s, l) => {
     const [y, m, d] = String(s).split("-").map(Number); if (!(d && m)) return s;
-    const l = lang(), mm = MESES[l][m - 1];
+    l = l || lang(); const mm = MESES[l][m - 1];
     return l === "en" ? d + " " + mm + " " + y : l === "ca" ? d + (/^[aeiou]/.test(mm) ? " d'" : " de ") + mm + " de " + y : d + " de " + mm + " de " + y;
   };
   const RES = typeof RESPALDO !== "undefined" ? RESPALDO : null;
@@ -504,25 +469,36 @@ function iniciarUI(){
   const valido = d => !!d && FECHA_OK(d.actualizado) && Array.isArray(d.planes)
     && d.planes.filter(p => p && p.id && p.prov && Array.isArray(p.inc) && p.inc.length === 4).length >= 10
     && (!RES || d.actualizado >= RES.actualizado);
+  const refOK = r => r && typeof r.valor === "number" && isFinite(r.valor) ? r : null;
   let actualizado = null, hecho = false;
-  const putDate = () => { if (actualizado) document.getElementById("fechaTarifas").textContent = fecha(actualizado); };
+  const putDate = () => {
+    if (!actualizado) return;
+    document.querySelectorAll(".fechaTarifas").forEach(el => el.textContent = fecha(actualizado, el.dataset.fl));
+    ["es","ca","en"].forEach(l => {
+      const sc = document.getElementById("faq-ld-" + l); if (!sc) return;
+      try { const j = JSON.parse(sc.textContent); const t = j.mainEntity[1].acceptedAnswer; t.text = t.text.replace(/(Fecha de la última revisión|Data de l'última revisió|Date of last review): [^.]+\./, "$1: " + fecha(actualizado, l) + "."); sc.textContent = JSON.stringify(j); } catch(_) {}
+    });
+  };
   document.addEventListener("nc-lang", putDate);
-  const modos = [document.getElementById("mRapida"), document.getElementById("mPrecisa")];
   function usar(d){
     if (hecho) return; hecho = true;
-    PLANS = d.planes; actualizado = d.actualizado; putDate();
-    modos.forEach(b => b.disabled = false);
+    PLANS = d.planes; actualizado = d.actualizado; REFERENCIA = refOK(d.referencia); putDate();
     iniciarUI();
   }
-  if (!RES) { // sin respaldo: espera al archivo
+  if (!RES) {
     fetch(URL_T, { cache: "no-store" }).then(r => r.json()).then(d => { if (valido(d)) usar(d); }).catch(() => {});
     return;
   }
-  modos.forEach(b => b.disabled = true);
   const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
   const tope = setTimeout(() => { if (ctl) ctl.abort(); usar(RES); }, LIMITE);
   const pedir = u => fetch(u, { cache: "no-store", signal: ctl ? ctl.signal : undefined }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
   pedir(URL_T).catch(e => { if (e && e.name === "AbortError") throw e; return pedir(URL_T2); })
     .then(d => { clearTimeout(tope); usar(valido(d) ? d : RES); })
     .catch(() => { clearTimeout(tope); usar(RES); });
+})();
+
+// Dudas: solo una abierta a la vez.
+(function faqUna(){
+  const list = document.querySelectorAll(".faq-i"); if (!list.length) return;
+  list.forEach(d => d.addEventListener("toggle", () => { if (d.open) list.forEach(o => { if (o !== d && o.open) o.open = false; }); }));
 })();
