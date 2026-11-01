@@ -20,7 +20,6 @@ Natasha Cáceres studies how European financial rules change the behaviour of ba
 
 ## Research tools
 - [Neighbourhood Fees Index, Barcelona](https://natashacaceres.com/observatorio): independent observatory of what neighbourhood shops pay for card payments, banking, alarms, phone and subscriptions, measured with real invoices. [Methodology](https://natashacaceres.com/observatorio-metodologia).
-- [Card fee calculator](https://natashacaceres.com/calculadora): compares a shop's card terminal costs with 28 bank and fintech tariffs in Spain (in Spanish).
 
 ## Articles
 - [Open Finance in LatAm 2026: Regulatory Gaps Europe Learned the Hard Way](https://natashacaceres.com/blog-open-finance-in-latam-2026-the-regulatory-gaps-europe-learned-the-hard-way) (2026-03-19). Latin America is scaling Open Finance fast. Europe already knows what happens when the infrastructure outpaces the regulation. The lesson is still relevant.

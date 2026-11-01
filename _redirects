@@ -40,3 +40,6 @@
 /wp-sitemap.xml                                /sitemap.xml              301
 /news-sitemap.xml                              /sitemap.xml              301
 /sitemap-index.xml                             /sitemap.xml              301
+# Calculadora quitada el 1 nov 2026: su tema sigue en el observatorio
+/calculadora                                   /observatorio             301
+/calculadora/                                  /observatorio             301
