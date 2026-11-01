@@ -1,14 +1,14 @@
 # Dr. Natasha Cáceres
 
-> Economist (PhD in Economics, Summa Cum Laude, University of Barcelona) specialised in Open Finance and EU digital finance regulation: PSD2, PSD3, the Payment Services Regulation (PSR), FIDA, DORA and MiCA. Based in Barcelona, Spain. Works in English, Spanish and Catalan. ORCID 0000-0001-9233-0274.
+> Economist (PhD in Economics, Summa Cum Laude, University of Barcelona) specialised in Open Finance and EU digital finance regulation: PSD2, PSD3, the Payment Services Regulation (PSR), FIDA, DORA and MiCA. Based in Barcelona, Spain. Works in English and Spanish. ORCID 0000-0001-9233-0274.
 
 Natasha Cáceres studies how European financial rules change the behaviour of banks, fintechs and their customers, and how regulation shapes venture capital allocation, market structure and the role of data aggregators in fintech and paytech. Her doctoral research was carried out in collaboration with the Joint Research Centre (JRC) of the European Commission. She has taught economics at the University of Barcelona and microeconomics at EADA Business School, and advises financial institutions, fintechs and policy teams in Europe and Latin America, including the Puerto Rico Department of State. She is also the founder of Ipso (ipsoglobal.com), a hospitality technology company in Barcelona.
 
 ## Publications
 - [Has PSD2 Favoured Investments in the European PayTech Companies?](https://publications.jrc.ec.europa.eu/repository/handle/JRC141896) Cáceres, N., Calzada, J., Duch-Brown, N. and Martínez Santos, F. European Commission, JRC Digital Economy Working Paper 2025-04, April 2025.
-- Essays on Capital Allocation and Regulation in Digital Finance. PhD thesis, University of Barcelona, March 2026, Summa Cum Laude.
+- [Essays on Capital Allocation and Regulation in Digital Finance](https://hdl.handle.net/10803/698659). PhD thesis, University of Barcelona, defended 5 March 2026, Summa Cum Laude.
 - Aggregators as Gatekeepers in Open Banking: Investor Networks and Capital Influence. Working paper.
-- Full list on [ORCID](https://orcid.org/0000-0001-9233-0274).
+- Full list on [ORCID](https://orcid.org/0000-0001-9233-0274) and [Google Scholar](https://scholar.google.com/citations?user=B1AdiPkAAAAJ).
 - [Digital Finance Reports](https://natashacaceres.com/reports): The New Rules of European Digital Finance (2026) and EU Digital Finance 2026, The Essentials (free guide).
 
 ## Advisory
@@ -34,4 +34,5 @@ Natasha Cáceres studies how European financial rules change the behaviour of ba
 ## About and contact
 - [About Natasha Cáceres](https://natashacaceres.com/about)
 - [ORCID](https://orcid.org/0000-0001-9233-0274)
+- [Google Scholar](https://scholar.google.com/citations?user=B1AdiPkAAAAJ)
 - [LinkedIn](https://www.linkedin.com/in/natasha-c%C3%A1ceres-9912b73b0/)
