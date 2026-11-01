@@ -35,3 +35,8 @@
 /feed/                                         /blog                     301
 /41-2                                          /about                    301
 /41-2/                                         /about                    301
+# Mapas del sitio con nombres de WordPress u otros que piden los robots
+/sitemap_index.xml                             /sitemap.xml              301
+/wp-sitemap.xml                                /sitemap.xml              301
+/news-sitemap.xml                              /sitemap.xml              301
+/sitemap-index.xml                             /sitemap.xml              301
