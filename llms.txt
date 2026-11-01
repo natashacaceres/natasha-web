@@ -1,0 +1,37 @@
+# Dr. Natasha Cáceres
+
+> Economist (PhD in Economics, Summa Cum Laude, University of Barcelona) specialised in Open Finance and EU digital finance regulation: PSD2, PSD3, the Payment Services Regulation (PSR), FIDA, DORA and MiCA. Based in Barcelona, Spain. Works in English, Spanish and Catalan. ORCID 0000-0001-9233-0274.
+
+Natasha Cáceres studies how European financial rules change the behaviour of banks, fintechs and their customers, and how regulation shapes venture capital allocation, market structure and the role of data aggregators in fintech and paytech. Her doctoral research was carried out in collaboration with the Joint Research Centre (JRC) of the European Commission. She has taught economics at the University of Barcelona and microeconomics at EADA Business School, and advises financial institutions, fintechs and policy teams in Europe and Latin America, including the Puerto Rico Department of State. She is also the founder of Ipso (ipsoglobal.com), a hospitality technology company in Barcelona.
+
+## Publications
+- [Has PSD2 Favoured Investments in the European PayTech Companies?](https://publications.jrc.ec.europa.eu/repository/handle/JRC141896) Cáceres, N., Calzada, J., Duch-Brown, N. and Martínez Santos, F. European Commission, JRC Digital Economy Working Paper 2025-04, April 2025.
+- Essays on Capital Allocation and Regulation in Digital Finance. PhD thesis, University of Barcelona, March 2026, Summa Cum Laude.
+- Aggregators as Gatekeepers in Open Banking: Investor Networks and Capital Influence. Working paper.
+- Full list on [ORCID](https://orcid.org/0000-0001-9233-0274).
+- [Digital Finance Reports](https://natashacaceres.com/reports): The New Rules of European Digital Finance (2026) and EU Digital Finance 2026, The Essentials (free guide).
+
+## Advisory
+- [Advisory on EU financial regulation](https://natashacaceres.com/advisory): regulatory impact analysis, EU market entry strategy for non-EU institutions, executive briefings for boards, and applied econometric research. Requests through the form on that page.
+
+## Teaching
+- [Open Finance 101](https://natashacaceres.com/open-finance-101): free self-paced course, 8 modules, about 60 minutes. What open finance is, the European regulatory map, the Americas, Asia, the plumbing and who wins.
+- [Open Finance Academy](https://natashacaceres.com/academy) and [courses](https://natashacaceres.com/courses).
+
+## Research tools
+- [Neighbourhood Fees Index, Barcelona](https://natashacaceres.com/observatorio): independent observatory of what neighbourhood shops pay for card payments, banking, alarms, phone and subscriptions, measured with real invoices. [Methodology](https://natashacaceres.com/observatorio-metodologia).
+- [Card fee calculator](https://natashacaceres.com/calculadora): compares a shop's card terminal costs with 28 bank and fintech tariffs in Spain (in Spanish).
+
+## Articles
+- [Open Finance in LatAm 2026: Regulatory Gaps Europe Learned the Hard Way](https://natashacaceres.com/blog-open-finance-in-latam-2026-the-regulatory-gaps-europe-learned-the-hard-way) (2026-03-19). Latin America is scaling Open Finance fast. Europe already knows what happens when the infrastructure outpaces the regulation. The lesson is still relevant.
+- [The Loophole Economy of Embedded Finance](https://natashacaceres.com/blog-the-loophole-economy-of-embedded-finance) (2025-06-11). Non-financial firms turned PSD2 compliance gaps into business models by building solutions where regulation was unclear.
+- [Open Banking is Great, Unless You’re an Immigrant](https://natashacaceres.com/blog-open-banking-is-great-unless-youre-an-immigrant) (2024-10-19). While residents in Europe can connect all their accounts and get personalized financial advice, immigrants are left managing fragmented systems.
+- [Investment in Open Banking Leaves the U.S. Behind](https://natashacaceres.com/blog-europes-open-banking-is-leaving-the-u-s-behind) (2024-10-14). Open Banking has changed the game, building investor trust and driving a surge of funding into fintech, especially for PayTechs.
+- [PSD2: Leveling the Financial Playing Field](https://natashacaceres.com/blog-psd2-leveling-the-financial-playing-field) (2024-05-09). Aware that a market-driven approach would not ensure fair competition between traditional banks and fintechs, the EU introduced PSD2.
+- [Credit Evaluation in the Era of Open Banking](https://natashacaceres.com/blog-credit-evaluation-in-the-era-of-open-banking) (2024-04-09). Open Banking has the potential to change how we decide who deserves credit.
+- [Open Banking: Europe’s Transformative Fintech Tool](https://natashacaceres.com/blog-open-banking-europes-transformative-fintech-tool) (2024-04-01). Open Banking is changing the financial sector, driving consumer-led innovation and opening up new opportunities for SMEs.
+
+## About and contact
+- [About Natasha Cáceres](https://natashacaceres.com/about)
+- [ORCID](https://orcid.org/0000-0001-9233-0274)
+- [LinkedIn](https://www.linkedin.com/in/natasha-c%C3%A1ceres-9912b73b0/)
